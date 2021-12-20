@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Contract
 {
@@ -11,5 +13,9 @@ namespace Contract
         List<string> Rename(List<string> originals);
         IRule Clone();
         string Name();
+
+        //Window GetWindow();
+        UserControl GetUI();
+      
     }
 }
