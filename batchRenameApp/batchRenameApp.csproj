@@ -6,4 +6,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Contract\Contract.csproj" />
+    <ProjectReference Include="..\RemoveExtraSpaceRule\RemoveExtraSpaceRule.csproj" />
+  </ItemGroup>
+
 </Project>
