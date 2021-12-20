@@ -1,66 +1,71 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using Contract;
 namespace RemoveExtraSpaceRule
 {
-    public class RemoveExtraSpaceRule 
+    public class RemoveExtraSpaceRule : IRule, INotifyPropertyChanged
+
     {
         public int Configuration { get; set; }
+        public string Name { get; set; }
         public RuleWindow ConfigurationUI { get; set; }
         public RemoveExtraSpaceRule()
         {
-            
+            Name = "Remove Extra Space";
             Configuration = 1;
             ConfigurationUI = new RuleWindow(this);
         }
         public RemoveExtraSpaceRule(int configuration = 1)
         {
-          
+            Name = "Remove Extra Space";
             Configuration = configuration;
             ConfigurationUI = new RuleWindow(this);
         }
-        public string Rename(string original)
-        {
-           
-            int index = original.LastIndexOf(".");
-            string[] tokens = original.Split(".");
-            string result = "";
-            for(int i = 0; i < tokens.Length-1; i++)
-            {
-                result += tokens[i] + ".";
-            }
-            result = result.Remove(result.Length-1);
-            switch (Configuration)
-            {
-                case -1:
-                    result = result.TrimStart();
-                    break;
-                case 0:
-                    result = result.TrimEnd();
-                    break;
-                case 1:
-                    result = result.Trim();
-                    break;
-            }
-            return result+"."+ tokens[tokens.Length-1];
-        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public IRule Clone()
         {
             return new RemoveExtraSpaceRule(1);
         }
 
-        
-
-        public string Name()
-        {
-            return "Remove Extra Space";
-        }
 
         public UserControl GetUI()
         {
             return ConfigurationUI;
+        }
+
+        public List<string> Rename(List<string> originals)
+        {
+            List<string> result = new List<string>();
+            foreach(var str in originals)
+            {
+                int index = str.LastIndexOf(".");
+                string[] tokens = str.Split(".");
+                string temp = "";
+                for (int i = 0; i < tokens.Length - 1; i++)
+                {
+                    temp += tokens[i] + ".";
+                }
+                temp = temp.Remove(temp.Length - 1);
+                switch (Configuration)
+                {
+                    case -1:
+                        temp = temp.TrimStart();
+                        break;
+                    case 0:
+                        temp = temp.TrimEnd();
+                        break;
+                    case 1:
+                        temp = temp.Trim();
+                        break;
+                }
+                result.Add(temp + "." + tokens[tokens.Length - 1]);
+            }
+            return result;
         }
     }
 }

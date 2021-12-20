@@ -12,10 +12,7 @@ namespace Contract
     {
         List<string> Rename(List<string> originals);
         IRule Clone();
-        string Name();
-
-        //Window GetWindow();
         UserControl GetUI();
-      
+
     }
 }

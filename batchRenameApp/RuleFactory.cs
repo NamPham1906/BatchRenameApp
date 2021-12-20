@@ -29,7 +29,6 @@ namespace batchRenameApp
                     {
                         IRule c = (IRule)Activator.CreateInstance(t);
                         _prototypes.Add(c);
-                        c.Name();
                     }
                 }
             }
