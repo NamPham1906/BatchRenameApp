@@ -1,8 +1,7 @@
 using System;
-using Contract;
 namespace RemoveExtraSpaceRule
 {
-    public class RemoveExtraSpaceRule : IRule
+    public class RemoveExtraSpaceRule 
     {
         public RemoveExtraSpaceRule()
         {
@@ -13,10 +12,10 @@ namespace RemoveExtraSpaceRule
             return original.Trim();
         }
 
-        public IRule Clone()
-        {
-            return new RemoveExtraSpaceRule();
-        }
+       // public IRule Clone()
+       // {
+       //     return new RemoveExtraSpaceRule();
+       // }
 
         public string Name()
         {
