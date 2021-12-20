@@ -97,88 +97,97 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                <TabControl>
+                    <TabItem Header="File">
+                        <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="550" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
+                            <StackPanel Orientation ="Horizontal"  Margin="10px">
+                                <TextBlock Text="" Margin="5px" FontSize ="10" Width="22px"/>
+                                <TextBlock Text="File Name" Margin="5px" FontSize ="10" Width="120px"/>
+                                <TextBlock Text="New file Name" Margin="5px" FontSize ="10" Width="120px"/>
+                                <TextBlock Text="File Extension" Margin="5px" FontSize ="10" Width="60px"/>
+                                <TextBlock Text="File Path" Margin="5px" FontSize ="10" Width="120px"/>
+                            </StackPanel>
+                            <ListView Name="FileList" Height="300px" Margin="5px"  AllowDrop="True"  Drop="DropFileList">
 
-                <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="550" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
-                    <StackPanel Orientation ="Horizontal"  Margin="10px">
-                        <TextBlock Text="" Margin="5px" FontSize ="10" Width="22px"/>
-                        <TextBlock Text="Folder Name" Margin="5px" FontSize ="10" Width="120px"/>
-                        <TextBlock Text="New folder Name" Margin="5px" FontSize ="10" Width="120px"/>
-                        <TextBlock Text="Folder Path" Margin="5px" FontSize ="10" Width="120px"/>
-                    </StackPanel>
-                    <ListView Name="FolderList" Height="300px" Margin="5px"  AllowDrop="True" DragOver="DragOverFolderList" Drop="DropFolderList">
+                                <ListView.Resources>
+                                    <ContextMenu x:Key="itemContextMenu">
+                                        <MenuItem Header="Lock" Click="lockFileMenu_Click" />
+                                        <MenuItem Header="Unlock" Click="unlockFileMenu_Click" />
+                                        <MenuItem Header="Change password" Click="changePasswordFileMenu_Click" />
+                                        <MenuItem Header="Rename" Click="renameFileMenu_Click" />
+                                        <MenuItem Header="Export this file" Click="exportFileMenu_Click" />
+                                        <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
+                                    </ContextMenu>
+                                </ListView.Resources>
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}">
+                                        <Setter Property="ContextMenu" Value="{StaticResource itemContextMenu}"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
 
-                        <ListView.Resources>
-                            <ContextMenu x:Key="itemContextMenu">
-                                <MenuItem Header="Lock" Click="lockFileMenu_Click" />
-                                <MenuItem Header="Unlock" Click="unlockFileMenu_Click" />
-                                <MenuItem Header="Change password" Click="changePasswordFileMenu_Click" />
-                                <MenuItem Header="Rename" Click="renameFileMenu_Click" />
-                                <MenuItem Header="Export this file" Click="exportFileMenu_Click" />
-                                <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
-                            </ContextMenu>
-                        </ListView.Resources>
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListViewItem}">
-                                <Setter Property="ContextMenu" Value="{StaticResource itemContextMenu}"/>
-                            </Style>
-                        </ListView.ItemContainerStyle>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation ="Horizontal">
+                                            <Image Source="{Binding fileimage}" Height="30px"/>
+                                            <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding filename}" Margin="5px" FontSize ="10" Width="120px" />
+                                                <TextBlock Text="{Binding newfilename}" Margin="5px" FontSize ="10" Width="120px"/>
+                                                <TextBlock Text="{Binding fileextension}" Margin="5px" FontSize ="10" Width="60px"/>
+                                                <TextBlock Text="{Binding filepath}" Margin="5px" FontSize ="10" Width="130px"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                      
+                    </TabItem>
+                    <TabItem Header="Folder">
+                        <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="550" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
+                            <StackPanel Orientation ="Horizontal"  Margin="10px">
+                                <TextBlock Text="" Margin="5px" FontSize ="10" Width="22px"/>
+                                <TextBlock Text="Folder Name" Margin="5px" FontSize ="10" Width="120px"/>
+                                <TextBlock Text="New folder Name" Margin="5px" FontSize ="10" Width="120px"/>
+                                <TextBlock Text="Folder Path" Margin="5px" FontSize ="10" Width="120px"/>
+                            </StackPanel>
+                            <ListView Name="FolderList" Height="300px" Margin="5px"  AllowDrop="True" DragOver="DragOverFolderList" Drop="DropFolderList">
 
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation ="Horizontal">
-                                    <Image Source="{Binding folderimage}" Height="30px"/>
-                                    <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding foldername}" Margin="5px" FontSize ="10" Width="120px" />
-                                        <TextBlock Text="{Binding newfoldername}" Margin="5px" FontSize ="10" Width="120px"/>
-                                        <TextBlock Text="{Binding folderpath}" Margin="5px" FontSize ="10" Width="130px"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </StackPanel>
+                                <ListView.Resources>
+                                    <ContextMenu x:Key="itemContextMenu">
+                                        <MenuItem Header="Lock" Click="lockFileMenu_Click" />
+                                        <MenuItem Header="Unlock" Click="unlockFileMenu_Click" />
+                                        <MenuItem Header="Change password" Click="changePasswordFileMenu_Click" />
+                                        <MenuItem Header="Rename" Click="renameFileMenu_Click" />
+                                        <MenuItem Header="Export this file" Click="exportFileMenu_Click" />
+                                        <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
+                                    </ContextMenu>
+                                </ListView.Resources>
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}">
+                                        <Setter Property="ContextMenu" Value="{StaticResource itemContextMenu}"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation ="Horizontal">
+                                            <Image Source="{Binding folderimage}" Height="30px"/>
+                                            <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding foldername}" Margin="5px" FontSize ="10" Width="120px" />
+                                                <TextBlock Text="{Binding newfoldername}" Margin="5px" FontSize ="10" Width="120px"/>
+                                                <TextBlock Text="{Binding folderpath}" Margin="5px" FontSize ="10" Width="130px"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                    </TabItem>
+                   
+                </TabControl>
+               
                 
-                <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="550" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
-                    <StackPanel Orientation ="Horizontal"  Margin="10px">
-                        <TextBlock Text="" Margin="5px" FontSize ="10" Width="22px"/>
-                        <TextBlock Text="File Name" Margin="5px" FontSize ="10" Width="120px"/>
-                        <TextBlock Text="New file Name" Margin="5px" FontSize ="10" Width="120px"/>
-                        <TextBlock Text="File Extension" Margin="5px" FontSize ="10" Width="60px"/>
-                        <TextBlock Text="File Path" Margin="5px" FontSize ="10" Width="120px"/>
-                    </StackPanel>
-                    <ListView Name="FileList" Height="300px" Margin="5px"  AllowDrop="True"  Drop="DropFileList">
-
-                        <ListView.Resources>
-                            <ContextMenu x:Key="itemContextMenu">
-                                <MenuItem Header="Lock" Click="lockFileMenu_Click" />
-                                <MenuItem Header="Unlock" Click="unlockFileMenu_Click" />
-                                <MenuItem Header="Change password" Click="changePasswordFileMenu_Click" />
-                                <MenuItem Header="Rename" Click="renameFileMenu_Click" />
-                                <MenuItem Header="Export this file" Click="exportFileMenu_Click" />
-                                <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
-                            </ContextMenu>
-                        </ListView.Resources>
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListViewItem}">
-                                <Setter Property="ContextMenu" Value="{StaticResource itemContextMenu}"/>
-                            </Style>
-                        </ListView.ItemContainerStyle>
-
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation ="Horizontal">
-                                    <Image Source="{Binding fileimage}" Height="30px"/>
-                                    <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding filename}" Margin="5px" FontSize ="10" Width="120px" />
-                                        <TextBlock Text="{Binding newfilename}" Margin="5px" FontSize ="10" Width="120px"/>
-                                        <TextBlock Text="{Binding fileextension}" Margin="5px" FontSize ="10" Width="60px"/>
-                                        <TextBlock Text="{Binding filepath}" Margin="5px" FontSize ="10" Width="130px"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </StackPanel>
+               
                 
                
 

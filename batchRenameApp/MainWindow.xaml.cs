@@ -22,18 +22,50 @@ namespace batchRenameApp
 
 
         private void addFile(string filedir) {
-            MyFile newfile = new MyFile(filedir);
-            newfile.fileimage = "images/file.png";
-         filelist.Add(newfile);
-         FileList.ItemsSource = filelist;
+            if (isFileNotExist(filedir))
+            {
+                MyFile newfile = new MyFile(filedir);
+                newfile.fileimage = "images/file.png";
+                filelist.Add(newfile);
+                FileList.ItemsSource = filelist;
+            }
         }
 
         private void addFolder(string folderdir)
         {
-            Folder newfolder = new Folder(folderdir);
-            newfolder.folderimage = "images/folder.png";
-            folderlist.Add(newfolder);
-            FolderList.ItemsSource = folderlist;
+            if (isFolderNotExist(folderdir))
+            {
+                Folder newfolder = new Folder(folderdir);
+                newfolder.folderimage = "images/folder.png";
+                folderlist.Add(newfolder);
+                FolderList.ItemsSource = folderlist;
+            }
+        }
+
+        private bool isFileNotExist(string filedir)
+        {
+
+            foreach (MyFile myfile in filelist)
+            {
+                if (myfile.filepath.Equals(filedir))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private bool isFolderNotExist(string folderdir)
+        {
+
+            foreach (Folder myfolder in folderlist)
+            {
+                if (myfolder.folderpath.Equals(folderdir))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
 
@@ -72,6 +104,7 @@ namespace batchRenameApp
             string[] droppedFilenames = e.Data.GetData(DataFormats.FileDrop, true) as string[];
             foreach (string filename in droppedFilenames)
             {
+                
                 addFile(filename);
             }
 
@@ -165,9 +198,8 @@ namespace batchRenameApp
         {
             CommonOpenFileDialog dialog = new CommonOpenFileDialog();
             dialog.IsFolderPicker = true;
-            dialog.ShowDialog();
-            if (dialog.ShowDialog() != null)
-            addFolder(dialog.FileName);
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                addFolder(dialog.FileName);
         }
 
         private void ChangePasswordVolume_Click(object sender, RoutedEventArgs e)
