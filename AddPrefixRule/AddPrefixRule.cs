@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Contract;
 
 namespace AddPrefixRule
@@ -6,6 +7,11 @@ namespace AddPrefixRule
     public class AddPrefixRule : IRule
     {
         public string Prefix { get; set; }
+
+        public AddPrefixRule()
+        {
+            this.Prefix = "";
+        }
 
         public AddPrefixRule(string prefix)
         {
@@ -22,13 +28,28 @@ namespace AddPrefixRule
             return "Add Prefix Rule";
         }
 
-        public string Rename(string original)
+        public List<string> Rename(List<string> originals)
         {
-            string result = "";
-            
-            result = $"{Prefix}{original}";
+            List<string> results = new List<string>();
 
-            return result;
+            foreach (var original in originals)
+            {
+                string nonex = "";
+
+                var tokens = original.Split(".");
+
+                nonex += tokens[0];
+                for (int i = 1; i < tokens.Length - 1; i++)
+                    nonex += "." + tokens[i];
+
+                string result = "";
+
+                result = $"{Prefix}{nonex}";
+
+                results.Add(result);
+            }
+
+            return results;
         }
     }
 }

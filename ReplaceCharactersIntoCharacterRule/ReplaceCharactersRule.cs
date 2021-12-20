@@ -21,18 +21,7 @@ namespace ReplaceCharactersIntoCharacterRule
             this.Needles = needles;
             this.Replacer = replacer;
         }
-        public string Rename(string original)
-        {
-            string result = original;
-
-            foreach (var needle in Needles)
-            {
-                result = result.Replace(needle, Replacer);
-            }
-
-            return result;
-        }
-
+        
         public IRule Clone()
         {
             return new ReplaceCharactersRule(Needles, Replacer);
@@ -41,6 +30,33 @@ namespace ReplaceCharactersIntoCharacterRule
         public string Name()
         {
             return "Replace Characters Rule";
+        }
+
+        public List<string> Rename(List<string> originals)
+        {
+            List<string> results = new List<string>();
+
+            foreach (var original in originals)
+            {
+                string nonex = "";
+
+                var tokens = original.Split(".");
+
+                nonex += tokens[0];
+                for (int i = 1; i < tokens.Length - 1; i++)
+                    nonex += "." + tokens[i];
+
+                string result = nonex;
+
+                foreach (var needle in Needles)
+                {
+                    result = result.Replace(needle, Replacer);
+                }
+
+                results.Add(result);
+            }
+
+            return results;
         }
     }
 }

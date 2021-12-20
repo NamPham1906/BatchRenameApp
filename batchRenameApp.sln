@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddPrefixRule", "AddPrefixR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddSuffixRule", "AddSuffixRule\AddSuffixRule.csproj", "{3766DBDE-7ED9-4939-A316-A6A3C9EF59C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertToLowercaseRule", "ConvertToLowercaseRule\ConvertToLowercaseRule.csproj", "{B6561C55-7F1E-4F09-B347-9A298E7A17E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertToPascalCase", "ConvertToPascalCase\ConvertToPascalCase.csproj", "{AEA9C0F3-B59B-4FCF-B3C1-0D9540DCB0F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{3766DBDE-7ED9-4939-A316-A6A3C9EF59C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3766DBDE-7ED9-4939-A316-A6A3C9EF59C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3766DBDE-7ED9-4939-A316-A6A3C9EF59C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6561C55-7F1E-4F09-B347-9A298E7A17E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6561C55-7F1E-4F09-B347-9A298E7A17E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6561C55-7F1E-4F09-B347-9A298E7A17E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6561C55-7F1E-4F09-B347-9A298E7A17E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEA9C0F3-B59B-4FCF-B3C1-0D9540DCB0F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEA9C0F3-B59B-4FCF-B3C1-0D9540DCB0F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEA9C0F3-B59B-4FCF-B3C1-0D9540DCB0F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEA9C0F3-B59B-4FCF-B3C1-0D9540DCB0F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

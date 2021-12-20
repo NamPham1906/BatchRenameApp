@@ -2,30 +2,23 @@ using System;
 using System.Collections.Generic;
 using Contract;
 
-namespace AddSuffixRule
+namespace ConvertToLowercaseRule
 {
-    public class AddSuffixRule : IRule
+    public class ConvertToLowercaseRule : IRule
     {
-        public string Suffix { get; set; }
-
-        public AddSuffixRule()
+        public ConvertToLowercaseRule()
         {
-            this.Suffix = "";
-        }
-
-        public AddSuffixRule(string suffix)
-        {
-            this.Suffix = suffix;
+            //Do nothing
         }
 
         public IRule Clone()
         {
-            return new AddSuffixRule(Suffix);
+            return new ConvertToLowercaseRule();
         }
 
         public string Name()
         {
-            return "Add Suffix Rule";
+            return "Convert To Lowercase Rule";
         }
 
         public List<string> Rename(List<string> originals)
@@ -42,9 +35,19 @@ namespace AddSuffixRule
                 for (int i = 1; i < tokens.Length - 1; i++)
                     nonex += "." + tokens[i];
 
+                string temp = nonex;
+
+                temp = temp.Replace(" ", "");
+
                 string result = "";
 
-                result = $"{nonex}{Suffix}";
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    if (temp[i] >= 65 && temp[i] <= 90)
+                        result += (char)(temp[i] + 32);
+                    else
+                        result += temp[i];
+                }
 
                 results.Add(result);
             }
