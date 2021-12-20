@@ -10,12 +10,9 @@ namespace Contract
 {
     public interface IRule
     {
-        string Rename(string original);
+        List<string> Rename(List<string> originals);
         IRule Clone();
-        string Name();
-
-        //Window GetWindow();
         UserControl GetUI();
-      
+
     }
 }

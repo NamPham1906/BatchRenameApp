@@ -30,7 +30,7 @@ namespace batchRenameApp
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             ruleAmount = RuleFactory.GetInstance().RuleAmount();
-            for(int i = 0; i < ruleAmount; i++)
+            for (int i = 0; i < ruleAmount; i++)
             {
                 rules.Add(RuleFactory.GetInstance().Create(i));
             }
