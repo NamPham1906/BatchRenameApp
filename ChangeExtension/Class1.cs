@@ -38,6 +38,6 @@ namespace ChangeExtension
             return new ChangeExtension(_extension);
         }
 
-        public string Name => "Change Extension";
+        public string Name() => "Change Extension";
     }
 }
