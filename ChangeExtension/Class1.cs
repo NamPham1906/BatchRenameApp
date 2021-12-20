@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Contract;
 
@@ -11,12 +12,27 @@ namespace ChangeExtension
         {
             this._extension = extension;
         }
-        public string Rename(string original)
+
+        public List<string> Rename(List<string> originals)
         {
-            string[] str = original.Split('.');
-            str[1] = _extension;
-            return $"{str[0]}.{str[1]}";
+            string newe = _extension;
+            List<string> result = new List<string>();
+
+            foreach (string item in originals)
+            {
+                string[] str = item.Split('.');
+                int strlen = str.Length;
+
+                string olde = str[strlen - 1];
+                string[] str1 = item.Split($".{olde}");
+
+                string newfilename = $"{str1[0]}.{newe}";
+                result.Add(newfilename);
+            }    
+            
+            return result;
         }
+
         public IRule Clone()
         {
             return new ChangeExtension(_extension);
