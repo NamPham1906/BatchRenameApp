@@ -54,11 +54,6 @@ namespace batchRenameApp
                 userRules.Add(allRules[i]);
             }
 
-            for (int i = 0; i < userControls.Count(); i++)
-            {
-                RuleStack.Children.Add(userControls[i]);
-            }
-
             RuleList.ItemsSource = userRules;
             this.DataContext = testingFile;
         }
@@ -73,6 +68,12 @@ namespace batchRenameApp
                 newName = temp[0];
             }
             testingFile.Name = newName;
+        }
+
+        private void RuleList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int index = RuleList.SelectedIndex;
+                        
         }
     }
 }

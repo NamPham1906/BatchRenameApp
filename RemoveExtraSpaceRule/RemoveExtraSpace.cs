@@ -6,19 +6,19 @@ using System.Windows.Controls;
 using Contract;
 namespace RemoveExtraSpaceRule
 {
-    public class RemoveExtraSpaceRule : IRule, INotifyPropertyChanged
+    public class RemoveExtraSpace : IRule, INotifyPropertyChanged
 
     {
         public int Configuration { get; set; }
         public string Name { get; set; }
         public RuleWindow ConfigurationUI { get; set; }
-        public RemoveExtraSpaceRule()
+        public RemoveExtraSpace()
         {
             Name = "Remove Extra Space";
             Configuration = 1;
             ConfigurationUI = new RuleWindow(this);
         }
-        public RemoveExtraSpaceRule(int configuration = 1)
+        public RemoveExtraSpace(int configuration = 1)
         {
             Name = "Remove Extra Space";
             Configuration = configuration;
@@ -29,13 +29,17 @@ namespace RemoveExtraSpaceRule
 
         public IRule Clone()
         {
-            return new RemoveExtraSpaceRule(1);
+            return new RemoveExtraSpace(1);
         }
 
 
         public UserControl GetUI()
         {
             return ConfigurationUI;
+        }
+        public string GetName()
+        {
+            return Name;
         }
 
         public List<string> Rename(List<string> originals)
@@ -67,5 +71,7 @@ namespace RemoveExtraSpaceRule
             }
             return result;
         }
+
+       
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows.Controls;
 using Contract;
 
 namespace AddCounter 
@@ -39,6 +40,16 @@ namespace AddCounter
         }
 
         public string Name() => "Add Counter";
+
+        public UserControl GetUI()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetName()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

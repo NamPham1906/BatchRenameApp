@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Windows.Controls;
 using Contract;
 
 namespace ConvertToPascalCase
@@ -14,6 +15,16 @@ namespace ConvertToPascalCase
         public IRule Clone()
         {
             return new ConvertToPascalCase();
+        }
+
+        public string GetName()
+        {
+            throw new NotImplementedException();
+        }
+
+        public UserControl GetUI()
+        {
+            throw new NotImplementedException();
         }
 
         public string Name()

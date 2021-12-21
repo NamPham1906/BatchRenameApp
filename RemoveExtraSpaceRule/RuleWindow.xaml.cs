@@ -20,8 +20,8 @@ namespace RemoveExtraSpaceRule
     /// </summary>
     public partial class RuleWindow : UserControl
     {
-        RemoveExtraSpaceRule rule;
-        public RuleWindow(RemoveExtraSpaceRule rule)
+        RemoveExtraSpace rule;
+        public RuleWindow(RemoveExtraSpace rule)
         {
             this.rule = rule;
             InitializeComponent();
@@ -41,6 +41,11 @@ namespace RemoveExtraSpaceRule
         private void BothRadio_Checked(object sender, RoutedEventArgs e)
         {
             this.rule.Configuration = 1;
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.DataContext = rule;
         }
     }
 }
