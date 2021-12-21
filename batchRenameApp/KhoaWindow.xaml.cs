@@ -20,9 +20,9 @@ namespace batchRenameApp
     /// <summary>
     /// Interaction logic for KhoaWindow.xaml
     /// </summary>
-    public class MyFile : INotifyPropertyChanged
+    public class MyPikaFile : INotifyPropertyChanged
     {
-        public MyFile()
+        public MyPikaFile()
         {
             Name = "   Pikachu   .txt";
         }
@@ -36,7 +36,7 @@ namespace batchRenameApp
         List<IRule> allRules = new List<IRule>();
         BindingList<IRule> userRules = new BindingList<IRule>();
         List<UserControl> userControls = new List<UserControl>();
-        MyFile testingFile = new MyFile();
+        MyPikaFile testingFile = new MyPikaFile();
         string backupName = "    Pikachu   .txt";
         public KhoaWindow()
         {
