@@ -53,7 +53,7 @@ namespace batchRenameApp
                 userControls.Add(allRules[i].GetUI());
                 userRules.Add(allRules[i]);
             }
-
+            userRules.Add(RuleFactory.GetInstance().Create(0));
             RuleList.ItemsSource = userRules;
             this.DataContext = testingFile;
         }
@@ -61,44 +61,36 @@ namespace batchRenameApp
 
         private void RuleList_LayoutUpdated(object sender, EventArgs e)
         {
-            string newName = testingFile.Name;
+            testingFile.Name = backupName;
             for (int i = 0; i < userRules.Count(); i++)
             {
-                List<string> temp = userRules[i].Rename(new List<string> { backupName });
-                newName = temp[0];
+                if (userRules[i].IsUse())
+                {
+                    List<string> temp = userRules[i].Rename(new List<string> { backupName });
+                    string newName = temp[0];
+                    testingFile.Name = newName;
+                }
             }
-            testingFile.Name = newName;
         }
 
         private void RuleList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var listView = (ListView)sender;
-            if (e.AddedItems.Count > 0 && listView.SelectedItem != e.AddedItems[0])
-                listView.SelectedItem = e.AddedItems[0];
-        }
+            if (listView.SelectedItems.Count > 1 )
+            {
+                IRule rule = (IRule)listView.SelectedItems[listView.SelectedItems.Count - 1];
+                listView.UnselectAll();
+                listView.SelectedItems.Add(rule);
+            }
 
+
+        }
 
         private void Remove_Rule_Button_Click(object sender, RoutedEventArgs e)
         {
             Button b = sender as Button;
             IRule rule = b.CommandParameter as IRule;
             userRules.Remove(rule);
-        }
-
-        private void Use_Rule_Checkbox_Checked(object sender, RoutedEventArgs e)
-        {
-            CheckBox b = sender as CheckBox;
-            IRule rule = b.CommandParameter as IRule;
-            int index = userRules.IndexOf(rule);
-            //code here
-        }
-
-        private void Use_Rule_Checkbox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            CheckBox b = sender as CheckBox;
-            IRule rule = b.CommandParameter as IRule;
-            int index = userRules.IndexOf(rule);
-            //code here
         }
     }
 }
