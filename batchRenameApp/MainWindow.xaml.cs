@@ -9,6 +9,7 @@ using System.IO;
 using System.ComponentModel;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using Contract;
 
 namespace batchRenameApp
 {
@@ -16,7 +17,12 @@ namespace batchRenameApp
     public partial class MainWindow : Window
     {
 
-
+        int totalRule = 0;
+        List<IRule> allRules = new List<IRule>();
+        BindingList<IRule> userRules = new BindingList<IRule>();
+        List<UserControl> userControls = new List<UserControl>();
+        MyPikaFile testingFile = new MyPikaFile();
+        string backupName = "    Pikachu   .txt";
         BindingList<MyFile> filelist = new BindingList<MyFile>();
         BindingList<Folder> folderlist = new BindingList<Folder>();
 
@@ -112,7 +118,17 @@ namespace batchRenameApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            //get all rule from DLL
+            totalRule = RuleFactory.GetInstance().RuleAmount();
+            for (int i = 0; i < totalRule; i++)
+            {
+                allRules.Add(RuleFactory.GetInstance().Create(i));
+                userControls.Add(allRules[i].GetUI());
+                userRules.Add(allRules[i]);
+            }
 
+            RuleList.ItemsSource = userRules;
+            this.DataContext = testingFile;
 
         }
 
@@ -132,10 +148,6 @@ namespace batchRenameApp
 
             if (openFileDialog.ShowDialog() == true)
                 addFile(openFileDialog.FileName);
-        }
-        private void SaveVolume_Click(object sender, RoutedEventArgs e)
-        {
-          
         }
 
         private void unlockMenu_Click(object sender, RoutedEventArgs e)
@@ -257,6 +269,80 @@ namespace batchRenameApp
                 e.Effects = DragDropEffects.None;
                 e.Handled = true;
             }
+        }
+
+        private void StartBatching_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RuleList_LayoutUpdated(object sender, EventArgs e)
+        {
+            List<string> listOfFileName = new List<string>();
+           // List<string> listOfFolderName = new List<string>();
+
+            for (int i=0; i < filelist.Count(); i++)
+            {
+                listOfFileName.Add(filelist[i].filename);
+                filelist[i].newfilename = filelist[i].filename;
+            }
+
+           // for (int i = 0; i < folderlist.Count(); i++)
+           // {
+           //     listOfFolderName.Add(folderlist[i].foldername);
+           //     folderlist[i].newfoldername = folderlist[i].foldername;
+           // }
+
+            for (int i = 0; i < userRules.Count(); i++)
+            {
+                if (userRules[i].IsUse())
+                {
+                    List<string> temp = userRules[i].Rename(listOfFileName);
+                    //List<string> temp2 = userRules[i].Rename(listOfFolderName);
+                    for (int j = 0; j < filelist.Count(); j++)
+                    {
+                        filelist[i].newfilename = temp[j];
+                    }
+
+                   // for (int j = 0; j < folderlist.Count(); j++)
+                  //  {
+
+                  //      folderlist[i].newfoldername = temp2[j];
+                  //  }
+                }
+            }
+           
+        }
+
+        private void RuleList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var listView = (ListView)sender;
+            if (e.AddedItems.Count > 0 && listView.SelectedItem != e.AddedItems[0])
+                listView.SelectedItem = e.AddedItems[0];
+        }
+
+
+        private void Remove_Rule_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button b = sender as Button;
+            IRule rule = b.CommandParameter as IRule;
+            userRules.Remove(rule);
+        }
+
+        private void Use_Rule_Checkbox_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox b = sender as CheckBox;
+            IRule rule = b.CommandParameter as IRule;
+            int index = userRules.IndexOf(rule);
+            //code here
+        }
+
+        private void Use_Rule_Checkbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            CheckBox b = sender as CheckBox;
+            IRule rule = b.CommandParameter as IRule;
+            int index = userRules.IndexOf(rule);
+            //code here
         }
     }
 }
