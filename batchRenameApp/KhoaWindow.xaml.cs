@@ -65,7 +65,7 @@ namespace batchRenameApp
             {
                 if (userRules[i].IsUse())
                 {
-                    List<string> temp = userRules[i].Rename(new List<string> { backupName });
+                    List<string> temp = userRules[i].Rename(new List<string> { backupName }, 1);
                     string newName = temp[0];
                     testingFile.Name = newName;
                 }
