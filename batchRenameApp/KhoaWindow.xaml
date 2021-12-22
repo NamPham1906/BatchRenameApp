@@ -114,14 +114,14 @@
                         <Setter Property="MaxHeight" Value="30"/>
                         <Setter Property="VerticalContentAlignment" Value="Top"/>
                         <Setter Property="ContentTemplate" Value="{StaticResource DefaultItemTemplate}" />
-                        <!--<Setter Property="Background">
+                        <Setter Property="Background">
                             <Setter.Value>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FF80CEF3" Offset="0.01"/>
-                                    <GradientStop Color="#FF5588A0" Offset="1"/>
+                                    <GradientStop Color="#FFBDEAFF" Offset="0.01"/>
+                                    <GradientStop Color="#FFBCDBEA" Offset="1"/>
                                 </LinearGradientBrush>
                             </Setter.Value>
-                        </Setter>-->
+                        </Setter>
                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter Property="ContentTemplate" Value="{StaticResource SelectedItemTemplate}" />
