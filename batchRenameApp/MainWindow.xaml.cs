@@ -278,13 +278,40 @@ namespace batchRenameApp
 
         private void RuleList_LayoutUpdated(object sender, EventArgs e)
         {
-            string newName = testingFile.Name;
+            List<string> listOfFileName = new List<string>();
+           // List<string> listOfFolderName = new List<string>();
+
+            for (int i=0; i < filelist.Count(); i++)
+            {
+                listOfFileName.Add(filelist[i].filename);
+                filelist[i].newfilename = filelist[i].filename;
+            }
+
+           // for (int i = 0; i < folderlist.Count(); i++)
+           // {
+           //     listOfFolderName.Add(folderlist[i].foldername);
+           //     folderlist[i].newfoldername = folderlist[i].foldername;
+           // }
+
             for (int i = 0; i < userRules.Count(); i++)
             {
-                List<string> temp = userRules[i].Rename(new List<string> { backupName });
-                newName = temp[0];
+                if (userRules[i].IsUse())
+                {
+                    List<string> temp = userRules[i].Rename(listOfFileName);
+                    //List<string> temp2 = userRules[i].Rename(listOfFolderName);
+                    for (int j = 0; j < filelist.Count(); j++)
+                    {
+                        filelist[i].newfilename = temp[j];
+                    }
+
+                   // for (int j = 0; j < folderlist.Count(); j++)
+                  //  {
+
+                  //      folderlist[i].newfoldername = temp2[j];
+                  //  }
+                }
             }
-            testingFile.Name = newName;
+           
         }
 
         private void RuleList_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -29,6 +29,7 @@ namespace batchRenameApp
 
             FileInfo myfile = new FileInfo(filedir);
             this.filename = myfile.Name;
+            this.newfilename = this.filename;
             this.fileextension = myfile.Extension;
             this.filepath = filedir;
         }
