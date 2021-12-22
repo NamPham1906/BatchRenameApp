@@ -12,7 +12,9 @@ namespace Contract
     {
         List<string> Rename(List<string> originals, int type);
         IRule Clone();
+
         UserControl GetUI();
+
         string GetName();
 
         bool IsUse();

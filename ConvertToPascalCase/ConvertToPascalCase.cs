@@ -3,13 +3,21 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using Contract;
 
-namespace ConvertToPascalCase
+namespace ConvertToPascalCaseRule
 {
     public class ConvertToPascalCase : IRule
     {
+        public string Name { get; set; }
+
+        public RuleWindow ConfigurationUI { get; set; }
+
+        public bool IsInUse { get; set; }
+
         public ConvertToPascalCase()
         {
-            //Do nothing
+            Name = "Convert To PascalCase";
+            ConfigurationUI = new RuleWindow(this);
+            IsInUse = false;
         }
 
         public IRule Clone()
@@ -19,32 +27,36 @@ namespace ConvertToPascalCase
 
         public string GetName()
         {
-            throw new NotImplementedException();
+            return Name;
         }
 
         public UserControl GetUI()
         {
-            throw new NotImplementedException();
+            return ConfigurationUI;
         }
 
-        public string Name()
+        public bool IsUse()
         {
-            return "Convert To PascalCase";
+            return IsInUse;
         }
 
-        public List<string> Rename(List<string> originals)
+        public List<string> Rename(List<string> originals, int type)
         {
             List<string> results = new List<string>();
 
             foreach (var original in originals)
             {
                 string nonex = "";
+                string ex = "";
 
                 var bases = original.Split(".");
 
                 nonex += bases[0];
                 for (int i = 1; i < bases.Length - 1; i++)
                     nonex += "." + bases[i];
+
+                if (type == 1) ex = "." + bases[bases.Length - 1];
+                if (type == 2) nonex = "." + bases[bases.Length - 1];
 
                 string result = "";
 
@@ -76,6 +88,8 @@ namespace ConvertToPascalCase
                             }
                         }
                 }
+
+                result = $"{result}{ex}";
 
                 results.Add(result);
             }

@@ -53,6 +53,7 @@ namespace batchRenameApp
                 userControls.Add(allRules[i].GetUI());
                 userRules.Add(allRules[i]);
             }
+
             RuleList.ItemsSource = userRules;
             this.DataContext = testingFile;
         }
@@ -81,8 +82,6 @@ namespace batchRenameApp
                 listView.UnselectAll();
                 listView.SelectedItems.Add(rule);
             }
-
-
         }
 
         private void Remove_Rule_Button_Click(object sender, RoutedEventArgs e)

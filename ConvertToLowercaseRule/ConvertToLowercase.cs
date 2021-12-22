@@ -1,50 +1,64 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Controls;
 using Contract;
 
 namespace ConvertToLowercaseRule
 {
-    public class ConvertToLowercaseRule : IRule
+    public class ConvertToLowercase : IRule, INotifyPropertyChanged
     {
-        public ConvertToLowercaseRule()
+        public string Name { get; set; }
+
+        public RuleWindow ConfigurationUI { get; set; }
+
+        public bool IsInUse { get; set; }
+        public ConvertToLowercase()
         {
-            //Do nothing
+            this.Name = "Convert To Lowercase";
+            ConfigurationUI = new RuleWindow(this);
+            IsInUse = false;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public IRule Clone()
         {
-            return new ConvertToLowercaseRule();
+            return new ConvertToLowercase();
         }
 
         public string GetName()
         {
-            throw new NotImplementedException();
+            return Name;
         }
 
         public UserControl GetUI()
         {
-            throw new NotImplementedException();
+            return ConfigurationUI;
         }
 
-        public string Name()
+        public bool IsUse()
         {
-            return "Convert To Lowercase Rule";
+            return IsInUse;
         }
 
-        public List<string> Rename(List<string> originals)
+        public List<string> Rename(List<string> originals, int type)
         {
             List<string> results = new List<string>();
 
             foreach (var original in originals)
             {
                 string nonex = "";
+                string ex = "";
 
                 var tokens = original.Split(".");
 
                 nonex += tokens[0];
                 for (int i = 1; i < tokens.Length - 1; i++)
                     nonex += "." + tokens[i];
+
+                if (type == 1) ex = "." + tokens[tokens.Length - 1];
+                if (type == 2) nonex = "." + tokens[tokens.Length - 1];
 
                 string temp = nonex;
 
@@ -59,6 +73,7 @@ namespace ConvertToLowercaseRule
                     else
                         result += temp[i];
                 }
+                result = $"{result}{ex}";
 
                 results.Add(result);
             }

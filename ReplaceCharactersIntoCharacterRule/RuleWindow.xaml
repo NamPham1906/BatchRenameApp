@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="ReplaceCharactersRule.RuleWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReplaceCharactersRule"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="150"
+             Background="White"
+             Loaded="UserControl_Loaded">
+    <StackPanel Margin="10">
+        <Label FontWeight="Bold">Replace:</Label>
+        <TextBox x:Name="needleInput" Text="{Binding Needle}" TextChanged="needleInput_TextChanged"/>
+        <Label FontWeight="Bold">Into:</Label>
+        <TextBox x:Name="replacerInput" Text="{Binding Replacer}" TextChanged="replacerInput_TextChanged"/>
+    </StackPanel>
+</UserControl>

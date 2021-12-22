@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="AddCounter.AddCounterWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AddCounter"
+             mc:Ignorable="d" 
+             d:DesignHeight="170" d:DesignWidth="400" Loaded="UserControl_Loaded"
+             Background="White">
+    <StackPanel Margin="10" >
+        <Label FontWeight="Bold">Enter starting number</Label>
+        <TextBox  x:Name="startInput" TextChanged="startInput_TextChange" Text="{Binding Start}"></TextBox>
+        <Label FontWeight="Bold">Enter step</Label>
+        <TextBox  x:Name="stepInput" TextChanged="stepInputt_TextChange" Text="{Binding Step}"></TextBox>
+        <Label FontWeight="Bold">Enter number of digits</Label>
+        <TextBox  x:Name="digitsInput" TextChanged="digitsInput_TextChange" Text="{Binding Digits}"></TextBox>
+    </StackPanel>
+</UserControl>
