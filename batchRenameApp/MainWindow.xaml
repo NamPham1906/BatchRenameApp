@@ -5,194 +5,295 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:batchRenameApp"
         mc:Ignorable="d"
-        Title="MyFS" Loaded="Window_Loaded" Height="500" Width="865">
-    <Grid>
-        <StackPanel Orientation ="Vertical" Margin="10px">
-            <StackPanel Orientation ="Horizontal">
+        Title="MyFS" Height="590" Width="900"  Loaded="Window_Loaded">
+    <StackPanel Orientation ="Vertical" Margin="10px">
+        <StackPanel Orientation ="Horizontal">
 
+            <Button  Click="StartBatching_Click" Width="100" Margin="5px">
+                <StackPanel Orientation ="Vertical" Margin="5px">
 
-                <Button  Click="AddFile_Click" Width="100" Margin="5px">
-                    <StackPanel Orientation ="Vertical" Margin="5px">
-                       
-                        <TextBlock Text="Add new file" FontSize ="10"></TextBlock>
-                    </StackPanel>
-                </Button>
+                    <TextBlock Text="Start Batching" FontSize ="10"></TextBlock>
+                </StackPanel>
+            </Button>
 
-                <Button  Click="AddFolder_Click" Width="100" Margin="5px">
-                    <StackPanel Orientation ="Vertical" Margin="5px">
-                        
-                        <TextBlock Text="Add new folder" FontSize ="10"></TextBlock>
-                    </StackPanel>
-                </Button>
+            <Button  Click="ExportVolume_Click" Width="100" Margin="5px">
+                <StackPanel Orientation ="Vertical" Margin="5px">
 
-                <Button  Click="SaveVolume_Click" Width="100" Margin="5px">
-                    <StackPanel Orientation ="Vertical" Margin="5px">
-                        
-                        <TextBlock Text="Save volume" FontSize ="10"></TextBlock>
-                    </StackPanel>
-                </Button>
+                    <TextBlock Text="Export volume" FontSize ="10"></TextBlock>
+                </StackPanel>
+            </Button>
 
-                <Button  Click="ExportVolume_Click" Width="100" Margin="5px">
-                    <StackPanel Orientation ="Vertical" Margin="5px">
-                       
-                        <TextBlock Text="Export volume" FontSize ="10"></TextBlock>
-                    </StackPanel>
-                </Button>
+            <Button  Click="ChangePasswordVolume_Click" Width="100" Margin="5px">
+                <StackPanel Orientation ="Vertical" Margin="5px">
 
-                <Button  Click="ChangePasswordVolume_Click" Width="100" Margin="5px">
-                    <StackPanel Orientation ="Vertical" Margin="5px">
-                       
-                        <TextBlock Text="Change" FontSize ="10" TextAlignment="Center" ></TextBlock>
-                        <TextBlock Text="volume password" FontSize ="10" TextAlignment="Center" ></TextBlock>
-                    </StackPanel>
-                </Button>
+                    <TextBlock Text="Change" FontSize ="10" TextAlignment="Center" ></TextBlock>
+                    <TextBlock Text="volume password" FontSize ="10" TextAlignment="Center" ></TextBlock>
+                </StackPanel>
+            </Button>
 
-                <Button  Click="ChangeNameVolume_Click" Width="100" Margin="5px">
-                    <StackPanel Orientation ="Vertical" Margin="5px">
-                      
-                        <TextBlock Text="Change" FontSize ="10" TextAlignment="Center"></TextBlock>
-                        <TextBlock Text="volume name" FontSize ="10" TextAlignment="Center" ></TextBlock>
-                    </StackPanel>
-                </Button>
+            <Button  Click="ChangeNameVolume_Click" Width="100" Margin="5px">
+                <StackPanel Orientation ="Vertical" Margin="5px">
 
-                <Button  Click="CreateNewVolume_Click" Width="100" Margin="5px">
-                    <StackPanel Orientation ="Vertical" Margin="5px">
-                       
-                        <TextBlock Text="Create" FontSize ="10" TextAlignment="Center"></TextBlock>
-                        <TextBlock Text="new volume" FontSize ="10" TextAlignment="Center" ></TextBlock>
-                    </StackPanel>
-                </Button>
+                    <TextBlock Text="Change" FontSize ="10" TextAlignment="Center"></TextBlock>
+                    <TextBlock Text="volume name" FontSize ="10" TextAlignment="Center" ></TextBlock>
+                </StackPanel>
+            </Button>
 
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                
-                <TextBlock Name="VolumeName" Text="" FontSize ="20"></TextBlock>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" >
-                <ListView Name="RuleList" Width="250px" Height="300px" Margin="5px" SelectionChanged="previewItem_Click" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
-                    <ListView.Resources>
-                        <ContextMenu x:Key="itemContextMenu">
-                            <MenuItem Header="Lock" Click="lockMenu_Click" />
-                            <MenuItem Header="Unlock" Click="unlockMenu_Click" />
-                            <MenuItem Header="Change password" Click="changePasswordMenu_Click" />
-                            <MenuItem Header="Rename" Click="renameMenu_Click" />
-                            <MenuItem Header="Import new file" Click="importMenu_Click" />
-                            <MenuItem Header="Delete" Click="deleteMenu_Click" />
-                        </ContextMenu>
-                    </ListView.Resources>
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListViewItem}">
-                            <Setter Property="ContextMenu" Value="{StaticResource itemContextMenu}"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation ="Horizontal">
-                                <Image Source="{Binding FolderImage}" Height="50px"/>
-                                <StackPanel Orientation ="Horizontal" VerticalAlignment="Center" Margin="10px">
-                                    <TextBlock Text="{Binding FolderName}" Margin="5px" FontSize ="20"/>
-                                    <Image Source="{Binding IsLockImage}" Margin="5px" Height="20px"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                <TabControl>
-                    <TabItem Header="File">
-                        <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="550" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
-                            <StackPanel Orientation ="Horizontal"  Margin="10px">
-                                <TextBlock Text="" Margin="5px" FontSize ="10" Width="22px"/>
-                                <TextBlock Text="File Name" Margin="5px" FontSize ="10" Width="120px"/>
-                                <TextBlock Text="New file Name" Margin="5px" FontSize ="10" Width="120px"/>
-                                <TextBlock Text="File Extension" Margin="5px" FontSize ="10" Width="60px"/>
-                                <TextBlock Text="File Path" Margin="5px" FontSize ="10" Width="120px"/>
-                            </StackPanel>
-                            <ListView Name="FileList" Height="300px" Margin="5px"  AllowDrop="True"  Drop="DropFileList">
+            <Button  Click="CreateNewVolume_Click" Width="100" Margin="5px">
+                <StackPanel Orientation ="Vertical" Margin="5px">
 
-                                <ListView.Resources>
-                                    <ContextMenu x:Key="itemContextMenu">
-                                        <MenuItem Header="Lock" Click="lockFileMenu_Click" />
-                                        <MenuItem Header="Unlock" Click="unlockFileMenu_Click" />
-                                        <MenuItem Header="Change password" Click="changePasswordFileMenu_Click" />
-                                        <MenuItem Header="Rename" Click="renameFileMenu_Click" />
-                                        <MenuItem Header="Export this file" Click="exportFileMenu_Click" />
-                                        <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
-                                    </ContextMenu>
-                                </ListView.Resources>
-                                <ListView.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ListViewItem}">
-                                        <Setter Property="ContextMenu" Value="{StaticResource itemContextMenu}"/>
-                                    </Style>
-                                </ListView.ItemContainerStyle>
+                    <TextBlock Text="Create" FontSize ="10" TextAlignment="Center"></TextBlock>
+                    <TextBlock Text="new volume" FontSize ="10" TextAlignment="Center" ></TextBlock>
+                </StackPanel>
+            </Button>
 
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation ="Horizontal">
-                                            <Image Source="{Binding fileimage}" Height="30px"/>
-                                            <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
-                                                <TextBlock Text="{Binding filename}" Margin="5px" FontSize ="10" Width="120px" />
-                                                <TextBlock Text="{Binding newfilename}" Margin="5px" FontSize ="10" Width="120px"/>
-                                                <TextBlock Text="{Binding fileextension}" Margin="5px" FontSize ="10" Width="60px"/>
-                                                <TextBlock Text="{Binding filepath}" Margin="5px" FontSize ="10" Width="130px"/>
-                                            </StackPanel>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                        </StackPanel>
-                      
-                    </TabItem>
-                    <TabItem Header="Folder">
-                        <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="550" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
-                            <StackPanel Orientation ="Horizontal"  Margin="10px">
-                                <TextBlock Text="" Margin="5px" FontSize ="10" Width="22px"/>
-                                <TextBlock Text="Folder Name" Margin="5px" FontSize ="10" Width="120px"/>
-                                <TextBlock Text="New folder Name" Margin="5px" FontSize ="10" Width="120px"/>
-                                <TextBlock Text="Folder Path" Margin="5px" FontSize ="10" Width="120px"/>
-                            </StackPanel>
-                            <ListView Name="FolderList" Height="300px" Margin="5px"  AllowDrop="True" DragOver="DragOverFolderList" Drop="DropFolderList">
-
-                                <ListView.Resources>
-                                    <ContextMenu x:Key="itemContextMenu">
-                                        <MenuItem Header="Lock" Click="lockFileMenu_Click" />
-                                        <MenuItem Header="Unlock" Click="unlockFileMenu_Click" />
-                                        <MenuItem Header="Change password" Click="changePasswordFileMenu_Click" />
-                                        <MenuItem Header="Rename" Click="renameFileMenu_Click" />
-                                        <MenuItem Header="Export this file" Click="exportFileMenu_Click" />
-                                        <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
-                                    </ContextMenu>
-                                </ListView.Resources>
-                                <ListView.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ListViewItem}">
-                                        <Setter Property="ContextMenu" Value="{StaticResource itemContextMenu}"/>
-                                    </Style>
-                                </ListView.ItemContainerStyle>
-
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation ="Horizontal">
-                                            <Image Source="{Binding folderimage}" Height="30px"/>
-                                            <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
-                                                <TextBlock Text="{Binding foldername}" Margin="5px" FontSize ="10" Width="120px" />
-                                                <TextBlock Text="{Binding newfoldername}" Margin="5px" FontSize ="10" Width="120px"/>
-                                                <TextBlock Text="{Binding folderpath}" Margin="5px" FontSize ="10" Width="130px"/>
-                                            </StackPanel>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                        </StackPanel>
-                    </TabItem>
-                   
-                </TabControl>
-               
-                
-               
-                
-               
-
-              
-            </StackPanel>
         </StackPanel>
-    </Grid>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+
+            <TextBlock Name="VolumeName" Text="" FontSize ="20"></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" >
+            <ListView 
+                SelectionMode="Multiple"
+                SelectionChanged="RuleList_SelectionChanged" 
+                LayoutUpdated="RuleList_LayoutUpdated" 
+                Width="300" Height="430"  
+                 Margin="5,0,5,0"
+                Name="RuleList" 
+                VerticalAlignment="Center" 
+                 HorizontalAlignment="Left"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                ScrollViewer.VerticalScrollBarVisibility="Auto" >
+                <ListView.Resources>
+                    <!--Layout for Default Item-->
+                    <DataTemplate x:Key="DefaultItemTemplate">
+                        <StackPanel Name="RuleRow" Width="300" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                            <Grid Height="30" Width="300">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition  Width="*"/>
+                                    <ColumnDefinition  Width="5*"/>
+                                    <ColumnDefinition  Width="*"/>
+                                    <ColumnDefinition  Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Width="20" Height="20" VerticalAlignment="Center" Source="/images/add.png" HorizontalAlignment="Center"></Image>
+                                <TextBlock  Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" HorizontalAlignment="Center" >
+                                    <Run Text="{Binding Name}" FontSize="16"></Run>
+                                </TextBlock>
+                                <CheckBox Name="Use_Rule_Checkbox" CommandParameter="{Binding}" Unchecked="Use_Rule_Checkbox_Unchecked" Checked="Use_Rule_Checkbox_Checked" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  ></CheckBox>
+                                <Button Name="Remove_Rule_Button" CommandParameter="{Binding}" Click="Remove_Rule_Button_Click" Grid.Column="3" Width="20" Cursor="Hand" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center">
+                                    <Image Source="/images/clear.png"/>
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0">
+                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="Transparent"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </Grid>
+                            <UserControl Height="100" Name="ConfigurationUI" Content="{Binding ConfigurationUI}"></UserControl>
+                        </StackPanel>
+                    </DataTemplate>
+
+                    <!--Layout for Selected Item-->
+                    <DataTemplate x:Key="SelectedItemTemplate">
+                        <StackPanel Name="RuleRow" Width="300" HorizontalAlignment="Left" VerticalAlignment="Stretch">
+                            <Grid Height="30" Width="300">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition  Width="*"/>
+                                    <ColumnDefinition  Width="5*"/>
+                                    <ColumnDefinition  Width="*"/>
+                                    <ColumnDefinition  Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Width="20" Height="20" VerticalAlignment="Center" Source="/images/remove.png" HorizontalAlignment="Center"></Image>
+                                <TextBlock  Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" HorizontalAlignment="Center" >
+                                    <Run Text="{Binding Name}" FontSize="16"></Run>
+                                </TextBlock>
+                                <CheckBox Grid.Column="2" Width="20" Height="20" Name="Use_Rule_Checkbox" CommandParameter="{Binding}" Unchecked="Use_Rule_Checkbox_Unchecked" VerticalAlignment="Center" HorizontalAlignment="Center"  ></CheckBox>
+                                <Button Name="Remove_Rule_Button" CommandParameter="{Binding}" Click="Remove_Rule_Button_Click" Grid.Column="3" Width="20" Cursor="Hand" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center">
+                                    <Image Source="/images/clear.png"/>
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0">
+                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="Transparent"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </Grid>
+                            <UserControl Height="100" Name="ConfigurationUI" Content="{Binding ConfigurationUI}"></UserControl>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.Resources>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Padding" Value="0,0,0,0"/>
+                        <Setter Property="Margin" Value="0,0,0,0"/>
+                        <Setter Property="MinHeight" Value="30"/>
+                        <Setter Property="MaxHeight" Value="30"/>
+                        <Setter Property="VerticalContentAlignment" Value="Top"/>
+                        <Setter Property="ContentTemplate" Value="{StaticResource DefaultItemTemplate}" />
+                        <!--<Setter Property="Background">
+                            <Setter.Value>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF80CEF3" Offset="0.01"/>
+                                    <GradientStop Color="#FF5588A0" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>-->
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="ContentTemplate" Value="{StaticResource SelectedItemTemplate}" />
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="MinHeight" From="30" To="130" Duration="0:0:0.5" />
+                                            <DoubleAnimation Storyboard.TargetProperty="MaxHeight" From="30" To="130" Duration="0:0:0.5" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="MinHeight" From="130" To="30" Duration="0:0:0.5" />
+                                            <DoubleAnimation Storyboard.TargetProperty="MaxHeight" From="130" To="30" Duration="0:0:0.5" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+
+                </ListView.ItemContainerStyle>
+            </ListView>
+            <TabControl>
+                <TabItem Header="File">
+                    <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="550" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
+                        <StackPanel Orientation ="Horizontal">
+                            <Button  Click="AddFile_Click" Width="100" Margin="5px">
+                                <StackPanel Orientation ="Vertical" Margin="5px">
+
+                                    <TextBlock Text="Add new file" FontSize ="10"></TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Orientation ="Horizontal"  Margin="10px">
+                            <TextBlock Text="" Margin="5px" FontSize ="10" Width="22px"/>
+                            <TextBlock Text="File Name" Margin="5px" FontSize ="10" Width="120px"/>
+                            <TextBlock Text="New file Name" Margin="5px" FontSize ="10" Width="120px"/>
+                            <TextBlock Text="File Extension" Margin="5px" FontSize ="10" Width="60px"/>
+                            <TextBlock Text="File Path" Margin="5px" FontSize ="10" Width="120px"/>
+                        </StackPanel>
+                        <ListView Name="FileList" Height="300px" Margin="5px"  AllowDrop="True"  Drop="DropFileList">
+
+                            <ListView.Resources>
+                                <ContextMenu x:Key="itemContextMenu">
+                                    <MenuItem Header="Lock" Click="lockFileMenu_Click" />
+                                    <MenuItem Header="Unlock" Click="unlockFileMenu_Click" />
+                                    <MenuItem Header="Change password" Click="changePasswordFileMenu_Click" />
+                                    <MenuItem Header="Rename" Click="renameFileMenu_Click" />
+                                    <MenuItem Header="Export this file" Click="exportFileMenu_Click" />
+                                    <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
+                                </ContextMenu>
+                            </ListView.Resources>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="ContextMenu" Value="{StaticResource itemContextMenu}"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation ="Horizontal">
+                                        <Image Source="{Binding fileimage}" Height="30px"/>
+                                        <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding filename}" Margin="5px" FontSize ="10" Width="120px" />
+                                            <TextBlock Text="{Binding newfilename}" Margin="5px" FontSize ="10" Width="120px"/>
+                                            <TextBlock Text="{Binding fileextension}" Margin="5px" FontSize ="10" Width="60px"/>
+                                            <TextBlock Text="{Binding filepath}" Margin="5px" FontSize ="10" Width="130px"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+
+                </TabItem>
+                <TabItem Header="Folder">
+                    <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="550" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
+                        <StackPanel Orientation ="Horizontal">
+                            <Button  Click="AddFolder_Click" Width="100" Margin="5px">
+                                <StackPanel Orientation ="Vertical" Margin="5px">
+
+                                    <TextBlock Text="Add new folder" FontSize ="10"></TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Orientation ="Horizontal"  Margin="10px">
+                            <TextBlock Text="" Margin="5px" FontSize ="10" Width="22px"/>
+                            <TextBlock Text="Folder Name" Margin="5px" FontSize ="10" Width="120px"/>
+                            <TextBlock Text="New folder Name" Margin="5px" FontSize ="10" Width="120px"/>
+                            <TextBlock Text="Folder Path" Margin="5px" FontSize ="10" Width="120px"/>
+                        </StackPanel>
+                        <ListView Name="FolderList" Height="300px" Margin="5px"  AllowDrop="True" DragOver="DragOverFolderList" Drop="DropFolderList">
+
+                            <ListView.Resources>
+                                <ContextMenu x:Key="itemContextMenu">
+                                    <MenuItem Header="Lock" Click="lockFileMenu_Click" />
+                                    <MenuItem Header="Unlock" Click="unlockFileMenu_Click" />
+                                    <MenuItem Header="Change password" Click="changePasswordFileMenu_Click" />
+                                    <MenuItem Header="Rename" Click="renameFileMenu_Click" />
+                                    <MenuItem Header="Export this file" Click="exportFileMenu_Click" />
+                                    <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
+                                </ContextMenu>
+                            </ListView.Resources>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="ContextMenu" Value="{StaticResource itemContextMenu}"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation ="Horizontal">
+                                        <Image Source="{Binding folderimage}" Height="30px"/>
+                                        <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding foldername}" Margin="5px" FontSize ="10" Width="120px" />
+                                            <TextBlock Text="{Binding newfoldername}" Margin="5px" FontSize ="10" Width="120px"/>
+                                            <TextBlock Text="{Binding folderpath}" Margin="5px" FontSize ="10" Width="130px"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </TabItem>
+
+            </TabControl>
+        </StackPanel>
+    </StackPanel>
 </Window>
