@@ -7,15 +7,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\add.png" />
+    <None Remove="images\clear.png" />
     <None Remove="images\file.png" />
     <None Remove="images\folder.png" />
+    <None Remove="images\remove.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="images\add.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\clear.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="images\file.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\folder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\remove.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

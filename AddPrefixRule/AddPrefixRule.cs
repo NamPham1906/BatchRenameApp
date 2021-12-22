@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Windows.Controls;
 using Contract;
 
 namespace AddPrefixRule
@@ -50,6 +51,16 @@ namespace AddPrefixRule
             }
 
             return results;
+        }
+
+        public UserControl GetUI()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetName()
+        {
+            throw new NotImplementedException();
         }
     }
 }
