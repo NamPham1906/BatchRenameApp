@@ -13,7 +13,8 @@ namespace Contract
         List<string> Rename(List<string> originals);
         IRule Clone();
         UserControl GetUI();
-        bool IsUse();
         string GetName();
+
+        bool IsUse();
     }
 }
