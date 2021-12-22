@@ -8,14 +8,28 @@
         Title="KhoaWindow" Height="450" Width="800" Loaded="Window_Loaded">
     <StackPanel>
         <StackPanel Name="RuleStack">
-            <ListView LayoutUpdated="RuleList_LayoutUpdated" Width="200" Height="200"  Name="RuleList" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0">
+            <!--ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                HorizontalAlignment="Center"-->
+            <ListView 
+                SelectionChanged="RuleList_SelectionChanged" 
+                LayoutUpdated="RuleList_LayoutUpdated" 
+                Width="150" Height="200"  
+                Name="RuleList" 
+                VerticalAlignment="Center" 
+                Margin="0,5,0,0" HorizontalAlignment="Left"
+            >
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Width="150">
-                            <TextBlock>
+                        <StackPanel Width="150" >
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock>
                                 <Run Text="{Binding Name}"></Run> : <Run Text="{Binding Configuration}"></Run>
-                            </TextBlock>
+                                </TextBlock>
+                                <CheckBox></CheckBox>
+                            </StackPanel>
+                            <ContentControl Content="{Binding ConfigurationUI}"></ContentControl>
                         </StackPanel>
+                       
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.ItemsPanel>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Windows.Controls;
 using Contract;
 
 namespace ReplaceCharactersIntoCharacterRule
@@ -57,6 +58,16 @@ namespace ReplaceCharactersIntoCharacterRule
             }
 
             return results;
+        }
+
+        public UserControl GetUI()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetName()
+        {
+            throw new NotImplementedException();
         }
     }
 }
