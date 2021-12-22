@@ -72,8 +72,31 @@ namespace batchRenameApp
 
         private void RuleList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int index = RuleList.SelectedIndex;
-                        
+            
+        }
+
+
+        private void Remove_Rule_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button b = sender as Button;
+            IRule rule = b.CommandParameter as IRule;
+            userRules.Remove(rule);
+        }
+
+        private void Use_Rule_Checkbox_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox b = sender as CheckBox;
+            IRule rule = b.CommandParameter as IRule;
+            int index = userRules.IndexOf(rule);
+            //code here
+        }
+
+        private void Use_Rule_Checkbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            CheckBox b = sender as CheckBox;
+            IRule rule = b.CommandParameter as IRule;
+            int index = userRules.IndexOf(rule);
+            //code here
         }
     }
 }
