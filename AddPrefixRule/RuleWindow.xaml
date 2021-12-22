@@ -8,7 +8,9 @@
              mc:Ignorable="d"
              Background="White"
              Loaded="UserControl_Loaded"
-             HorizontalContentAlignment="Left"             HorizontalAlignment="Stretch"             VerticalAlignment="Stretch">
+             HorizontalContentAlignment="Stretch"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch">
     <StackPanel Margin="10">
         <TextBlock FontWeight="Bold" HorizontalAlignment="left">Add Prefix:</TextBlock>
         <TextBox x:Name="prefixInput" Text="{Binding Prefix}" TextChanged="prefixInput_TextChanged"
