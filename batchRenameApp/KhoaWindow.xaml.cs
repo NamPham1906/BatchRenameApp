@@ -72,7 +72,9 @@ namespace batchRenameApp
 
         private void RuleList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+            var listView = (ListView)sender;
+            if (e.AddedItems.Count > 0 && listView.SelectedItem != e.AddedItems[0])
+                listView.SelectedItem = e.AddedItems[0];
         }
 
 

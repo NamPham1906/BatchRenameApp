@@ -11,6 +11,7 @@
             <!--ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                 HorizontalAlignment="Center"-->
             <ListView 
+                SelectionMode="Multiple"
                 SelectionChanged="RuleList_SelectionChanged" 
                 LayoutUpdated="RuleList_LayoutUpdated" 
                 Width="300" Height="400"  
@@ -24,16 +25,6 @@
                     <!--Layout for Default Item-->
                     <DataTemplate x:Key="DefaultItemTemplate">
                         <StackPanel Name="RuleRow" Width="300" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-                            <!--<StackPanel Height="26" Orientation="Horizontal" VerticalAlignment="Center">
-                                <Image VerticalAlignment="Center" Source="/images/add.png" Width="20" Height="20" Margin="0,0,10,0"></Image>
-                                <TextBlock VerticalAlignment="Center" Height="20" >
-                                    <Run Text="{Binding Name}" FontSize="16"></Run> : <Run Text="{Binding Configuration}"></Run>
-                                </TextBlock>
-                                <CheckBox VerticalAlignment="Center" Width="20" Height="20" Margin="10,0,0,0"></CheckBox>
-                                <Button Cursor="Hand" Width="26" Height="26" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent">
-                                    <Image Source="/images/clear.png"/>
-                                </Button>
-                            </StackPanel>-->
                             <Grid Height="30" Width="300">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition  Width="*"/>
@@ -48,8 +39,26 @@
                                 <CheckBox Name="Use_Rule_Checkbox" CommandParameter="{Binding}" Unchecked="Use_Rule_Checkbox_Unchecked" Checked="Use_Rule_Checkbox_Checked" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  ></CheckBox>
                                 <Button Name="Remove_Rule_Button" CommandParameter="{Binding}" Click="Remove_Rule_Button_Click" Grid.Column="3" Width="20" Cursor="Hand" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center">
                                     <Image Source="/images/clear.png"/>
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0">
+                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="Transparent"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
                                 </Button>
-
                             </Grid>
                             <UserControl Height="100" Name="ConfigurationUI" Content="{Binding ConfigurationUI}"></UserControl>
                         </StackPanel>
@@ -72,6 +81,25 @@
                                 <CheckBox Grid.Column="2" Width="20" Height="20" Name="Use_Rule_Checkbox" CommandParameter="{Binding}" Unchecked="Use_Rule_Checkbox_Unchecked" VerticalAlignment="Center" HorizontalAlignment="Center"  ></CheckBox>
                                 <Button Name="Remove_Rule_Button" CommandParameter="{Binding}" Click="Remove_Rule_Button_Click" Grid.Column="3" Width="20" Cursor="Hand" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center">
                                     <Image Source="/images/clear.png"/>
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0">
+                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="Transparent"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
                                 </Button>
                             </Grid>
                             <UserControl Height="100" Name="ConfigurationUI" Content="{Binding ConfigurationUI}"></UserControl>
@@ -86,7 +114,14 @@
                         <Setter Property="MaxHeight" Value="30"/>
                         <Setter Property="VerticalContentAlignment" Value="Top"/>
                         <Setter Property="ContentTemplate" Value="{StaticResource DefaultItemTemplate}" />
-                        <Setter Property="Background" Value="white"/>
+                        <!--<Setter Property="Background">
+                            <Setter.Value>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF80CEF3" Offset="0.01"/>
+                                    <GradientStop Color="#FF5588A0" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>-->
                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter Property="ContentTemplate" Value="{StaticResource SelectedItemTemplate}" />
