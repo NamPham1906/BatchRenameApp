@@ -19,6 +19,7 @@ namespace batchRenameApp
 
         int totalRule = 0;
         List<IRule> allRules = new List<IRule>();
+        List<String> allRulesName = new List<String>();
         BindingList<IRule> userRules = new BindingList<IRule>();
         List<UserControl> userControls = new List<UserControl>();
         MyPikaFile testingFile = new MyPikaFile();
@@ -125,8 +126,9 @@ namespace batchRenameApp
                 allRules.Add(RuleFactory.GetInstance().Create(i));
                 userControls.Add(allRules[i].GetUI());
                 userRules.Add(allRules[i]);
+                allRulesName.Add(allRules[i].GetName());
             }
-
+            RuleComboBox.ItemsSource = allRulesName;
             RuleList.ItemsSource = userRules;
             this.DataContext = testingFile;
 
@@ -301,7 +303,7 @@ namespace batchRenameApp
                     //List<string> temp2 = userRules[i].Rename(listOfFolderName);
                     for (int j = 0; j < filelist.Count(); j++)
                     {
-                        filelist[i].newfilename = temp[j];
+                        filelist[j].newfilename = temp[j];
                     }
 
                    // for (int j = 0; j < folderlist.Count(); j++)
