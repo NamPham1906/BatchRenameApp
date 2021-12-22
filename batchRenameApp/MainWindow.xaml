@@ -44,7 +44,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Image Grid.Column="0" Width="20" Height="20" VerticalAlignment="Center" Source="/images/add.png" HorizontalAlignment="Center"/>
                                 <TextBlock  Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" HorizontalAlignment="Center" ><Run Text="{Binding Name}" FontSize="16"/></TextBlock>
-                                <CheckBox IsChecked="{Binding IsInUse}" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  />
+                                <CheckBox IsChecked="{Binding IsInUse}" Checked="Use_Rule_Checkbox_Checked" Unchecked="Use_Rule_Checkbox_Unchecked" CommandParameter="{Binding}" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  />
                                 <Button x:Name="Remove_Rule_Button" CommandParameter="{Binding}" Click="Remove_Rule_Button_Click" Grid.Column="3" Width="20" Cursor="Hand" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center">
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}">
@@ -84,7 +84,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Image Grid.Column="0" Width="20" Height="20" VerticalAlignment="Center" Source="/images/remove.png" HorizontalAlignment="Center"/>
                                 <TextBlock  Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" HorizontalAlignment="Center" ><Run Text="{Binding Name}" FontSize="16"/></TextBlock>
-                                <CheckBox IsChecked="{Binding IsInUse}" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  />
+                                <CheckBox IsChecked="{Binding IsInUse}"  Checked="Use_Rule_Checkbox_Checked" Unchecked="Use_Rule_Checkbox_Unchecked" CommandParameter="{Binding}" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  />
                                 <Button x:Name="Remove_Rule_Button" CommandParameter="{Binding}" Click="Remove_Rule_Button_Click" Grid.Column="3" Width="20" Cursor="Hand" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center">
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}">
@@ -154,7 +154,7 @@
                             <Button   Content="Add new file" Click="AddFile_Click" Width="120" Margin="5px">
                             </Button>
                         </StackPanel>
-                        <ListView x:Name="FileList" Height="360px" Margin="5px"  AllowDrop="True"  Drop="DropFileList">
+                        <ListView x:Name="FileList" Height="360px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFileList" Drop="DropFileList">
                          
                             
                             <ListView.ContextMenu>
