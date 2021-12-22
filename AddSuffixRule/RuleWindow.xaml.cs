@@ -13,24 +13,24 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AddPrefixRule
+namespace AddSuffixRule
 {
     /// <summary>
     /// Interaction logic for RuleWindow.xaml
     /// </summary>
     public partial class RuleWindow : UserControl
     {
-        AddPrefix rule;
+        AddSuffix rule;
 
-        public RuleWindow(AddPrefix rule)
+        public RuleWindow(AddSuffix rule)
         {
             this.rule = rule;
             InitializeComponent();
         }
 
-        private void prefixInput_TextChanged(object sender, TextChangedEventArgs e)
+        private void suffixInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            this.rule.Prefix = prefixInput.Text;
+            this.rule.Suffix = suffixInput.Text;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
