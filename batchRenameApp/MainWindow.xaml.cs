@@ -299,7 +299,7 @@ namespace batchRenameApp
             {
                 if (userRules[i].IsUse())
                 {
-                    List<string> temp = userRules[i].Rename(listOfFileName);
+                    List<string> temp = userRules[i].Rename(listOfFileName, 1);
                     //List<string> temp2 = userRules[i].Rename(listOfFolderName);
                     for (int j = 0; j < filelist.Count(); j++)
                     {
