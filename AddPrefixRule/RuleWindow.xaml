@@ -4,12 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AddPrefixRule"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
              mc:Ignorable="d"
              Background="White"
-             d:DesignHeight="100" d:DesignWidth="150"
-             Loaded="UserControl_Loaded">
+             Loaded="UserControl_Loaded"
+             HorizontalContentAlignment="Left"             HorizontalAlignment="Stretch"             VerticalAlignment="Stretch">
     <StackPanel Margin="10">
-        <Label FontWeight="Bold">Add Prefix:</Label>
-        <TextBox x:Name="prefixInput" Text="{Binding Prefix}" TextChanged="prefixInput_TextChanged"/>
+        <TextBlock FontWeight="Bold" HorizontalAlignment="left">Add Prefix:</TextBlock>
+        <TextBox x:Name="prefixInput" Text="{Binding Prefix}" TextChanged="prefixInput_TextChanged"
+                 HorizontalAlignment="Stretch"/>
     </StackPanel>
 </UserControl>

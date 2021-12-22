@@ -301,7 +301,7 @@ namespace batchRenameApp
                     //List<string> temp2 = userRules[i].Rename(listOfFolderName);
                     for (int j = 0; j < filelist.Count(); j++)
                     {
-                        filelist[i].newfilename = temp[j];
+                        filelist[j].newfilename = temp[j];
                     }
 
                    // for (int j = 0; j < folderlist.Count(); j++)
