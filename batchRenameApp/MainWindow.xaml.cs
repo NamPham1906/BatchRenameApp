@@ -280,14 +280,14 @@ namespace batchRenameApp
 
         private void RuleList_LayoutUpdated(object sender, EventArgs e)
         {
-            List<string> listOfFileName = new List<string>();
+           // List<string> listOfFileName = new List<string>();
            // List<string> listOfFolderName = new List<string>();
 
-            for (int i=0; i < filelist.Count(); i++)
-            {
-                listOfFileName.Add(filelist[i].filename);
-                filelist[i].newfilename = filelist[i].filename;
-            }
+          //  for (int i=0; i < filelist.Count(); i++)
+          //  {
+         //       listOfFileName.Add(filelist[i].filename);
+         //       filelist[i].newfilename = filelist[i].filename;
+         //   }
 
            // for (int i = 0; i < folderlist.Count(); i++)
            // {
@@ -295,24 +295,26 @@ namespace batchRenameApp
            //     folderlist[i].newfoldername = folderlist[i].foldername;
            // }
 
-            for (int i = 0; i < userRules.Count(); i++)
-            {
-                if (userRules[i].IsUse())
-                {
-                    List<string> temp = userRules[i].Rename(listOfFileName, 1);
+         //   for (int i = 0; i < userRules.Count(); i++)
+          //  {
+          //      if (userRules[i].IsUse())
+         //       {
+          //          List<string> temp = userRules[i].Rename(listOfFileName, 1);
                     //List<string> temp2 = userRules[i].Rename(listOfFolderName);
-                    for (int j = 0; j < filelist.Count(); j++)
-                    {
-                        filelist[j].newfilename = temp[j];
-                    }
+         //           for (int j = 0; j < filelist.Count(); j++)
+          //          {
+          //              filelist[j].newfilename = temp[j];
+          //              listOfFileName[j] = temp[j];
+          //          }
 
-                   // for (int j = 0; j < folderlist.Count(); j++)
-                  //  {
 
-                  //      folderlist[i].newfoldername = temp2[j];
-                  //  }
-                }
-            }
+                    // for (int j = 0; j < folderlist.Count(); j++)
+                    //  {
+
+                    //      folderlist[i].newfoldername = temp2[j];
+                    //  }
+         //       }
+         //   }
            
         }
 
@@ -337,6 +339,27 @@ namespace batchRenameApp
             IRule rule = b.CommandParameter as IRule;
             int index = userRules.IndexOf(rule);
             //code here
+
+            List<string> listOfFileName = new List<string>();
+
+            for (int i = 0; i < filelist.Count(); i++)
+            {
+                listOfFileName.Add(filelist[i].filename);
+                filelist[i].newfilename = filelist[i].filename;
+            }
+
+            for (int i = 0; i < userRules.Count(); i++)
+            {
+                if (userRules[i].IsUse())
+                {
+                    List<string> temp = userRules[i].Rename(listOfFileName, 1);
+                    for (int j = 0; j < filelist.Count(); j++)
+                    {
+                        filelist[j].newfilename = temp[j];
+                        listOfFileName[j] = temp[j];
+                    }
+                }
+            }
         }
 
         private void Use_Rule_Checkbox_Unchecked(object sender, RoutedEventArgs e)
@@ -345,6 +368,29 @@ namespace batchRenameApp
             IRule rule = b.CommandParameter as IRule;
             int index = userRules.IndexOf(rule);
             //code here
+
+            List<string> listOfFileName = new List<string>();
+
+            for (int i = 0; i < filelist.Count(); i++)
+            {
+                listOfFileName.Add(filelist[i].filename);
+                filelist[i].newfilename = filelist[i].filename;
+            }
+
+            for (int i = 0; i < userRules.Count(); i++)
+            {
+                if (userRules[i].IsUse())
+                {
+                    List<string> temp = userRules[i].Rename(listOfFileName, 1);
+                    for (int j = 0; j < filelist.Count(); j++)
+                    {
+                        filelist[j].newfilename = temp[j];
+                        listOfFileName[j] = temp[j];
+                    }
+                }
+            }
+
+            
         }
     }
 }
