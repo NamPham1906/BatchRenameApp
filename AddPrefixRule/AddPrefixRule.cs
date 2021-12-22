@@ -1,31 +1,38 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Controls;
 using Contract;
 
 namespace AddPrefixRule
 {
-    public class AddPrefixRule : IRule
+    public class AddPrefixRule : IRule, INotifyPropertyChanged
     {
+        public string Name { get; set; }
+        
+        public RuleWindow ConfigurationUI { get; set; }
+        
         public string Prefix { get; set; }
 
         public AddPrefixRule()
         {
+            this.Name = "Add Prefix";
             this.Prefix = "";
+            ConfigurationUI = new RuleWindow(this);
         }
 
         public AddPrefixRule(string prefix)
         {
+            this.Name = "Add Prefix";
             this.Prefix = prefix;
+            ConfigurationUI = new RuleWindow(this);
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public IRule Clone()
         {
             return new AddPrefixRule(Prefix);
-        }
-
-        public string Name()
-        {
-            return "Add Prefix Rule";
         }
 
         public List<string> Rename(List<string> originals)
@@ -50,6 +57,11 @@ namespace AddPrefixRule
             }
 
             return results;
+        }
+
+        public UserControl GetUI()
+        {
+            return ConfigurationUI;
         }
     }
 }
