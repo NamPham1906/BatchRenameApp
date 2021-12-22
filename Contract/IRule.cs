@@ -14,5 +14,7 @@ namespace Contract
         IRule Clone();
         UserControl GetUI();
         string GetName();
+
+        bool IsUse();
     }
 }

@@ -12,16 +12,20 @@ namespace RemoveExtraSpaceRule
         public int Configuration { get; set; }
         public string Name { get; set; }
         public RuleWindow ConfigurationUI { get; set; }
+
+        public bool IsInUse { get; set; }
         public RemoveExtraSpace()
         {
             Name = "Remove Extra Space";
             Configuration = 1;
+            IsInUse = false;
             ConfigurationUI = new RuleWindow(this);
         }
         public RemoveExtraSpace(int configuration = 1)
         {
             Name = "Remove Extra Space";
             Configuration = configuration;
+            IsInUse = false;
             ConfigurationUI = new RuleWindow(this);
         }
 
@@ -42,6 +46,10 @@ namespace RemoveExtraSpaceRule
             return Name;
         }
 
+        public bool IsUse()
+        {
+            return IsInUse;
+        }
         public List<string> Rename(List<string> originals)
         {
             List<string> result = new List<string>();

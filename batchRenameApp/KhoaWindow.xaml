@@ -36,7 +36,7 @@
                                 <TextBlock  Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" HorizontalAlignment="Center" >
                                     <Run Text="{Binding Name}" FontSize="16"></Run>
                                 </TextBlock>
-                                <CheckBox Name="Use_Rule_Checkbox" CommandParameter="{Binding}" Unchecked="Use_Rule_Checkbox_Unchecked" Checked="Use_Rule_Checkbox_Checked" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  ></CheckBox>
+                                <CheckBox IsChecked="{Binding IsInUse}" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  ></CheckBox>
                                 <Button Name="Remove_Rule_Button" CommandParameter="{Binding}" Click="Remove_Rule_Button_Click" Grid.Column="3" Width="20" Cursor="Hand" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center">
                                     <Image Source="/images/clear.png"/>
                                     <Button.Style>
@@ -78,7 +78,7 @@
                                 <TextBlock  Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" HorizontalAlignment="Center" >
                                     <Run Text="{Binding Name}" FontSize="16"></Run>
                                 </TextBlock>
-                                <CheckBox Grid.Column="2" Width="20" Height="20" Name="Use_Rule_Checkbox" CommandParameter="{Binding}" Unchecked="Use_Rule_Checkbox_Unchecked" VerticalAlignment="Center" HorizontalAlignment="Center"  ></CheckBox>
+                                <CheckBox IsChecked="{Binding IsInUse}" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  ></CheckBox>
                                 <Button Name="Remove_Rule_Button" CommandParameter="{Binding}" Click="Remove_Rule_Button_Click" Grid.Column="3" Width="20" Cursor="Hand" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center">
                                     <Image Source="/images/clear.png"/>
                                     <Button.Style>
@@ -114,14 +114,14 @@
                         <Setter Property="MaxHeight" Value="30"/>
                         <Setter Property="VerticalContentAlignment" Value="Top"/>
                         <Setter Property="ContentTemplate" Value="{StaticResource DefaultItemTemplate}" />
-                        <Setter Property="Background">
+                        <!--<Setter Property="Background">
                             <Setter.Value>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="#FFBDEAFF" Offset="0.01"/>
                                     <GradientStop Color="#FFBCDBEA" Offset="1"/>
                                 </LinearGradientBrush>
                             </Setter.Value>
-                        </Setter>
+                        </Setter>-->
                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter Property="ContentTemplate" Value="{StaticResource SelectedItemTemplate}" />
