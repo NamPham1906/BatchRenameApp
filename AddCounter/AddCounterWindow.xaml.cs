@@ -34,50 +34,44 @@ namespace AddCounter
 
         private void startInput_TextChange(object sender, TextChangedEventArgs e)
         {
-            Regex regex = new Regex(@"^\d+$");
-            if (startInput.Text == "")
-                this.rule.Start = 0;
-            else if (regex.IsMatch(startInput.Text))
+            if(startInput.Text!="")
             {
-                this.rule.Start = Int32.Parse(startInput.Text);
-            }
-            else
-            {
-                this.rule.Start = 0;
-                startInput.Text = "0";
+                this.rule.Start = int.Parse(startInput.Text);
             }
         }
 
         private void stepInputt_TextChange(object sender, TextChangedEventArgs e)
         {
-            if (stepInput.Text == "")
-                this.rule.Step = 0;
-            else
+            if (stepInput.Text != "")
             {
-                Regex regex = new Regex("^[0-9]+$");
-                if (regex.IsMatch(stepInput.Text))
-                    this.rule.Step = Int32.Parse(stepInput.Text);
-
-                else
-                    this.rule.Step = 0;
+                this.rule.Step = int.Parse(stepInput.Text);
             }
         }
 
         private void digitsInput_TextChange(object sender, TextChangedEventArgs e)
         {
-            if (digitsInput.Text == "")
-                this.rule.Digits = 0;
-            else
+            if (digitsInput.Text != "")
             {
-                Regex regex = new Regex("^[0-9]+$");
-                if(regex.IsMatch(digitsInput.Text))
-                {
-                    this.rule.Digits = Int32.Parse(digitsInput.Text);
-                }    
-                    
-                else
-                    this.rule.Digits = 0;
+                this.rule.Digits = int.Parse(digitsInput.Text);
             }
+        }
+
+        private void NumberValidationTextBox1(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void NumberValidationTextBox2(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void NumberValidationTextBox3(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }
