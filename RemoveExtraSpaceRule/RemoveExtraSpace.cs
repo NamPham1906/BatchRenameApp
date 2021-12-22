@@ -50,36 +50,63 @@ namespace RemoveExtraSpaceRule
         {
             return IsInUse;
         }
-        public List<string> Rename(List<string> originals)
+        public List<string> Rename(List<string> originals, int type)
         {
             List<string> result = new List<string>();
-            foreach(var str in originals)
+            switch (type)
             {
-                int index = str.LastIndexOf(".");
-                string[] tokens = str.Split(".");
-                string temp = "";
-                for (int i = 0; i < tokens.Length - 1; i++)
-                {
-                    temp += tokens[i] + ".";
-                }
-                temp = temp.Remove(temp.Length - 1);
-                switch (Configuration)
-                {
-                    case -1:
-                        temp = temp.TrimStart();
-                        break;
-                    case 0:
-                        temp = temp.TrimEnd();
-                        break;
-                    case 1:
-                        temp = temp.Trim();
-                        break;
-                }
-                result.Add(temp + "." + tokens[tokens.Length - 1]);
+                case 1:
+                    foreach (var str in originals)
+                    {
+                        string[] tokens = str.Split(".");
+                        string temp = "";
+                        for (int i = 0; i < tokens.Length - 1; i++)
+                        {
+                            temp += tokens[i] + ".";
+                        }
+                        if(temp.Length >= 1)
+                        {
+                            temp = temp.Remove(temp.Length - 1);
+                        }
+                        switch (Configuration)
+                        {
+                            case -1:
+                                temp = temp.TrimStart();
+                                break;
+                            case 0:
+                                temp = temp.TrimEnd();
+                                break;
+                            case 1:
+                                temp = temp.Trim();
+                                break;
+                        }
+                        result.Add(temp + "." + tokens[tokens.Length - 1]);
+                    }
+                    break;
+                case 2:
+                    foreach (var str in originals)
+                    {
+                       
+                        string temp = str;
+                        switch (Configuration)
+                        {
+                            case -1:
+                                temp = temp.TrimStart();
+                                break;
+                            case 0:
+                                temp = temp.TrimEnd();
+                                break;
+                            case 1:
+                                temp = temp.Trim();
+                                break;
+                        }
+                        result.Add(str);
+                    }
+                    break;
+                default:
+                    return originals;
             }
             return result;
         }
-
-       
     }
 }
