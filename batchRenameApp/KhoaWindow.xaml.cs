@@ -53,7 +53,6 @@ namespace batchRenameApp
                 userControls.Add(allRules[i].GetUI());
                 userRules.Add(allRules[i]);
             }
-            userRules.Add(RuleFactory.GetInstance().Create(0));
             RuleList.ItemsSource = userRules;
             this.DataContext = testingFile;
         }
