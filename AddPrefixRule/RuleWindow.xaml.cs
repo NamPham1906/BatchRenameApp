@@ -28,14 +28,14 @@ namespace AddPrefixRule
             InitializeComponent();
         }
 
-        private void prefixInput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            this.rule.Prefix = prefixInput.Text;
-        }
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.DataContext = rule;
+        }
+
+        private void prefixInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.rule.Prefix = prefixInput.Text;
         }
     }
 }

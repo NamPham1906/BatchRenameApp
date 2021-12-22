@@ -13,16 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AddSuffixRule
+namespace ConvertToPascalCaseRule
 {
     /// <summary>
     /// Interaction logic for RuleWindow.xaml
     /// </summary>
     public partial class RuleWindow : UserControl
     {
-        AddSuffix rule;
+        ConvertToPascalCase rule;
 
-        public RuleWindow(AddSuffix rule)
+        public RuleWindow(ConvertToPascalCase rule)
         {
             this.rule = rule;
             InitializeComponent();
@@ -31,11 +31,6 @@ namespace AddSuffixRule
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.DataContext = rule;
-        }
-
-        private void suffixInput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            this.rule.Suffix = suffixInput.Text;
         }
     }
 }

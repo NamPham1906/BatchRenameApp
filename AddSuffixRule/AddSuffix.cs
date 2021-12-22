@@ -39,7 +39,7 @@ namespace AddSuffixRule
             return new AddSuffix(Suffix);
         }
 
-        public List<string> Rename(List<string> originals)
+        public List<string> Rename(List<string> originals, int type)
         {
             List<string> results = new List<string>();
 
@@ -54,7 +54,8 @@ namespace AddSuffixRule
                 for (int i = 1; i < tokens.Length - 1; i++)
                     nonex += "." + tokens[i];
 
-                ex = "." + tokens[tokens.Length - 1];
+                if (type == 1) ex = "." + tokens[tokens.Length - 1];
+                if (type == 2) nonex = "." + tokens[tokens.Length - 1];
 
                 string result = "";
 

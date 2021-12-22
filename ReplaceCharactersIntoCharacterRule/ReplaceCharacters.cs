@@ -1,42 +1,43 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows.Controls;
 using Contract;
 
-namespace AddPrefixRule
+namespace ReplaceCharactersRule
 {
-    public class AddPrefix : IRule, INotifyPropertyChanged
+    public class ReplaceCharacters : IRule
     {
         public string Name { get; set; }
-        
-        public RuleWindow ConfigurationUI { get; set; }
 
-        public string Prefix { get; set; }
+        public RuleWindow ConfigurationUI { get; set; }
 
         public bool IsInUse { get; set; }
 
-        public AddPrefix()
+        public string Needle { get; set; }
+
+        public string Replacer { get; set; }
+
+        public ReplaceCharacters()
         {
-            this.Name = "Add Prefix";
-            this.Prefix = "";
-            ConfigurationUI = new RuleWindow(this);
-            IsInUse = false;
+            this.Needle = "";
+            this.Replacer = "";
+            this.Name = "Replace Characters";
+            this.IsInUse = false;
+            this.ConfigurationUI = new RuleWindow(this);
         }
 
-        public AddPrefix(string prefix)
+        public ReplaceCharacters(string needle, string replacer)
         {
-            this.Name = "Add Prefix";
-            this.Prefix = prefix;
-            ConfigurationUI = new RuleWindow(this);
-            IsInUse = false;
+            this.Needle = needle;
+            this.Replacer = replacer;
+            this.Name = "Replace Characters";
+            this.IsInUse = false;
+            this.ConfigurationUI = new RuleWindow(this);
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
+        
         public IRule Clone()
         {
-            return new AddPrefix(Prefix);
+            return new ReplaceCharacters(Needle, Replacer);
         }
 
         public List<string> Rename(List<string> originals, int type)
@@ -57,9 +58,11 @@ namespace AddPrefixRule
                 if (type == 1) ex = "." + tokens[tokens.Length - 1];
                 if (type == 2) nonex = "." + tokens[tokens.Length - 1];
 
-                string result = "";
+                string result = nonex;
 
-                result = $"{Prefix}{nonex}{ex}";
+                result = result.Replace(Needle, Replacer);
+                
+                result = $"{result}{ex}";
 
                 results.Add(result);
             }

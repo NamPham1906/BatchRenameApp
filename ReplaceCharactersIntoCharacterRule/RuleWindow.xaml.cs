@@ -13,16 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AddSuffixRule
+namespace ReplaceCharactersRule
 {
     /// <summary>
     /// Interaction logic for RuleWindow.xaml
     /// </summary>
     public partial class RuleWindow : UserControl
     {
-        AddSuffix rule;
+        ReplaceCharacters rule;
 
-        public RuleWindow(AddSuffix rule)
+        public RuleWindow(ReplaceCharacters rule)
         {
             this.rule = rule;
             InitializeComponent();
@@ -33,9 +33,14 @@ namespace AddSuffixRule
             this.DataContext = rule;
         }
 
-        private void suffixInput_TextChanged(object sender, TextChangedEventArgs e)
+        private void needleInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            this.rule.Suffix = suffixInput.Text;
+            this.rule.Needle = needleInput.Text;
+        }
+
+        private void replacerInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.rule.Replacer = replacerInput.Text;
         }
     }
 }
