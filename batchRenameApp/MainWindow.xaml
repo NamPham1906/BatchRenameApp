@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:batchRenameApp"
         mc:Ignorable="d"
-        Title="MyFS" Height="590" Width="900"  Loaded="Window_Loaded">
+        Title="MyFS" Height="590" Width="1200"  Loaded="Window_Loaded">
     <StackPanel Orientation ="Vertical" Margin="10px">
         <StackPanel Orientation ="Horizontal">
 
@@ -79,7 +79,7 @@
                                 <TextBlock  Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" HorizontalAlignment="Center" >
                                     <Run Text="{Binding Name}" FontSize="16"></Run>
                                 </TextBlock>
-                                <CheckBox Name="Use_Rule_Checkbox" CommandParameter="{Binding}" Unchecked="Use_Rule_Checkbox_Unchecked" Checked="Use_Rule_Checkbox_Checked" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  ></CheckBox>
+                                <CheckBox IsChecked="{Binding IsInUse}" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  ></CheckBox>
                                 <Button Name="Remove_Rule_Button" CommandParameter="{Binding}" Click="Remove_Rule_Button_Click" Grid.Column="3" Width="20" Cursor="Hand" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center">
                                     <Image Source="/images/clear.png"/>
                                     <Button.Style>
@@ -121,7 +121,7 @@
                                 <TextBlock  Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" HorizontalAlignment="Center" >
                                     <Run Text="{Binding Name}" FontSize="16"></Run>
                                 </TextBlock>
-                                <CheckBox Grid.Column="2" Width="20" Height="20" Name="Use_Rule_Checkbox" CommandParameter="{Binding}" Unchecked="Use_Rule_Checkbox_Unchecked" VerticalAlignment="Center" HorizontalAlignment="Center"  ></CheckBox>
+                                <CheckBox IsChecked="{Binding IsInUse}" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  ></CheckBox>
                                 <Button Name="Remove_Rule_Button" CommandParameter="{Binding}" Click="Remove_Rule_Button_Click" Grid.Column="3" Width="20" Cursor="Hand" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center">
                                     <Image Source="/images/clear.png"/>
                                     <Button.Style>
@@ -192,7 +192,7 @@
             </ListView>
             <TabControl>
                 <TabItem Header="File">
-                    <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="550" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
+                    <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="850" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
                         <StackPanel Orientation ="Horizontal">
                             <Button  Click="AddFile_Click" Width="100" Margin="5px">
                                 <StackPanel Orientation ="Vertical" Margin="5px">
@@ -203,10 +203,10 @@
                         </StackPanel>
                         <StackPanel Orientation ="Horizontal"  Margin="10px">
                             <TextBlock Text="" Margin="5px" FontSize ="10" Width="22px"/>
-                            <TextBlock Text="File Name" Margin="5px" FontSize ="10" Width="120px"/>
-                            <TextBlock Text="New file Name" Margin="5px" FontSize ="10" Width="120px"/>
+                            <TextBlock Text="File Name" Margin="5px" FontSize ="10" Width="220px"/>
+                            <TextBlock Text="New file Name" Margin="5px" FontSize ="10" Width="220px"/>
                             <TextBlock Text="File Extension" Margin="5px" FontSize ="10" Width="60px"/>
-                            <TextBlock Text="File Path" Margin="5px" FontSize ="10" Width="120px"/>
+                            <TextBlock Text="File Path" Margin="5px" FontSize ="10" Width="250px"/>
                         </StackPanel>
                         <ListView Name="FileList" Height="300px" Margin="5px"  AllowDrop="True"  Drop="DropFileList">
 
@@ -231,10 +231,10 @@
                                     <StackPanel Orientation ="Horizontal">
                                         <Image Source="{Binding fileimage}" Height="30px"/>
                                         <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
-                                            <TextBlock Text="{Binding filename}" Margin="5px" FontSize ="10" Width="120px" />
-                                            <TextBlock Text="{Binding newfilename}" Margin="5px" FontSize ="10" Width="120px"/>
+                                            <TextBlock Text="{Binding filename}" Margin="5px" FontSize ="10" Width="220px" />
+                                            <TextBlock Text="{Binding newfilename}" Margin="5px" FontSize ="10" Width="220px"/>
                                             <TextBlock Text="{Binding fileextension}" Margin="5px" FontSize ="10" Width="60px"/>
-                                            <TextBlock Text="{Binding filepath}" Margin="5px" FontSize ="10" Width="130px"/>
+                                            <TextBlock Text="{Binding filepath}" Margin="5px" FontSize ="10" Width="250px"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </DataTemplate>
@@ -244,7 +244,7 @@
 
                 </TabItem>
                 <TabItem Header="Folder">
-                    <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="550" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
+                    <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="850" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
                         <StackPanel Orientation ="Horizontal">
                             <Button  Click="AddFolder_Click" Width="100" Margin="5px">
                                 <StackPanel Orientation ="Vertical" Margin="5px">
@@ -255,9 +255,9 @@
                         </StackPanel>
                         <StackPanel Orientation ="Horizontal"  Margin="10px">
                             <TextBlock Text="" Margin="5px" FontSize ="10" Width="22px"/>
-                            <TextBlock Text="Folder Name" Margin="5px" FontSize ="10" Width="120px"/>
-                            <TextBlock Text="New folder Name" Margin="5px" FontSize ="10" Width="120px"/>
-                            <TextBlock Text="Folder Path" Margin="5px" FontSize ="10" Width="120px"/>
+                            <TextBlock Text="Folder Name" Margin="5px" FontSize ="10" Width="220px"/>
+                            <TextBlock Text="New folder Name" Margin="5px" FontSize ="10" Width="220px"/>
+                            <TextBlock Text="Folder Path" Margin="5px" FontSize ="10" Width="310px"/>
                         </StackPanel>
                         <ListView Name="FolderList" Height="300px" Margin="5px"  AllowDrop="True" DragOver="DragOverFolderList" Drop="DropFolderList">
 
@@ -282,9 +282,9 @@
                                     <StackPanel Orientation ="Horizontal">
                                         <Image Source="{Binding folderimage}" Height="30px"/>
                                         <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
-                                            <TextBlock Text="{Binding foldername}" Margin="5px" FontSize ="10" Width="120px" />
-                                            <TextBlock Text="{Binding newfoldername}" Margin="5px" FontSize ="10" Width="120px"/>
-                                            <TextBlock Text="{Binding folderpath}" Margin="5px" FontSize ="10" Width="130px"/>
+                                            <TextBlock Text="{Binding foldername}" Margin="5px" FontSize ="10" Width="220px" />
+                                            <TextBlock Text="{Binding newfoldername}" Margin="5px" FontSize ="10" Width="220px"/>
+                                            <TextBlock Text="{Binding folderpath}" Margin="5px" FontSize ="10" Width="310px"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </DataTemplate>
