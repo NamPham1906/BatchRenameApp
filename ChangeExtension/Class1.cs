@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows.Controls;
 using Contract;
 
 namespace ChangeExtension
@@ -38,6 +39,16 @@ namespace ChangeExtension
             return new ChangeExtension(_extension);
         }
 
-        public string Name => "Change Extension";
+        public string Name() => "Change Extension";
+
+        public UserControl GetUI()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetName()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

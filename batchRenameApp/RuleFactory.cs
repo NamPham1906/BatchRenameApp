@@ -8,14 +8,15 @@ using System.Threading.Tasks;
 using Contract;
 namespace batchRenameApp
 {
-    class RuleFactory
+    public class RuleFactory
     {
-        private List<IRule> _prototypes = null;
+        private List<IRule> _prototypes = new List<IRule>();
+        private static RuleFactory instance = null;
         private RuleFactory()
         {
             string exePath = Assembly.GetExecutingAssembly().Location;
             string folder = Path.GetDirectoryName(exePath);
-            var fis = new DirectoryInfo(folder).GetFiles("*.dll");
+            var fis = new DirectoryInfo(folder+"\\DLL").GetFiles("*.dll");
 
             foreach (var f in fis)
             {
@@ -33,9 +34,23 @@ namespace batchRenameApp
             }
         }
 
+        static public RuleFactory GetInstance()
+        {
+           if(instance == null)
+            {
+                instance = new RuleFactory();
+            }
+            return instance;
+        }
+
         public IRule Create(int type)
         {
             return _prototypes[type].Clone();
+        }
+
+        public int RuleAmount()
+        {
+            return _prototypes.Count();
         }
     }
 }
