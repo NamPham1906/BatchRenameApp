@@ -5,30 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:batchRenameApp"
         mc:Ignorable="d"
-        Title="MyFS" Loaded="Window_Loaded" Height="500" Width="865">
+        Title="MyFS" Loaded="Window_Loaded" Height="560" Width="850">
     <Grid>
         <StackPanel Orientation ="Vertical" Margin="10px">
             <StackPanel Orientation ="Horizontal">
 
-
-                <Button  Click="AddFile_Click" Width="100" Margin="5px">
-                    <StackPanel Orientation ="Vertical" Margin="5px">
-                       
-                        <TextBlock Text="Add new file" FontSize ="10"></TextBlock>
-                    </StackPanel>
-                </Button>
-
-                <Button  Click="AddFolder_Click" Width="100" Margin="5px">
+                <Button  Click="StartBatching_Click" Width="100" Margin="5px">
                     <StackPanel Orientation ="Vertical" Margin="5px">
                         
-                        <TextBlock Text="Add new folder" FontSize ="10"></TextBlock>
-                    </StackPanel>
-                </Button>
-
-                <Button  Click="SaveVolume_Click" Width="100" Margin="5px">
-                    <StackPanel Orientation ="Vertical" Margin="5px">
-                        
-                        <TextBlock Text="Save volume" FontSize ="10"></TextBlock>
+                        <TextBlock Text="Start Batching" FontSize ="10"></TextBlock>
                     </StackPanel>
                 </Button>
 
@@ -69,37 +54,153 @@
                 <TextBlock Name="VolumeName" Text="" FontSize ="20"></TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal" >
-                <ListView Name="RuleList" Width="250px" Height="300px" Margin="5px" SelectionChanged="previewItem_Click" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
+                <ListView 
+                SelectionMode="Multiple"
+                SelectionChanged="RuleList_SelectionChanged" 
+                LayoutUpdated="RuleList_LayoutUpdated" 
+                Width="300" Height="400"  
+                Name="RuleList" 
+                VerticalAlignment="Center" 
+                Margin="0,5,0,0" HorizontalAlignment="Left"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                ScrollViewer.VerticalScrollBarVisibility="Auto" >
                     <ListView.Resources>
-                        <ContextMenu x:Key="itemContextMenu">
-                            <MenuItem Header="Lock" Click="lockMenu_Click" />
-                            <MenuItem Header="Unlock" Click="unlockMenu_Click" />
-                            <MenuItem Header="Change password" Click="changePasswordMenu_Click" />
-                            <MenuItem Header="Rename" Click="renameMenu_Click" />
-                            <MenuItem Header="Import new file" Click="importMenu_Click" />
-                            <MenuItem Header="Delete" Click="deleteMenu_Click" />
-                        </ContextMenu>
-                    </ListView.Resources>
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListViewItem}">
-                            <Setter Property="ContextMenu" Value="{StaticResource itemContextMenu}"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation ="Horizontal">
-                                <Image Source="{Binding FolderImage}" Height="50px"/>
-                                <StackPanel Orientation ="Horizontal" VerticalAlignment="Center" Margin="10px">
-                                    <TextBlock Text="{Binding FolderName}" Margin="5px" FontSize ="20"/>
-                                    <Image Source="{Binding IsLockImage}" Margin="5px" Height="20px"/>
-                                </StackPanel>
+                        <!--Layout for Default Item-->
+                        <DataTemplate x:Key="DefaultItemTemplate">
+                            <StackPanel Name="RuleRow" Width="300" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                                <Grid Height="30" Width="300">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition  Width="*"/>
+                                        <ColumnDefinition  Width="5*"/>
+                                        <ColumnDefinition  Width="*"/>
+                                        <ColumnDefinition  Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Width="20" Height="20" VerticalAlignment="Center" Source="/images/add.png" HorizontalAlignment="Center"></Image>
+                                    <TextBlock  Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" HorizontalAlignment="Center" >
+                                    <Run Text="{Binding Name}" FontSize="16"></Run>
+                                    </TextBlock>
+                                    <CheckBox Name="Use_Rule_Checkbox" CommandParameter="{Binding}" Unchecked="Use_Rule_Checkbox_Unchecked" Checked="Use_Rule_Checkbox_Checked" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  ></CheckBox>
+                                    <Button Name="Remove_Rule_Button" CommandParameter="{Binding}" Click="Remove_Rule_Button_Click" Grid.Column="3" Width="20" Cursor="Hand" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center">
+                                        <Image Source="/images/clear.png"/>
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type Button}">
+                                                            <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0">
+                                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="Transparent"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </Grid>
+                                <UserControl Height="100" Name="ConfigurationUI" Content="{Binding ConfigurationUI}"></UserControl>
                             </StackPanel>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
+
+                        <!--Layout for Selected Item-->
+                        <DataTemplate x:Key="SelectedItemTemplate">
+                            <StackPanel Name="RuleRow" Width="300" HorizontalAlignment="Left" VerticalAlignment="Stretch">
+                                <Grid Height="30" Width="300">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition  Width="*"/>
+                                        <ColumnDefinition  Width="5*"/>
+                                        <ColumnDefinition  Width="*"/>
+                                        <ColumnDefinition  Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Width="20" Height="20" VerticalAlignment="Center" Source="/images/remove.png" HorizontalAlignment="Center"></Image>
+                                    <TextBlock  Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" HorizontalAlignment="Center" >
+                                    <Run Text="{Binding Name}" FontSize="16"></Run>
+                                    </TextBlock>
+                                    <CheckBox Grid.Column="2" Width="20" Height="20" Name="Use_Rule_Checkbox" CommandParameter="{Binding}" Unchecked="Use_Rule_Checkbox_Unchecked" VerticalAlignment="Center" HorizontalAlignment="Center"  ></CheckBox>
+                                    <Button Name="Remove_Rule_Button" CommandParameter="{Binding}" Click="Remove_Rule_Button_Click" Grid.Column="3" Width="20" Cursor="Hand" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center">
+                                        <Image Source="/images/clear.png"/>
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type Button}">
+                                                            <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0">
+                                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="Transparent"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </Grid>
+                                <UserControl Height="100" Name="ConfigurationUI" Content="{Binding ConfigurationUI}"></UserControl>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.Resources>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Padding" Value="0,0,0,0"/>
+                            <Setter Property="Margin" Value="0,0,0,0"/>
+                            <Setter Property="MinHeight" Value="30"/>
+                            <Setter Property="MaxHeight" Value="30"/>
+                            <Setter Property="VerticalContentAlignment" Value="Top"/>
+                            <Setter Property="ContentTemplate" Value="{StaticResource DefaultItemTemplate}" />
+                            <!--<Setter Property="Background">
+                            <Setter.Value>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF80CEF3" Offset="0.01"/>
+                                    <GradientStop Color="#FF5588A0" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>-->
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="ContentTemplate" Value="{StaticResource SelectedItemTemplate}" />
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="MinHeight" From="30" To="130" Duration="0:0:0.5" />
+                                                <DoubleAnimation Storyboard.TargetProperty="MaxHeight" From="30" To="130" Duration="0:0:0.5" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="MinHeight" From="130" To="30" Duration="0:0:0.5" />
+                                                <DoubleAnimation Storyboard.TargetProperty="MaxHeight" From="130" To="30" Duration="0:0:0.5" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+
+                    </ListView.ItemContainerStyle>
                 </ListView>
                 <TabControl>
                     <TabItem Header="File">
                         <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="550" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
+                            <StackPanel Orientation ="Horizontal">
+                                <Button  Click="AddFile_Click" Width="100" Margin="5px">
+                                    <StackPanel Orientation ="Vertical" Margin="5px">
+
+                                        <TextBlock Text="Add new file" FontSize ="10"></TextBlock>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
                             <StackPanel Orientation ="Horizontal"  Margin="10px">
                                 <TextBlock Text="" Margin="5px" FontSize ="10" Width="22px"/>
                                 <TextBlock Text="File Name" Margin="5px" FontSize ="10" Width="120px"/>
@@ -144,6 +245,14 @@
                     </TabItem>
                     <TabItem Header="Folder">
                         <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="550" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
+                            <StackPanel Orientation ="Horizontal">
+                                <Button  Click="AddFolder_Click" Width="100" Margin="5px">
+                                    <StackPanel Orientation ="Vertical" Margin="5px">
+
+                                        <TextBlock Text="Add new folder" FontSize ="10"></TextBlock>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
                             <StackPanel Orientation ="Horizontal"  Margin="10px">
                                 <TextBlock Text="" Margin="5px" FontSize ="10" Width="22px"/>
                                 <TextBlock Text="Folder Name" Margin="5px" FontSize ="10" Width="120px"/>
