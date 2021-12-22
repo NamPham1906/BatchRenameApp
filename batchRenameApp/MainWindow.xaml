@@ -7,57 +7,21 @@
         mc:Ignorable="d"
         Title="MyFS" Height="590" Width="1200"  Loaded="Window_Loaded">
     <StackPanel Orientation ="Vertical" Margin="10px">
-        <StackPanel Orientation ="Horizontal">
-
-            <Button  Click="StartBatching_Click" Width="100" Margin="5px">
-                <StackPanel Orientation ="Vertical" Margin="5px">
-
-                    <TextBlock Text="Start Batching" FontSize ="10"></TextBlock>
-                </StackPanel>
+        <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
+            <Button Content="Start Batching" Click="StartBatching_Click" Width="100" Margin="5px">
             </Button>
-
-            <Button  Click="ExportVolume_Click" Width="100" Margin="5px">
-                <StackPanel Orientation ="Vertical" Margin="5px">
-
-                    <TextBlock Text="Export volume" FontSize ="10"></TextBlock>
-                </StackPanel>
-            </Button>
-
-            <Button  Click="ChangePasswordVolume_Click" Width="100" Margin="5px">
-                <StackPanel Orientation ="Vertical" Margin="5px">
-
-                    <TextBlock Text="Change" FontSize ="10" TextAlignment="Center" ></TextBlock>
-                    <TextBlock Text="volume password" FontSize ="10" TextAlignment="Center" ></TextBlock>
-                </StackPanel>
-            </Button>
-
-            <Button  Click="ChangeNameVolume_Click" Width="100" Margin="5px">
-                <StackPanel Orientation ="Vertical" Margin="5px">
-
-                    <TextBlock Text="Change" FontSize ="10" TextAlignment="Center"></TextBlock>
-                    <TextBlock Text="volume name" FontSize ="10" TextAlignment="Center" ></TextBlock>
-                </StackPanel>
-            </Button>
-
-            <Button  Click="CreateNewVolume_Click" Width="100" Margin="5px">
-                <StackPanel Orientation ="Vertical" Margin="5px">
-
-                    <TextBlock Text="Create" FontSize ="10" TextAlignment="Center"></TextBlock>
-                    <TextBlock Text="new volume" FontSize ="10" TextAlignment="Center" ></TextBlock>
-                </StackPanel>
-            </Button>
-
+            <hc:ComboBox Name="RuleComboBox" Width="300" Margin="5px" VerticalContentAlignment="Center"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 
-            <TextBlock Name="VolumeName" Text="" FontSize ="20"></TextBlock>
+            <TextBlock x:Name="VolumeName" Text="" FontSize ="20"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" >
             <ListView 
                 SelectionMode="Multiple"
                 SelectionChanged="RuleList_SelectionChanged" 
                 LayoutUpdated="RuleList_LayoutUpdated" 
-                Height="430"  
+                Height="435"  
                 Margin="5,0,5,0"
                 Name="RuleList" 
                 VerticalAlignment="Top" 
@@ -70,7 +34,7 @@
                     </Style>
                     <!--Layout for Default Item-->
                     <DataTemplate x:Key="DefaultItemTemplate">
-                        <StackPanel Name="RuleRow" Width="300" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                        <StackPanel x:Name="RuleRow" Width="300" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
                             <Grid Height="30" Width="300">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition  Width="*"/>
@@ -78,13 +42,10 @@
                                     <ColumnDefinition  Width="*"/>
                                     <ColumnDefinition  Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Width="20" Height="20" VerticalAlignment="Center" Source="/images/add.png" HorizontalAlignment="Center"></Image>
-                                <TextBlock  Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" HorizontalAlignment="Center" >
-                                    <Run Text="{Binding Name}" FontSize="16"></Run>
-                                </TextBlock>
-                                <CheckBox IsChecked="{Binding IsInUse}" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  ></CheckBox>
-                                <Button Name="Remove_Rule_Button" CommandParameter="{Binding}" Click="Remove_Rule_Button_Click" Grid.Column="3" Width="20" Cursor="Hand" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center">
-                                    <Image Source="/images/clear.png"/>
+                                <Image Grid.Column="0" Width="20" Height="20" VerticalAlignment="Center" Source="/images/add.png" HorizontalAlignment="Center"/>
+                                <TextBlock  Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" HorizontalAlignment="Center" ><Run Text="{Binding Name}" FontSize="16"/></TextBlock>
+                                <CheckBox IsChecked="{Binding IsInUse}" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  />
+                                <Button x:Name="Remove_Rule_Button" CommandParameter="{Binding}" Click="Remove_Rule_Button_Click" Grid.Column="3" Width="20" Cursor="Hand" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center">
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}">
                                             <Setter Property="Background" Value="Transparent"/>
@@ -104,6 +65,7 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Button.Style>
+                                    <Image Source="/images/clear.png"/>
                                 </Button>
                             </Grid>
                             <UserControl Height="140" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Name="ConfigurationUI" Content="{Binding ConfigurationUI}"></UserControl>
@@ -112,7 +74,7 @@
 
                     <!--Layout for Selected Item-->
                     <DataTemplate x:Key="SelectedItemTemplate">
-                        <StackPanel Name="RuleRow" Width="300" HorizontalAlignment="Left" VerticalAlignment="Stretch">
+                        <StackPanel x:Name="RuleRow" Width="300" HorizontalAlignment="Left" VerticalAlignment="Stretch">
                             <Grid Height="30" Width="300">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition  Width="*"/>
@@ -120,13 +82,10 @@
                                     <ColumnDefinition  Width="*"/>
                                     <ColumnDefinition  Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Width="20" Height="20" VerticalAlignment="Center" Source="/images/remove.png" HorizontalAlignment="Center"></Image>
-                                <TextBlock  Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" HorizontalAlignment="Center" >
-                                    <Run Text="{Binding Name}" FontSize="16"></Run>
-                                </TextBlock>
-                                <CheckBox IsChecked="{Binding IsInUse}" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  ></CheckBox>
-                                <Button Name="Remove_Rule_Button" CommandParameter="{Binding}" Click="Remove_Rule_Button_Click" Grid.Column="3" Width="20" Cursor="Hand" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center">
-                                    <Image Source="/images/clear.png"/>
+                                <Image Grid.Column="0" Width="20" Height="20" VerticalAlignment="Center" Source="/images/remove.png" HorizontalAlignment="Center"/>
+                                <TextBlock  Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" HorizontalAlignment="Center" ><Run Text="{Binding Name}" FontSize="16"/></TextBlock>
+                                <CheckBox IsChecked="{Binding IsInUse}" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  />
+                                <Button x:Name="Remove_Rule_Button" CommandParameter="{Binding}" Click="Remove_Rule_Button_Click" Grid.Column="3" Width="20" Cursor="Hand" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center">
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}">
                                             <Setter Property="Background" Value="Transparent"/>
@@ -146,6 +105,7 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Button.Style>
+                                    <Image Source="/images/clear.png"/>
                                 </Button>
                             </Grid>
                             <UserControl Height="140" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Name="ConfigurationUI" Content="{Binding ConfigurationUI}"></UserControl>
@@ -164,7 +124,6 @@
 
                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="ContentTemplate" Value="{StaticResource SelectedItemTemplate}" />
                                 <Trigger.EnterActions>
                                     <BeginStoryboard>
                                         <Storyboard>
@@ -181,6 +140,7 @@
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.ExitActions>
+                                <Setter Property="ContentTemplate" Value="{StaticResource SelectedItemTemplate}" />
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -189,26 +149,16 @@
             </ListView>
             <TabControl>
                 <TabItem Header="File">
-                    <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="850" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
+                    <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="850">
                         <StackPanel Orientation ="Horizontal">
-                            <Button  Click="AddFile_Click" Width="100" Margin="5px">
-                                <StackPanel Orientation ="Vertical" Margin="5px">
-
-                                    <TextBlock Text="Add new file" FontSize ="10"></TextBlock>
-                                </StackPanel>
+                            <Button   Content="Add new file" Click="AddFile_Click" Width="120" Margin="5px">
                             </Button>
                         </StackPanel>
-                        <StackPanel Orientation ="Horizontal"  Margin="10px">
-                            <TextBlock Text="" Margin="5px" FontSize ="10" Width="22px"/>
-                            <TextBlock Text="File Name" Margin="5px" FontSize ="10" Width="220px"/>
-                            <TextBlock Text="New file Name" Margin="5px" FontSize ="10" Width="220px"/>
-                            <TextBlock Text="File Extension" Margin="5px" FontSize ="10" Width="60px"/>
-                            <TextBlock Text="File Path" Margin="5px" FontSize ="10" Width="250px"/>
-                        </StackPanel>
-                        <ListView Name="FileList" Height="300px" Margin="5px"  AllowDrop="True"  Drop="DropFileList">
-
-                            <ListView.Resources>
-                                <ContextMenu x:Key="itemContextMenu">
+                        <ListView x:Name="FileList" Height="360px" Margin="5px"  AllowDrop="True"  Drop="DropFileList">
+                         
+                            
+                            <ListView.ContextMenu>
+                                <ContextMenu>
                                     <MenuItem Header="Lock" Click="lockFileMenu_Click" />
                                     <MenuItem Header="Unlock" Click="unlockFileMenu_Click" />
                                     <MenuItem Header="Change password" Click="changePasswordFileMenu_Click" />
@@ -216,26 +166,23 @@
                                     <MenuItem Header="Export this file" Click="exportFileMenu_Click" />
                                     <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
                                 </ContextMenu>
-                            </ListView.Resources>
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="{x:Type ListViewItem}">
-                                    <Setter Property="ContextMenu" Value="{StaticResource itemContextMenu}"/>
-                                </Style>
-                            </ListView.ItemContainerStyle>
+                            </ListView.ContextMenu>
 
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation ="Horizontal">
-                                        <Image Source="{Binding fileimage}" Height="30px"/>
-                                        <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
-                                            <TextBlock Text="{Binding filename}" Margin="5px" FontSize ="10" Width="220px" />
-                                            <TextBlock Text="{Binding newfilename}" Margin="5px" FontSize ="10" Width="220px"/>
-                                            <TextBlock Text="{Binding fileextension}" Margin="5px" FontSize ="10" Width="60px"/>
-                                            <TextBlock Text="{Binding filepath}" Margin="5px" FontSize ="10" Width="250px"/>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Image Source="{Binding fileimage}" Height="30px"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="200" Header="File Name"  DisplayMemberBinding="{Binding filename}"/>
+                                    <GridViewColumn Width="200" Header="New file name" DisplayMemberBinding="{Binding newfilename}"/>
+                                    <GridViewColumn Width="100" Header="File Extendsion" DisplayMemberBinding="{Binding fileextension}"/>
+                                    <GridViewColumn  Header="File Extendsion" DisplayMemberBinding="{Binding filepath}"/>
+                                </GridView>
+                            </ListView.View>
                         </ListView>
                     </StackPanel>
 
@@ -243,23 +190,15 @@
                 <TabItem Header="Folder">
                     <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="850" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
                         <StackPanel Orientation ="Horizontal">
-                            <Button  Click="AddFolder_Click" Width="100" Margin="5px">
-                                <StackPanel Orientation ="Vertical" Margin="5px">
-
-                                    <TextBlock Text="Add new folder" FontSize ="10"></TextBlock>
-                                </StackPanel>
+                            <Button  Content="Add new folder" Click="AddFolder_Click"  Width="120" Margin="5px">
                             </Button>
                         </StackPanel>
-                        <StackPanel Orientation ="Horizontal"  Margin="10px">
-                            <TextBlock Text="" Margin="5px" FontSize ="10" Width="22px"/>
-                            <TextBlock Text="Folder Name" Margin="5px" FontSize ="10" Width="220px"/>
-                            <TextBlock Text="New folder Name" Margin="5px" FontSize ="10" Width="220px"/>
-                            <TextBlock Text="Folder Path" Margin="5px" FontSize ="10" Width="310px"/>
-                        </StackPanel>
-                        <ListView Name="FolderList" Height="300px" Margin="5px"  AllowDrop="True" DragOver="DragOverFolderList" Drop="DropFolderList">
 
-                            <ListView.Resources>
-                                <ContextMenu x:Key="itemContextMenu">
+                        <ListView x:Name="FolderList" Height="360px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFolderList" Drop="DropFolderList">
+
+
+                            <ListView.ContextMenu>
+                                <ContextMenu>
                                     <MenuItem Header="Lock" Click="lockFileMenu_Click" />
                                     <MenuItem Header="Unlock" Click="unlockFileMenu_Click" />
                                     <MenuItem Header="Change password" Click="changePasswordFileMenu_Click" />
@@ -267,26 +206,24 @@
                                     <MenuItem Header="Export this file" Click="exportFileMenu_Click" />
                                     <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
                                 </ContextMenu>
-                            </ListView.Resources>
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="{x:Type ListViewItem}">
-                                    <Setter Property="ContextMenu" Value="{StaticResource itemContextMenu}"/>
-                                </Style>
-                            </ListView.ItemContainerStyle>
+                            </ListView.ContextMenu>
 
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation ="Horizontal">
-                                        <Image Source="{Binding folderimage}" Height="30px"/>
-                                        <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
-                                            <TextBlock Text="{Binding foldername}" Margin="5px" FontSize ="10" Width="220px" />
-                                            <TextBlock Text="{Binding newfoldername}" Margin="5px" FontSize ="10" Width="220px"/>
-                                            <TextBlock Text="{Binding folderpath}" Margin="5px" FontSize ="10" Width="310px"/>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Image Source="{Binding folderimage}" Height="30px"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="200" Header="File Name"  DisplayMemberBinding="{Binding foldername}"/>
+                                    <GridViewColumn Width="200" Header="New file name" DisplayMemberBinding="{Binding newfoldername}"/>
+                                    <GridViewColumn Width="400" Header="File Extendsion" DisplayMemberBinding="{Binding folderpath}"/>
+                                </GridView>
+                            </ListView.View>
                         </ListView>
+                      
                     </StackPanel>
                 </TabItem>
 
