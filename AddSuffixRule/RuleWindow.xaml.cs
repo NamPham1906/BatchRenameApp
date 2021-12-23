@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -36,6 +37,12 @@ namespace AddSuffixRule
         private void suffixInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             this.rule.Suffix = suffixInput.Text;
+        }
+
+        private void ValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@"[\/:*?""<>|]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }
