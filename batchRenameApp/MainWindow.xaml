@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:batchRenameApp"
         mc:Ignorable="d"
         Title="MyFS"  
-        Height="580" Width="1315"
+        Height="580" Width="1335"
         Loaded="Window_Loaded" Closed="Window_Closed">
     <Window.Resources>
         <local:StatusColorConverter x:Key="StatusColorConverter" />
@@ -161,7 +161,7 @@
             
             <TabControl>
                 <TabItem Header="File">
-                    <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="950">
+                    <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="970">
                         <StackPanel Orientation ="Horizontal">
                             <Button   Content="Add new file" Click="AddFile_Click" Width="120" Margin="5px">
                             </Button>
@@ -210,7 +210,7 @@
                                     <GridViewColumn Width="150" Header="New file name" DisplayMemberBinding="{Binding newfilename}"/>
                                     <GridViewColumn Width="110" Header="File Extendsion" DisplayMemberBinding="{Binding fileextension}"/>
                                     <GridViewColumn Width="280" Header="File Path" DisplayMemberBinding="{Binding filepath}"/>
-                                    <GridViewColumn Width="180" Header="Status">
+                                    <GridViewColumn Width="250" Header="Status">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock x:Name="StatusText" Text="{Binding status}" FontWeight="Bold" Foreground="{Binding status, Converter={StaticResource StatusColorConverter}}" />
@@ -225,7 +225,7 @@
 
                 </TabItem>
                 <TabItem Header="Folder">
-                    <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="950" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
+                    <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="970" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
                         <StackPanel Orientation ="Horizontal">
                             <Button  Content="Add new folder" Click="AddFolder_Click"  Width="120" Margin="5px">
                             </Button>
@@ -258,7 +258,13 @@
                                     <GridViewColumn Width="150" Header="Folder Name"  DisplayMemberBinding="{Binding foldername}"/>
                                     <GridViewColumn Width="150" Header="New folder name" DisplayMemberBinding="{Binding newfoldername}"/>
                                     <GridViewColumn Width="400" Header="Folder Path" DisplayMemberBinding="{Binding folderpath}"/>
-                                    <GridViewColumn Width="180" Header="Status" DisplayMemberBinding="{Binding status}"/>
+                                    <GridViewColumn Width="250" Header="Status">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock x:Name="StatusText" Text="{Binding status}" FontWeight="Bold" Foreground="{Binding status, Converter={StaticResource StatusColorConverter}}" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
                                 </GridView>
                             </ListView.View>
                             <!--<ListView.ItemContainerStyle>
