@@ -1,11 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 using System.Windows.Controls;
 using Contract;
 
 namespace AddSuffixRule
 {
+    public class AddSuffixData
+    {
+        public string Suffix { get; set; }
+        public string Name { get; set; }
+        public bool IsInUse { get; set; }
+    }
     public class AddSuffix : IRule, INotifyPropertyChanged
     {
         public string Name { get; set; }
@@ -34,6 +41,26 @@ namespace AddSuffixRule
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public string ToJson()
+        {
+            AddSuffixData data = new AddSuffixData();
+            data.Suffix = this.Suffix;
+            data.Name = this.Name;
+            data.IsInUse = this.IsInUse;
+            string json = JsonSerializer.Serialize(data);
+            return json;
+        }
+
+        public IRule Clone(string json)
+        {
+            AddSuffixData ruleData = (AddSuffixData)JsonSerializer.Deserialize(json, typeof(AddSuffixData));
+            AddSuffix rule = new AddSuffix();
+            rule.Name = ruleData.Name;
+            rule.Suffix = ruleData.Suffix;
+            rule.IsInUse = ruleData.IsInUse;
+
+            return rule;
+        }
         public IRule Clone()
         {
             return new AddSuffix(Suffix);
@@ -55,7 +82,7 @@ namespace AddSuffixRule
                     nonex += "." + tokens[i];
 
                 if (type == 1) ex = "." + tokens[tokens.Length - 1];
-                if (type == 2) nonex = "." + tokens[tokens.Length - 1];
+                if (type == 2 && tokens.Length > 1) nonex = "." + tokens[tokens.Length - 1];
 
                 string result = "";
 

@@ -79,6 +79,7 @@ namespace batchRenameApp
         String BatchingUnsuccessErrorStatus = "Error: Batching unsuccessfully";
         String FileDulicateErrorStatus = "Error: File duplicate";
         String FileNotExistErrorStatus = "Error: File not exist";
+        String FileNameNotChangeErrorStatus = "Error: File name not change";
 
         //How to use:
         //StoreRules(userRules, @"D:\JSON\path.json");
@@ -381,7 +382,10 @@ namespace batchRenameApp
                 if (!file.Exists)
                 {
                     filelist[i].status = FileNotExistErrorStatus;
-                    
+                } else if (filelist[i].filename.Equals(filelist[i].newfilename))
+                {
+                    filelist[i].status = FileNameNotChangeErrorStatus;
+
                 } else if (newfile.Exists)
                 {
                     filelist[i].status = FileDulicateErrorStatus;

@@ -2,10 +2,17 @@ using Contract;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 using System.Windows.Controls;
 
 namespace ChangeFileNameRule
 {
+    public class ChangeFileNameData
+    {
+        public string NewName { get; set; }
+        public string Name { get; set; }
+        public bool IsInUse { get; set; }
+    }
     public class ChangeFileName: IRule, INotifyPropertyChanged
     {
         public string NewName { get; set; }
@@ -67,6 +74,26 @@ namespace ChangeFileNameRule
 
         }
 
+        public string ToJson()
+        {
+            ChangeFileNameData data = new ChangeFileNameData();
+            data.NewName = this.NewName;
+            data.Name = this.Name;
+            data.IsInUse = this.IsInUse;
+            string json = JsonSerializer.Serialize(data);
+            return json;
+        }
+
+        public IRule Clone(string json)
+        {
+            ChangeFileNameData ruleData = (ChangeFileNameData)JsonSerializer.Deserialize(json, typeof(ChangeFileNameData));
+            ChangeFileName rule = new ChangeFileName();
+            rule.Name = ruleData.Name;
+            rule.NewName = ruleData.NewName;
+            rule.IsInUse = ruleData.IsInUse;
+
+            return rule;
+        }
         public IRule Clone()
         {
             return new ChangeFileName(NewName);

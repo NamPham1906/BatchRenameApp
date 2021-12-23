@@ -1,11 +1,21 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text.Json;
 using System.Windows.Controls;
 using Contract;
 
 namespace ReplaceCharactersRule
 {
-    public class ReplaceCharacters : IRule
+    public class ReplaceCharactersData
+    {
+        public string Name { get; set; }
+        public bool IsInUse { get; set; }
+        public string Needle { get; set; }
+        public string Replacer { get; set; }
+    }
+
+    public class ReplaceCharacters : IRule, INotifyPropertyChanged
     {
         public string Name { get; set; }
 
@@ -34,7 +44,9 @@ namespace ReplaceCharactersRule
             this.IsInUse = false;
             this.ConfigurationUI = new RuleWindow(this);
         }
-        
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public IRule Clone()
         {
             return new ReplaceCharacters(Needle, Replacer);
@@ -58,7 +70,7 @@ namespace ReplaceCharactersRule
                     nonex += "." + tokens[i];
 
                 if (type == 1) ex = "." + tokens[tokens.Length - 1];
-                if (type == 2) nonex = "." + tokens[tokens.Length - 1];
+                if (type == 2 && tokens.Length > 1) nonex = "." + tokens[tokens.Length - 1];
 
                 string result = nonex;
 
@@ -85,6 +97,29 @@ namespace ReplaceCharactersRule
         public bool IsUse()
         {
             return IsInUse;
+        }
+
+        public string ToJson()
+        {
+            ReplaceCharactersData data = new ReplaceCharactersData();
+            data.Needle = this.Needle;
+            data.Replacer = this.Replacer;
+            data.Name = this.Name;
+            data.IsInUse = this.IsInUse;
+            string json = JsonSerializer.Serialize(data);
+            return json;
+        }
+
+        public IRule Clone(string json)
+        {
+            ReplaceCharactersData ruleData = (ReplaceCharactersData)JsonSerializer.Deserialize(json, typeof(ReplaceCharactersData));
+            ReplaceCharacters rule = new ReplaceCharacters();
+            rule.Name = ruleData.Name;
+            rule.Needle = ruleData.Needle;
+            rule.Replacer = ruleData.Replacer;
+            rule.IsInUse = ruleData.IsInUse;
+
+            return rule;
         }
     }
 }
