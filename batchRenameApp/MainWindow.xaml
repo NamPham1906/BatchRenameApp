@@ -10,143 +10,149 @@
         <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
             <Button Content="Start Batching" Click="StartBatching_Click" Width="100" Margin="5px">
             </Button>
-            <hc:ComboBox Name="RuleComboBox" Width="300" Margin="5px" VerticalContentAlignment="Center"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-
-            <TextBlock x:Name="VolumeName" Text="" FontSize ="20"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" >
-            <ListView 
+           
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,0">
+                    <TextBlock VerticalAlignment="Center" Text="Add Rule: "/>
+                    <hc:ComboBox Name="RuleComboBox" Width="261" SelectionChanged="RuleComboBox_SelectionChanged" HorizontalAlignment="Stretch" Margin="5px" VerticalContentAlignment="Center"/>
+                </StackPanel>
+                <ListView 
                 SelectionMode="Multiple"
                 SelectionChanged="RuleList_SelectionChanged" 
                 LayoutUpdated="RuleList_LayoutUpdated" 
-                Height="435"  
+                Height="435"
+                Width="320"
                 Margin="5,0,5,0"
                 Name="RuleList" 
                 VerticalAlignment="Top" 
                 HorizontalAlignment="Left"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 ScrollViewer.VerticalScrollBarVisibility="Auto" >
-                <ListView.Resources>
-                    <Style TargetType="GridViewColumnHeader">
-                        <Setter Property="Visibility" Value="Collapsed" />
-                    </Style>
-                    <!--Layout for Default Item-->
-                    <DataTemplate x:Key="DefaultItemTemplate">
-                        <StackPanel x:Name="RuleRow" Width="300" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-                            <Grid Height="30" Width="300">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition  Width="*"/>
-                                    <ColumnDefinition  Width="5*"/>
-                                    <ColumnDefinition  Width="*"/>
-                                    <ColumnDefinition  Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Width="20" Height="20" VerticalAlignment="Center" Source="/images/add.png" HorizontalAlignment="Center"/>
-                                <TextBlock  Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" HorizontalAlignment="Center" ><Run Text="{Binding Name}" FontSize="16"/></TextBlock>
-                                <CheckBox IsChecked="{Binding IsInUse}" Checked="Use_Rule_Checkbox_Checked" Unchecked="Use_Rule_Checkbox_Unchecked" CommandParameter="{Binding}" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  />
-                                <Button x:Name="Remove_Rule_Button" CommandParameter="{Binding}" Click="Remove_Rule_Button_Click" Grid.Column="3" Width="20" Cursor="Hand" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center">
-                                    <Button.Style>
-                                        <Style TargetType="{x:Type Button}">
-                                            <Setter Property="Background" Value="Transparent"/>
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="{x:Type Button}">
-                                                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0">
-                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                        </Border>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="Transparent"/>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                    <Image Source="/images/clear.png"/>
-                                </Button>
-                            </Grid>
-                            <UserControl VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Name="ConfigurationUI" Content="{Binding ConfigurationUI}"></UserControl>
-                        </StackPanel>
-                    </DataTemplate>
+                    <ListView.Resources>
+                        <Style TargetType="GridViewColumnHeader">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </Style>
+                        <!--Layout for Default Item-->
+                        <DataTemplate x:Key="DefaultItemTemplate">
+                            <StackPanel x:Name="RuleRow" Width="300" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                                <Grid Height="30" Width="300">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition  Width="*"/>
+                                        <ColumnDefinition  Width="5*"/>
+                                        <ColumnDefinition  Width="*"/>
+                                        <ColumnDefinition  Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Width="20" Height="20" VerticalAlignment="Center" Source="/images/add.png" HorizontalAlignment="Center"/>
+                                    <TextBlock  Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" HorizontalAlignment="Center" ><Run Text="{Binding Name}" FontSize="16"/></TextBlock>
+                                    <CheckBox IsChecked="{Binding IsInUse}" Checked="Use_Rule_Checkbox_Checked" Unchecked="Use_Rule_Checkbox_Unchecked" CommandParameter="{Binding}" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  />
+                                    <Button x:Name="Remove_Rule_Button" CommandParameter="{Binding}" Click="Remove_Rule_Button_Click" Grid.Column="3" Width="20" Cursor="Hand" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center">
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type Button}">
+                                                            <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0">
+                                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="Transparent"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                        <Image Source="/images/clear.png"/>
+                                    </Button>
+                                </Grid>
+                                <UserControl VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Name="ConfigurationUI" Content="{Binding ConfigurationUI}"></UserControl>
+                            </StackPanel>
+                        </DataTemplate>
 
-                    <!--Layout for Selected Item-->
-                    <DataTemplate x:Key="SelectedItemTemplate">
-                        <StackPanel x:Name="RuleRow" Width="300" HorizontalAlignment="Left" VerticalAlignment="Stretch">
-                            <Grid Height="30" Width="300">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition  Width="*"/>
-                                    <ColumnDefinition  Width="5*"/>
-                                    <ColumnDefinition  Width="*"/>
-                                    <ColumnDefinition  Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Width="20" Height="20" VerticalAlignment="Center" Source="/images/remove.png" HorizontalAlignment="Center"/>
-                                <TextBlock  Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" HorizontalAlignment="Center" ><Run Text="{Binding Name}" FontSize="16"/></TextBlock>
-                                <CheckBox IsChecked="{Binding IsInUse}"  Checked="Use_Rule_Checkbox_Checked" Unchecked="Use_Rule_Checkbox_Unchecked" CommandParameter="{Binding}" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  />
-                                <Button x:Name="Remove_Rule_Button" CommandParameter="{Binding}" Click="Remove_Rule_Button_Click" Grid.Column="3" Width="20" Cursor="Hand" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center">
-                                    <Button.Style>
-                                        <Style TargetType="{x:Type Button}">
-                                            <Setter Property="Background" Value="Transparent"/>
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="{x:Type Button}">
-                                                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0">
-                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                        </Border>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="Transparent"/>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                    <Image Source="/images/clear.png"/>
-                                </Button>
-                            </Grid>
-                            <UserControl Height="210" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Name="ConfigurationUI" Content="{Binding ConfigurationUI}"></UserControl>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.Resources>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem">
-                        <Setter Property="Padding" Value="0,5,0,5"/>
-                        <Setter Property="Margin" Value="0,0,0,0"/>
-                        <Setter Property="MinHeight" Value="40"/>
-                        <Setter Property="MaxHeight" Value="40"/>
-                        <Setter Property="VerticalContentAlignment" Value="Top"/>
-                        <Setter Property="ContentTemplate" Value="{StaticResource DefaultItemTemplate}" />
-                        <Setter Property="Background" Value="White"/>
+                        <!--Layout for Selected Item-->
+                        <DataTemplate x:Key="SelectedItemTemplate">
+                            <StackPanel x:Name="RuleRow" Width="300" HorizontalAlignment="Left" VerticalAlignment="Stretch">
+                                <Grid Height="30" Width="300">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition  Width="*"/>
+                                        <ColumnDefinition  Width="5*"/>
+                                        <ColumnDefinition  Width="*"/>
+                                        <ColumnDefinition  Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Width="20" Height="20" VerticalAlignment="Center" Source="/images/remove.png" HorizontalAlignment="Center"/>
+                                    <TextBlock  Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" HorizontalAlignment="Center" ><Run Text="{Binding Name}" FontSize="16"/></TextBlock>
+                                    <CheckBox IsChecked="{Binding IsInUse}"  Checked="Use_Rule_Checkbox_Checked" Unchecked="Use_Rule_Checkbox_Unchecked" CommandParameter="{Binding}" Grid.Column="2" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"  />
+                                    <Button x:Name="Remove_Rule_Button" CommandParameter="{Binding}" Click="Remove_Rule_Button_Click" Grid.Column="3" Width="20" Cursor="Hand" Padding="3,3,3,3" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center">
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type Button}">
+                                                            <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0">
+                                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="Transparent"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                        <Image Source="/images/clear.png"/>
+                                    </Button>
+                                </Grid>
+                                <UserControl Height="210" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Name="ConfigurationUI" Content="{Binding ConfigurationUI}"></UserControl>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.Resources>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Padding" Value="0,5,0,5"/>
+                            <Setter Property="Margin" Value="0,0,0,0"/>
+                            <Setter Property="MinHeight" Value="40"/>
+                            <Setter Property="MaxHeight" Value="40"/>
+                            <Setter Property="VerticalContentAlignment" Value="Top"/>
+                            <Setter Property="ContentTemplate" Value="{StaticResource DefaultItemTemplate}" />
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="AllowDrop" Value="true"/>
+                            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListBoxItem_PreviewMouseLeftButtonDown"/>
+                            <EventSetter Event="Drop" Handler="ListBoxItem_Drop"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="MinHeight" From="40" To="240" Duration="0:0:0.5" />
+                                                <DoubleAnimation Storyboard.TargetProperty="MaxHeight" From="40" To="240" Duration="0:0:0.5" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="MinHeight" From="240" To="40" Duration="0:0:0.5" />
+                                                <DoubleAnimation Storyboard.TargetProperty="MaxHeight" From="240" To="40" Duration="0:0:0.5" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.ExitActions>
+                                    <Setter Property="ContentTemplate" Value="{StaticResource SelectedItemTemplate}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
 
-                        <Style.Triggers>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Trigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetProperty="MinHeight" From="40" To="240" Duration="0:0:0.5" />
-                                            <DoubleAnimation Storyboard.TargetProperty="MaxHeight" From="40" To="240" Duration="0:0:0.5" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.EnterActions>
-                                <Trigger.ExitActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetProperty="MinHeight" From="240" To="40" Duration="0:0:0.5" />
-                                            <DoubleAnimation Storyboard.TargetProperty="MaxHeight" From="240" To="40" Duration="0:0:0.5" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.ExitActions>
-                                <Setter Property="ContentTemplate" Value="{StaticResource SelectedItemTemplate}" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-
-                </ListView.ItemContainerStyle>
-            </ListView>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </StackPanel>
+            
             <TabControl>
                 <TabItem Header="File">
                     <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="850">
@@ -155,9 +161,9 @@
                             </Button>
                         </StackPanel>
                         <ListView x:Name="FileList" Height="360px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFileList" Drop="DropFileList">
-                         
-                            
-                            <ListView.ContextMenu>
+
+
+                            <!--<ListView.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="Lock" Click="lockFileMenu_Click" />
                                     <MenuItem Header="Unlock" Click="unlockFileMenu_Click" />
@@ -166,8 +172,25 @@
                                     <MenuItem Header="Export this file" Click="exportFileMenu_Click" />
                                     <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
                                 </ContextMenu>
-                            </ListView.ContextMenu>
-
+                            </ListView.ContextMenu>-->
+                            <!--<ListView.Resources>
+                                <ContextMenu x:Key="ItemContextMenu">
+                                    <MenuItem Header="Lock" Click="lockFileMenu_Click" />
+                                    <MenuItem Header="Unlock" Click="unlockFileMenu_Click" />
+                                    <MenuItem Header="Change password" Click="changePasswordFileMenu_Click" />
+                                    <MenuItem Header="Rename" Click="renameFileMenu_Click" />
+                                    <MenuItem Header="Export this file" Click="exportFileMenu_Click" />
+                                    <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
+                                </ContextMenu>
+                            </ListView.Resources>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}" >
+                                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                                    <Setter Property="Background" Value="White"/>
+                                    <Setter Property="Padding" Value="10"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>-->
+                           
                             <ListView.View>
                                 <GridView >
                                     <GridViewColumn>
@@ -183,6 +206,7 @@
                                     <GridViewColumn  Header="File Path" DisplayMemberBinding="{Binding filepath}"/>
                                 </GridView>
                             </ListView.View>
+                            
                         </ListView>
                     </StackPanel>
 
@@ -197,7 +221,7 @@
                         <ListView x:Name="FolderList" Height="360px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFolderList" Drop="DropFolderList">
 
 
-                            <ListView.ContextMenu>
+                            <!--<ListView.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="Lock" Click="lockFileMenu_Click" />
                                     <MenuItem Header="Unlock" Click="unlockFileMenu_Click" />
@@ -206,8 +230,9 @@
                                     <MenuItem Header="Export this file" Click="exportFileMenu_Click" />
                                     <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
                                 </ContextMenu>
-                            </ListView.ContextMenu>
-
+                            </ListView.ContextMenu>-->
+                          
+                           
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn>
@@ -222,6 +247,11 @@
                                     <GridViewColumn Width="400" Header="Folder Path" DisplayMemberBinding="{Binding folderpath}"/>
                                 </GridView>
                             </ListView.View>
+                            <!--<ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}" >
+                                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                                </Style>
+                            </ListView.ItemContainerStyle>-->
                         </ListView>
                       
                     </StackPanel>
