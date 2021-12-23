@@ -206,7 +206,13 @@
                                     <GridViewColumn Width="320" Header="File Path" DisplayMemberBinding="{Binding filepath}"/>
                                     <GridViewColumn Width="150" Header="Status" DisplayMemberBinding="{Binding status}" />
 
-                                 
+                                    <GridViewColumn Width="150" Header="Status">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock x:Name="StatusText" Text="{Binding status}" Foreground="Yellow" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
                                 </GridView>
                             </ListView.View>
                             
