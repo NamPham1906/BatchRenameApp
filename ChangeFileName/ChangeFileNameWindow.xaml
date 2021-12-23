@@ -8,7 +8,8 @@
              HorizontalContentAlignment="Stretch"
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch"
-             Background="White">
+             Background="White"
+             Loaded="UserControl_Loaded">
     <StackPanel Margin="10">
         <TextBlock FontWeight="Bold" HorizontalAlignment="left">Enter new file name</TextBlock>
         <TextBox HorizontalAlignment="Stretch" x:Name="nameInput" TextChanged="nameInput_TextChange" Text="{Binding NewName}"
