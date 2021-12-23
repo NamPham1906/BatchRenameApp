@@ -124,7 +124,7 @@
                             <Setter Property="ContentTemplate" Value="{StaticResource DefaultItemTemplate}" />
                             <Setter Property="Background" Value="White"/>
                             <Setter Property="AllowDrop" Value="true"/>
-                            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListBoxItem_PreviewMouseLeftButtonDown"/>
+                            <EventSetter Event="PreviewMouseRightButtonDown" Handler="ListBoxItem_PreviewMouseRightButtonDown"/>
                             <EventSetter Event="Drop" Handler="ListBoxItem_Drop"/>
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
