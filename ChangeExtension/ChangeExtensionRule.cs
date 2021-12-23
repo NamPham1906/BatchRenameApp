@@ -30,6 +30,7 @@ namespace ChangeExtension
             Name = "Change Extension";
             this.Extension = "";
             ConfigurationUI = new ChangeExtensionWindow(this);
+            IsInUse = false;
         }
 
         public ChangeExtensionRule(string extension)
@@ -37,6 +38,8 @@ namespace ChangeExtension
             Name = "Change Extension";
             this.Extension = extension;
             ConfigurationUI = new ChangeExtensionWindow(this);
+            IsInUse = false;
+
         }
 
         public List<string> Rename(List<string> originals, int type)
