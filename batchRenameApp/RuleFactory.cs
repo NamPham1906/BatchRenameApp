@@ -54,7 +54,7 @@ namespace batchRenameApp
             IRule result = null;
             for(int i = 0; i < totalRule; i++)
             {
-                if(_prototypes[i].Name == ruleContainer.Name)
+                if(_prototypes[i].GetName() == ruleContainer.Name)
                 {
                     result = _prototypes[i].Clone(ruleContainer.Data);
                     break;

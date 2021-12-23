@@ -159,7 +159,6 @@ namespace batchRenameApp
             for (int i = 0; i < totalRule; i++)
             {
                 allRules.Add(RuleFactory.GetInstance().Create(i));
-                allRules.Add(RuleFactory.GetInstance().Create(i));
                 allRulesName.Add(allRules[i].GetName());
             }
             RuleComboBox.ItemsSource = allRulesName;
