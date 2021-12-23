@@ -568,5 +568,15 @@ namespace batchRenameApp
 
             Process.Start("explorer.exe", folderlist[selectedfolder].folderpath);
         }
+
+        private void ClearAllFile_Click(object sender, RoutedEventArgs e)
+        {
+            filelist.Clear();
+        }
+
+        private void ClearAllFolder_Click(object sender, RoutedEventArgs e)
+        {
+            folderlist.Clear();
+        }
     }
 }

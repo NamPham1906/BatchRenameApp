@@ -169,8 +169,8 @@
                 <TabItem Header="File">
                     <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="970">
                         <StackPanel Orientation ="Horizontal">
-                            <Button   Content="Add new file" Click="AddFile_Click" Width="120" Margin="5px">
-                            </Button>
+                            <Button   Content="Add new file" Click="AddFile_Click" Width="120" Margin="5px"/>
+                            <Button   Content="Clear all" Click="ClearAllFile_Click" Width="120" Margin="5px"/>
                         </StackPanel>
                         <ListView x:Name="FileList" Height="400px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFileList" Drop="DropFileList">
                             <ListView.Resources>
@@ -218,8 +218,8 @@
                 <TabItem Header="Folder">
                     <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="970" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
                         <StackPanel Orientation ="Horizontal">
-                            <Button  Content="Add new folder" Click="AddFolder_Click"  Width="120" Margin="5px">
-                            </Button>
+                            <Button  Content="Add new folder" Click="AddFolder_Click"  Width="120" Margin="5px"/>
+                            <Button   Content="Clear all" Click="ClearAllFolder_Click" Width="120" Margin="5px"/>
                         </StackPanel>
 
                         <ListView x:Name="FolderList" Height="400px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFolderList" Drop="DropFolderList">
