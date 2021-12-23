@@ -22,7 +22,12 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,0">
                     <TextBlock VerticalAlignment="Center" Text="Add Rule: "/>
                     <hc:ComboBox Name="RuleComboBox" Width="163" SelectionChanged="RuleComboBox_SelectionChanged" HorizontalAlignment="Stretch" Margin="5px" VerticalContentAlignment="Center"/>
-                    <Button Cursor="Hand" Name="Clear_All_Rule_Btn" Click="Clear_All_Rule_Btn_Click" Margin="5px">                        <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">                            <Image Source="images/clear_all.png" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>                            <TextBlock Text="Clear All"/>                        </StackPanel>                    </Button>
+                    <Button Cursor="Hand" Name="Clear_All_Rule_Btn" Click="Clear_All_Rule_Btn_Click" Margin="5px">
+                        <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
+                            <Image Source="images/clear_all.png" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <TextBlock Text="Clear All"/>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
                 <ListView 
                 SelectionMode="Multiple"
@@ -168,40 +173,25 @@
                             </Button>
                         </StackPanel>
                         <ListView x:Name="FileList" Height="400px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFileList" Drop="DropFileList">
-
-
-                            <!--<ListView.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="Lock" Click="lockFileMenu_Click" />
-                                    <MenuItem Header="Unlock" Click="unlockFileMenu_Click" />
-                                    <MenuItem Header="Change password" Click="changePasswordFileMenu_Click" />
-                                    <MenuItem Header="Rename" Click="renameFileMenu_Click" />
-                                    <MenuItem Header="Export this file" Click="exportFileMenu_Click" />
-                                    <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
-                                </ContextMenu>
-                            </ListView.ContextMenu>-->
-                            <!--<ListView.Resources>
+                            <ListView.Resources>
                                 <ContextMenu x:Key="ItemContextMenu">
-                                    <MenuItem Header="Lock" Click="lockFileMenu_Click" />
-                                    <MenuItem Header="Unlock" Click="unlockFileMenu_Click" />
-                                    <MenuItem Header="Change password" Click="changePasswordFileMenu_Click" />
-                                    <MenuItem Header="Rename" Click="renameFileMenu_Click" />
-                                    <MenuItem Header="Export this file" Click="exportFileMenu_Click" />
+                                    <MenuItem Header="Open in file explorer" Click="openInFileExplorer_Click" />
                                     <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
                                 </ContextMenu>
                             </ListView.Resources>
                             <ListView.ItemContainerStyle>
-                                <Style TargetType="{x:Type ListViewItem}" >
+                                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ListViewItemBaseStyle}" >
                                     <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
-                                    <Setter Property="Background" Value="White"/>
-                                    <Setter Property="Padding" Value="10"/>
                                 </Style>
-                            </ListView.ItemContainerStyle>-->
-                           
+                            </ListView.ItemContainerStyle>
+
                             <ListView.View>
-                                <GridView >
+                               
+                                <GridView>
+                                  
                                     <GridViewColumn>
-                                        <GridViewColumn.CellTemplate>
+                                       
+                                          <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Image Source="{Binding fileimage}" Height="30px"/>
                                             </DataTemplate>
@@ -234,19 +224,19 @@
 
                         <ListView x:Name="FolderList" Height="400px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFolderList" Drop="DropFolderList">
 
-
-                            <!--<ListView.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="Lock" Click="lockFileMenu_Click" />
-                                    <MenuItem Header="Unlock" Click="unlockFileMenu_Click" />
-                                    <MenuItem Header="Change password" Click="changePasswordFileMenu_Click" />
-                                    <MenuItem Header="Rename" Click="renameFileMenu_Click" />
-                                    <MenuItem Header="Export this file" Click="exportFileMenu_Click" />
-                                    <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
+                            <ListView.Resources>
+                                <ContextMenu x:Key="ItemContextMenu">
+                                    <MenuItem Header="Open in file explorer" Click="openInFolderExplorer_Click" />
+                                    <MenuItem Header="Delete" Click="deleteFolderMenu_Click" />
                                 </ContextMenu>
-                            </ListView.ContextMenu>-->
-                          
-                           
+                            </ListView.Resources>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ListViewItemBaseStyle}" >
+                                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+
+
                             <ListView.View>
                                 <GridView x:Name="FileGrid">
                                     <GridViewColumn>
