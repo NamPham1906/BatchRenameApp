@@ -23,7 +23,7 @@ namespace batchRenameApp
                 }
                 else
                 {
-                    return new SolidColorBrush(Colors.Green);
+                    return new SolidColorBrush(Colors.LimeGreen);
                 }
                
             } 

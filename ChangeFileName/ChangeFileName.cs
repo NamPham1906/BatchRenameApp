@@ -30,6 +30,7 @@ namespace ChangeFileNameRule
             this.NewName = "";
             IsInUse = false;
             ConfigurationUI = new ChangeFileNameWindow(this);
+            IsInUse = false;
         }
 
         public ChangeFileName(string newname)
@@ -38,7 +39,6 @@ namespace ChangeFileNameRule
             this.NewName = newname;
             ConfigurationUI = new ChangeFileNameWindow(this);
             IsInUse = false;
-
         }
 
         public List<string> Rename(List<string> originals, int type)

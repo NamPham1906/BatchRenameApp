@@ -11,6 +11,7 @@ using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Contract;
 using System.Text.Json;
+using System.Diagnostics;
 
 namespace batchRenameApp
 {
@@ -262,84 +263,12 @@ namespace batchRenameApp
                 addFile(openFileDialog.FileName);
         }
 
-        private void unlockMenu_Click(object sender, RoutedEventArgs e)
-        {
-        }
-        private void deleteMenu_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-        private void lockMenu_Click(object sender, RoutedEventArgs e)
-        {
-          
-        }
-        private void changePasswordMenu_Click(object sender, RoutedEventArgs e)
-        {
-           
-        }
-        private void renameMenu_Click(object sender, RoutedEventArgs e)
-        {
-          
-        }
-        private void importMenu_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void unlockFileMenu_Click(object sender, RoutedEventArgs e)
-        {
-          
-        }
-        private void lockFileMenu_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-        private void deleteFileMenu_Click(object sender, RoutedEventArgs e)
-        {
-           
-        }
-        private void renameFileMenu_Click(object sender, RoutedEventArgs e)
-        {
-          
-        }
-        private void changePasswordFileMenu_Click(object sender, RoutedEventArgs e)
-        {
-           
-        }
-        private void exportFileMenu_Click(object sender, RoutedEventArgs e)
-        {
-           
-
-        }
-
-        private void ExportVolume_Click(object sender, RoutedEventArgs e)
-        {
-           
-
-        }
-
         private void AddFolder_Click(object sender, RoutedEventArgs e)
         {
             CommonOpenFileDialog dialog = new CommonOpenFileDialog();
             dialog.IsFolderPicker = true;
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
                 addFolder(dialog.FileName);
-        }
-
-        private void ChangePasswordVolume_Click(object sender, RoutedEventArgs e)
-        {
-
-         
-        }
-
-        private void ChangeNameVolume_Click(object sender, RoutedEventArgs e)
-        {
-          
-        }
-
-        private void CreateNewVolume_Click(object sender, RoutedEventArgs e)
-        {
-           
         }
 
         private void DropFolderList(object sender, DragEventArgs e)
@@ -627,6 +556,7 @@ namespace batchRenameApp
         {
             userRules.Clear();
         }
+
         private void PresetComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int index = PresetComboBox.SelectedIndex;
@@ -654,6 +584,47 @@ namespace batchRenameApp
 
             presets.Add(ps);
             PresetComboBox.Items.Add(presetName);
+
+        private void openInFileExplorer_Click(object sender, RoutedEventArgs e)
+        {
+            int selectedfile = FileList.SelectedIndex;
+
+            Process.Start("explorer.exe", filelist[selectedfile].filepath.Substring(0, filelist[selectedfile].filepath.LastIndexOf(@"\")+1));
+        }
+
+        private void deleteFileMenu_Click(object sender, RoutedEventArgs e)
+        {
+            int selectedfile = FileList.SelectedIndex;
+            if (selectedfile >= 0)
+            {
+                filelist.Remove(filelist[selectedfile]);
+            }
+        }
+
+        private void deleteFolderMenu_Click(object sender, RoutedEventArgs e)
+        {
+            int selectedfolder = FolderList.SelectedIndex;
+            if (selectedfolder >= 0)
+            {
+                folderlist.Remove(folderlist[selectedfolder]);
+            }
+        }
+
+        private void openInFolderExplorer_Click(object sender, RoutedEventArgs e)
+        {
+            int selectedfolder = FolderList.SelectedIndex;
+
+            Process.Start("explorer.exe", folderlist[selectedfolder].folderpath);
+        }
+
+        private void ClearAllFile_Click(object sender, RoutedEventArgs e)
+        {
+            filelist.Clear();
+        }
+
+        private void ClearAllFolder_Click(object sender, RoutedEventArgs e)
+        {
+            folderlist.Clear();
         }
     }
 }
