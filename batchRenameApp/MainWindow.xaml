@@ -5,15 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:batchRenameApp"
         mc:Ignorable="d"
-        Title="MyFS"  
+        Title="Batch Rename"  
         Height="580" Width="1315"
+        Icon="images/icon.png"
         Loaded="Window_Loaded" Closed="Window_Closed">
     <Window.Resources>
         <local:StatusColorConverter x:Key="StatusColorConverter" />
     </Window.Resources>
     <StackPanel Orientation ="Vertical" Margin="10px">
         <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
-            <Button Content="Start Batching" Click="StartBatching_Click" Width="100" Margin="5px">
+            <Button Cursor="Hand" Name="New_Project_Btn" Click="New_Project_Btn_Click" Margin="5px">
+                <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
+                    <Image Source="images/new-document.png" Margin="0,0,10,0"/>
+                    <TextBlock Text="New"/>
+                </StackPanel>
+            </Button>
+            <Button Cursor="Hand" Name="Open_Project_Btn" Click="Open_Project_Btn_Click" Margin="5px">
+                <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
+                    <Image Source="images/open.png" Margin="0,0,10,0"/>
+                    <TextBlock Text="Open"/>
+                </StackPanel>
+            </Button>
+            <Button Cursor="Hand" Name="Save_Project_Btn" Click="Save_Project_Btn_Click" Margin="5px">
+                <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
+                    <Image Source="images/save.png" Margin="0,0,10,0"/>
+                    <TextBlock Text="Save"/>
+                </StackPanel>
+            </Button>
+            <Button Cursor="Hand" Name="Save_As_Project_Btn" Click="Save_As_Project_Btn_Click" Margin="5px">
+                <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
+                    <Image Source="images/save-as.png" Margin="0,0,10,0"/>
+                    <TextBlock Text="Save as"/>
+                </StackPanel>
+            </Button>
+            <Button Cursor="Hand" Click="StartBatching_Click" Margin="5px">
+                <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
+                    <Image Source="images/start-batching.png" Margin="0,0,10,0"/>
+                    <TextBlock Text="Start Batching"/>
+                </StackPanel>
             </Button>
         </StackPanel>
         <StackPanel Orientation="Horizontal" >
@@ -121,7 +150,7 @@
                     </ListView.Resources>
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
-                            <Setter Property="Padding" Value="0,5,0,5"/>
+                            <Setter Property="Padding" Value="5"/>
                             <Setter Property="Margin" Value="0,0,0,0"/>
                             <Setter Property="MinHeight" Value="40"/>
                             <Setter Property="MaxHeight" Value="40"/>
