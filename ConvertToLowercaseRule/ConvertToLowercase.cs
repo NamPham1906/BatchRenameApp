@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
+using System.Globalization;
 using Contract;
 
 namespace ConvertToLowercaseRule
@@ -66,14 +67,9 @@ namespace ConvertToLowercaseRule
 
                 string result = "";
 
-                for (int i = 0; i < temp.Length; i++)
-                {
-                    if (temp[i] >= 65 && temp[i] <= 90)
-                        result += (char)(temp[i] + 32);
-                    else
-                        result += temp[i];
-                }
-                result = $"{result}{ex}";
+                temp = temp.ToLower(new CultureInfo("vi-VI", false));
+
+                result = $"{temp}{ex}";
 
                 results.Add(result);
             }
