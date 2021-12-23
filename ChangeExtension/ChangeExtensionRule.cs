@@ -2,11 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Text.Json;
 using System.Windows.Controls;
 using Contract;
 
 namespace ChangeExtension
 {
+    public class ChangeExtensionData
+    {
+        public string Extension { get; set; }
+        public string Name { get; set; }
+        public bool IsInUse { get; set; }
+    }
     public class ChangeExtensionRule: IRule, INotifyPropertyChanged
     {
         public string Extension { get; set; }
@@ -63,10 +70,28 @@ namespace ChangeExtension
                 default:
                     return originals;
             }
-        }    
-            
-                
-        
+        }
+        public string ToJson()
+        {
+            ChangeExtensionData data = new ChangeExtensionData();
+            data.Extension = this.Extension;
+            data.Name = this.Name;
+            data.IsInUse = this.IsInUse;
+            string json = JsonSerializer.Serialize(data);
+
+            return json;
+        }
+
+        public IRule Clone(string json)
+        {
+            ChangeExtensionData ruleData = (ChangeExtensionData)JsonSerializer.Deserialize(json, typeof(ChangeExtensionData));
+            ChangeExtensionRule rule = new ChangeExtensionRule();
+            rule.Name = ruleData.Name;
+            rule.Extension = ruleData.Extension;
+            rule.IsInUse = ruleData.IsInUse;
+
+            return rule;
+        }
 
         public IRule Clone()
         {
