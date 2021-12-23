@@ -12,10 +12,10 @@
              Background="White">
     <StackPanel Margin="10" >
         <Label FontWeight="Bold">Enter starting number</Label>
-        <TextBox  HorizontalAlignment="Stretch"  x:Name="startInput" TextChanged="startInput_TextChange" Text="{Binding Start}"></TextBox>
+        <TextBox PreviewTextInput="NumberValidationTextBox1" MaxLength="9" HorizontalAlignment="Stretch"  x:Name="startInput" TextChanged="startInput_TextChange" Text="{Binding Start}"></TextBox>
         <Label FontWeight="Bold">Enter step</Label>
-        <TextBox  HorizontalAlignment="Stretch"  x:Name="stepInput" TextChanged="stepInputt_TextChange" Text="{Binding Step}"></TextBox>
+        <TextBox PreviewTextInput="NumberValidationTextBox2" MaxLength="9" HorizontalAlignment="Stretch"  x:Name="stepInput" TextChanged="stepInputt_TextChange" Text="{Binding Step}"></TextBox>
         <Label FontWeight="Bold">Enter number of digits</Label>
-        <TextBox  HorizontalAlignment="Stretch"  x:Name="digitsInput" TextChanged="digitsInput_TextChange" Text="{Binding Digits}"></TextBox>
+        <TextBox PreviewTextInput="NumberValidationTextBox3" MaxLength="9" HorizontalAlignment="Stretch"  x:Name="digitsInput" TextChanged="digitsInput_TextChange" Text="{Binding Digits}"></TextBox>
     </StackPanel>
 </UserControl>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,17 +34,44 @@ namespace AddCounter
 
         private void startInput_TextChange(object sender, TextChangedEventArgs e)
         {
-            this.rule.Start = Int32.Parse(startInput.Text);
+            if(startInput.Text!="")
+            {
+                this.rule.Start = int.Parse(startInput.Text);
+            }
         }
 
         private void stepInputt_TextChange(object sender, TextChangedEventArgs e)
         {
-            this.rule.Step = Int32.Parse(stepInput.Text);
+            if (stepInput.Text != "")
+            {
+                this.rule.Step = int.Parse(stepInput.Text);
+            }
         }
 
         private void digitsInput_TextChange(object sender, TextChangedEventArgs e)
         {
-            this.rule.Digits = Int32.Parse(digitsInput.Text);
+            if (digitsInput.Text != "")
+            {
+                this.rule.Digits = int.Parse(digitsInput.Text);
+            }
+        }
+
+        private void NumberValidationTextBox1(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void NumberValidationTextBox2(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void NumberValidationTextBox3(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }
