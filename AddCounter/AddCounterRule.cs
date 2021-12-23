@@ -41,41 +41,50 @@ namespace AddCounter
 
         public List<string> Rename(List<string> originals, int type)
         {
-            if(type == 1)
+            List<string> result = new List<string>();
+            int i = Start;
+            switch (type)
             {
-                List<string> result = new List<string>();
-                int i = Start;
-                foreach (string item in originals)
-                {
+                case 1:
+                    {
+                        foreach (string item in originals)
+                        {
 
-                    string count = i.ToString().PadLeft(Digits, '0');
-                    string[] str = item.Split('.');
+                            string count = i.ToString().PadLeft(Digits, '0');
+                            string[] str = item.Split('.');
 
-                    int strlen = str.Length;
-                    string extension = str[strlen - 1];
-                    string[] str1 = item.Split($".{extension}");
+                            int strlen = str.Length;
+                            string extension = str[strlen - 1];
 
-                    string newfilename = $"{str1[0]}{count}.{extension}";
-                    result.Add(newfilename);
-                    i = i + Step;
-                }
+                            string temp = "";
+                            for (int j = 0; j < strlen - 2; j++)
+                            {
+                                temp += str[j] + ".";
+                            }
+                            temp += str[strlen - 2];
+                            string newfilename = $"{temp}{count}.{extension}";
+                            result.Add(newfilename);
+                            i = i + Step;
+                        }
 
-                return result;
-            }    
-            else
-            {
-                List<string> result = new List<string>();
-                int i = Start;
-                foreach (string item in originals)
-                {
-                    string count = i.ToString().PadLeft(Digits, '0');
-                    string newfilename = $"{item}{count}";
-                    result.Add(newfilename);
-                    i = i + Step;
-                }
+                        return result;
+                    }
+                case 2:
+                    {
+                        foreach (string item in originals)
+                        {
+                            string count = i.ToString().PadLeft(Digits, '0');
+                            string newfilename = $"{item}{count}";
+                            result.Add(newfilename);
+                            i = i + Step;
+                        }
 
-                return result;
+                        return result;
+                    }
+                default:
+                    return originals;
             }
+            
         }
 
         public IRule Clone()

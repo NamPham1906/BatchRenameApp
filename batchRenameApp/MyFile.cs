@@ -19,8 +19,9 @@ namespace batchRenameApp
         public string filename { get; set; }
         public string newfilename { get; set; }
         public string fileextension { get; set; }
-
         public string filepath { get; set; }
+
+        public string status { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -36,20 +37,19 @@ namespace batchRenameApp
 
         
 
-        public bool changeName(string newName)
+        public bool changeName(string newNameFileDir)
         {
-            if (newName.Length == 0)
+            if (newNameFileDir.Length == 0)
             {
                 return false;
             }
             else
             {
-                if (!newName.Contains('.'))
-                {
-                    newName += fileextension;
-                }
-
-                this.filename = newName;
+                FileInfo myfile = new FileInfo(newNameFileDir);
+                this.filename = myfile.Name;
+                this.newfilename = this.filename;
+                this.fileextension = myfile.Extension;
+                this.filepath = newNameFileDir;
                 return true;
             }
         }

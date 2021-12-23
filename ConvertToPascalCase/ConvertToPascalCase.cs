@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using System.Globalization;
 using Contract;
 
 namespace ConvertToPascalCaseRule
@@ -67,25 +68,11 @@ namespace ConvertToPascalCaseRule
                     for (int j = 0; j < tokens[i].Length; j++)
                         if (j == 0)
                         {
-                            if (tokens[i][j] >= 97 && tokens[i][j] <= 122)
-                            {
-                                result += (char)(tokens[i][j] - 32);
-                            }
-                            else
-                            {
-                                result += tokens[i][j];
-                            }
+                            result += char.ToUpper(tokens[i][j], new CultureInfo("vi-VI"));
                         }
                         else
                         {
-                            if (tokens[i][j] >= 65 && tokens[i][j] <= 90)
-                            {
-                                result += (char)(tokens[i][j] + 32);
-                            }
-                            else
-                            {
-                                result += tokens[i][j];
-                            }
+                            result += char.ToLower(tokens[i][j], new CultureInfo("vi-VI"));
                         }
                 }
 
