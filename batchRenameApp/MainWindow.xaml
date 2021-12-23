@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:batchRenameApp"
         mc:Ignorable="d"
-        Title="MyFS" Height="580" Width="1315"  Loaded="Window_Loaded">
+        Title="MyFS"  
+        Height="580" Width="1315"
+        Loaded="Window_Loaded" Closed="Window_Closed">
     <Window.Resources>
         <local:StatusColorConverter x:Key="StatusColorConverter" />
     </Window.Resources>
