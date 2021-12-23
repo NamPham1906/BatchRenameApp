@@ -70,7 +70,7 @@ namespace ReplaceCharactersRule
                     nonex += "." + tokens[i];
 
                 if (type == 1) ex = "." + tokens[tokens.Length - 1];
-                if (type == 2) nonex = "." + tokens[tokens.Length - 1];
+                if (type == 2 && tokens.Length > 1) nonex = "." + tokens[tokens.Length - 1];
 
                 string result = nonex;
 

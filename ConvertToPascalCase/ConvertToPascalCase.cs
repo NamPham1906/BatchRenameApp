@@ -67,7 +67,7 @@ namespace ConvertToPascalCaseRule
                     nonex += "." + bases[i];
 
                 if (type == 1) ex = "." + bases[bases.Length - 1];
-                if (type == 2) nonex = "." + bases[bases.Length - 1];
+                if (type == 2 && bases.Length > 1) nonex = "." + bases[bases.Length - 1];
 
                 string result = "";
 
