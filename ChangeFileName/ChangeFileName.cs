@@ -1,40 +1,40 @@
+using Contract;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Windows.Controls;
-using Contract;
 
-namespace ChangeExtension
+namespace ChangeFileNameRule
 {
-    public class ChangeExtensionRule: IRule, INotifyPropertyChanged
+    public class ChangeFileName: IRule, INotifyPropertyChanged
     {
-        public string Extension { get; set; }
+        public string NewName { get; set; }
         public string Name { get; set; }
-        public ChangeExtensionWindow ConfigurationUI { get; set; }
+        public ChangeFileNameWindow ConfigurationUI { get; set; }
         public bool IsInUse { get; set; }
         public bool IsUse()
         {
             return IsInUse;
         }
 
-        public ChangeExtensionRule()
+        public ChangeFileName()
         {
-            Name = "Change Extension";
-            this.Extension = "";
-            ConfigurationUI = new ChangeExtensionWindow(this);
+            Name = "Change File Name";
+            this.NewName = "";
+            ConfigurationUI = new ChangeFileNameWindow(this);
         }
 
-        public ChangeExtensionRule(string extension)
+        public ChangeFileName(string newname)
         {
-            Name = "Change Extension";
-            this.Extension = extension;
-            ConfigurationUI = new ChangeExtensionWindow(this);
+            Name = "Change File Name";
+            this.NewName = newname;
+            ConfigurationUI = new ChangeFileNameWindow(this);
+
         }
 
         public List<string> Rename(List<string> originals, int type)
         {
-            string newe = Extension;
+            string newn = NewName;
             List<string> result = new List<string>();
             switch (type)
             {
@@ -44,13 +44,9 @@ namespace ChangeExtension
                         {
                             string[] str = item.Split('.');
                             int strlen = str.Length;
-                            string temp = "";
-                            for (int j = 0; j < strlen - 1; j++)
-                            {
-                                temp += str[j] + ".";
-                            }
 
-                            string newfilename = $"{temp}{newe}";
+                            string extension = str[strlen - 1];
+                            string newfilename = $"{newn}.{extension}";
                             result.Add(newfilename);
                         }
 
@@ -58,19 +54,22 @@ namespace ChangeExtension
                     }
                 case 2:
                     {
-                        return originals;
+                        foreach (string item in originals)
+                        {
+                            string newfilename = $"{newn}";
+                            result.Add(newfilename);
+                        }
+                        return result;
                     }
                 default:
                     return originals;
             }
-        }    
-            
-                
-        
+
+        }
 
         public IRule Clone()
         {
-            return new ChangeExtensionRule(Extension);
+            return new ChangeFileName(NewName);
         }
 
         public UserControl GetUI()
