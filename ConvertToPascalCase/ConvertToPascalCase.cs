@@ -3,10 +3,18 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Globalization;
 using Contract;
+using System.ComponentModel;
+using System.Text.Json;
 
 namespace ConvertToPascalCaseRule
 {
-    public class ConvertToPascalCase : IRule
+    public class ConvertToPascalCaseData
+    {
+        public string Name { get; set; }
+        public bool IsInUse { get; set; }
+    }
+
+    public class ConvertToPascalCase : IRule, INotifyPropertyChanged
     {
         public string Name { get; set; }
 
@@ -20,6 +28,8 @@ namespace ConvertToPascalCaseRule
             ConfigurationUI = new RuleWindow(this);
             IsInUse = false;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public IRule Clone()
         {
@@ -82,6 +92,25 @@ namespace ConvertToPascalCaseRule
             }
 
             return results;
+        }
+
+        public string ToJson()
+        {
+            ConvertToPascalCaseData data = new ConvertToPascalCaseData();
+            data.Name = this.Name;
+            data.IsInUse = this.IsInUse;
+            string json = JsonSerializer.Serialize(data);
+            return json;
+        }
+
+        public IRule Clone(string json)
+        {
+            ConvertToPascalCaseData ruleData = (ConvertToPascalCaseData)JsonSerializer.Deserialize(json, typeof(ConvertToPascalCaseData));
+            ConvertToPascalCase rule = new ConvertToPascalCase();
+            rule.Name = ruleData.Name;
+            rule.IsInUse = ruleData.IsInUse;
+
+            return rule;
         }
     }
 }

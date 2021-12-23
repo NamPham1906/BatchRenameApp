@@ -4,9 +4,16 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using System.Globalization;
 using Contract;
+using System.Text.Json;
 
 namespace ConvertToLowercaseRule
 {
+    public class ConvertToLowercaseData
+    {
+        public string Name { get; set; }
+        public bool IsInUse { get; set; }
+    }
+
     public class ConvertToLowercase : IRule, INotifyPropertyChanged
     {
         public string Name { get; set; }
@@ -75,6 +82,25 @@ namespace ConvertToLowercaseRule
             }
 
             return results;
+        }
+
+        public string ToJson()
+        {
+            ConvertToLowercaseData data = new ConvertToLowercaseData();
+            data.Name = this.Name;
+            data.IsInUse = this.IsInUse;
+            string json = JsonSerializer.Serialize(data);
+            return json;
+        }
+
+        public IRule Clone(string json)
+        {
+            ConvertToLowercaseData ruleData = (ConvertToLowercaseData)JsonSerializer.Deserialize(json, typeof(ConvertToLowercaseData));
+            ConvertToLowercase rule = new ConvertToLowercase();
+            rule.Name = ruleData.Name;
+            rule.IsInUse = ruleData.IsInUse;
+
+            return rule;
         }
     }
 }
