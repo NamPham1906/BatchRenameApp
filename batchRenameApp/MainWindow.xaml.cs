@@ -26,6 +26,10 @@ namespace batchRenameApp
         string backupName = "    Pikachu   .txt";
         BindingList<MyFile> filelist = new BindingList<MyFile>();
         BindingList<Folder> folderlist = new BindingList<Folder>();
+        String BatchingSuccessStatus = "Batching successfully";
+        String BatchingUnsuccessErrorStatus = "Error: Batching unsuccessfully";
+        String FileDulicateErrorStatus = "Error: File duplicate";
+        String FileNotExistErrorStatus = "Error: File not exist";
 
 
         private void addFile(string filedir) {
@@ -277,7 +281,34 @@ namespace batchRenameApp
 
         private void StartBatching_Click(object sender, RoutedEventArgs e)
         {
+            for (int i = 0; i < filelist.Count(); i++)
+            {
+                FileInfo file = new FileInfo(filelist[i].filepath);
+                string newfilepath = filelist[i].filepath.Substring(0, filelist[i].filepath.LastIndexOf(@"\") + 1);
+                newfilepath += filelist[i].newfilename;
+                FileInfo newfile = new FileInfo(newfilepath);
+                if (!file.Exists)
+                {
+                    filelist[i].status = FileNotExistErrorStatus;
+                    
+                } else if (newfile.Exists)
+                {
+                    filelist[i].status = FileDulicateErrorStatus;
+                } else if (file.Exists && !newfile.Exists)
+                {
 
+                    System.IO.File.Move(filelist[i].filepath, newfilepath);
+
+                    if (filelist[i].changeName(newfilepath))
+                    {
+                        filelist[i].status = BatchingSuccessStatus;
+                    }
+                    else
+                    {
+                        filelist[i].status = BatchingUnsuccessErrorStatus;
+                    }
+                }
+            }
         }
 
         private void RuleList_LayoutUpdated(object sender, EventArgs e)

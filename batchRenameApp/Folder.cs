@@ -16,6 +16,7 @@ namespace batchRenameApp
         public string newfoldername { get; set; }
 
         public string folderpath { get; set; }
+        public string status { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
