@@ -42,6 +42,8 @@ namespace ReplaceCharactersRule
 
         public List<string> Rename(List<string> originals, int type)
         {
+            if (Needle == "") return originals; 
+
             List<string> results = new List<string>();
 
             foreach (var original in originals)
