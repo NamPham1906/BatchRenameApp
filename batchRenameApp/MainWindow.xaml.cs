@@ -126,8 +126,8 @@ namespace batchRenameApp
             for (int i = 0; i < totalRule; i++)
             {
                 allRules.Add(RuleFactory.GetInstance().Create(i));
-                userControls.Add(allRules[i].GetUI());
-                userRules.Add(allRules[i]);
+                //userControls.Add(allRules[i].GetUI());
+                //userRules.Add(allRules[i]);
                 allRulesName.Add(allRules[i].GetName());
             }
             RuleComboBox.ItemsSource = allRulesName;
@@ -393,6 +393,50 @@ namespace batchRenameApp
             }
 
             
+        }
+
+        private void RuleComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int index = RuleComboBox.SelectedIndex;
+            userRules.Add(allRules[index].Clone());
+        }
+
+        private void ListBoxItem_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (sender is ListBoxItem)
+            {
+                ListBoxItem draggedItem = sender as ListBoxItem;
+                DataObject data = new DataObject("RULE", draggedItem.DataContext);
+                DragDrop.DoDragDrop(draggedItem, data, DragDropEffects.Move);
+                //draggedItem.IsSelected = true;
+            }
+        }
+
+        private void ListBoxItem_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent("RULE"))
+            {
+                IRule droppedData = e.Data.GetData("RULE") as IRule;
+                IRule target = ((ListBoxItem)(sender)).DataContext as IRule;
+
+                int removedIdx = RuleList.Items.IndexOf(droppedData);
+                int targetIdx = RuleList.Items.IndexOf(target);
+
+                if (removedIdx < targetIdx)
+                {
+                    userRules.Insert(targetIdx + 1, droppedData);
+                    userRules.RemoveAt(removedIdx);
+                }
+                else
+                {
+                    int remIdx = removedIdx + 1;
+                    if (userRules.Count + 1 > remIdx)
+                    {
+                        userRules.Insert(targetIdx, droppedData);
+                        userRules.RemoveAt(remIdx);
+                    }
+                }
+            }
         }
     }
 }
