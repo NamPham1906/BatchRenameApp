@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using System.IO;
 using System.ComponentModel;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Text.Json;
 
 namespace batchRenameApp
 {
-    class MyFile : INotifyPropertyChanged
+    public class MyFile : INotifyPropertyChanged
     {
 
         public string fileimage { get; set; }
@@ -33,9 +33,18 @@ namespace batchRenameApp
             this.newfilename = this.filename;
             this.fileextension = myfile.Extension;
             this.filepath = filedir;
+            this.status = "";
         }
 
-        
+        public MyFile()
+        {
+            this.filename = "";
+            this.newfilename = "";
+            this.fileextension ="";
+            this.filepath = "";
+            this.status = "";
+        }
+
 
         public bool changeName(string newNameFileDir)
         {
@@ -66,6 +75,16 @@ namespace batchRenameApp
                 return true;
             }
         }
+        public String ToJson()
+        {
+            string json = JsonSerializer.Serialize(this);
+            return json;
+        }
 
+        public static MyFile Parser(string json)
+        {
+            MyFile result = (MyFile)JsonSerializer.Deserialize(json, typeof(MyFile));
+            return result;
+        }
     }
 }

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Text.Json;
 
 namespace batchRenameApp
 {
-    class Folder : INotifyPropertyChanged
+    public class Folder : INotifyPropertyChanged
     {
 
         public string folderimage { get; set; }
@@ -28,6 +29,15 @@ namespace batchRenameApp
             this.folderpath = folderdir;
         }
 
+        public Folder()
+        {
+            folderimage = "";
+            foldername = "";
+            newfoldername = "";
+            folderpath = "";
+            status = "";
+        }
+
         public bool changeName(string newName)
         {
             if (newName.Length == 0)
@@ -39,6 +49,17 @@ namespace batchRenameApp
                 this.foldername = newName;
                 return true;
             }
+        }
+        public String ToJson()
+        {
+            string json = JsonSerializer.Serialize(this);
+            return json;
+        }
+
+        public static Folder Parser(string json)
+        {
+            Folder result = (Folder)JsonSerializer.Deserialize(json, typeof(Folder));
+            return result;
         }
     }
 }

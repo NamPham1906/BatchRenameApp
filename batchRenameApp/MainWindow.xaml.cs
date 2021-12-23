@@ -14,6 +14,57 @@ using System.Text.Json;
 
 namespace batchRenameApp
 {
+    public class AppState
+    {
+        public double WindowWidth { get; set; }
+        public double WindowHeight { get; set; }
+        public double WindowLeft { get; set; }
+        public double WindowTop { get; set; }
+
+        public List<RuleContainer> Rules { get; set; }
+        public List<MyFile> Files { get; set; }
+        public List<Folder> Folders { get; set; }
+
+        public AppState()
+        {
+            WindowWidth = 1315;
+            WindowHeight = 580;
+            WindowLeft = 0;
+            WindowTop = 0;
+            Rules = null;
+            Folders = null;
+        }
+
+
+        public void StoreData(string path)
+        {
+            string json = JsonSerializer.Serialize(this);
+            File.WriteAllText(path, json);
+        }
+
+        public static AppState Parser(string path)
+        {
+            FileInfo file = new FileInfo(path);
+            if (!file.Exists)
+            {
+                return null;
+            }
+            string outJson = File.ReadAllText(path);
+            AppState result = (AppState)JsonSerializer.Deserialize(outJson, typeof(AppState));
+            return result;
+        }
+
+        public List<IRule> GetRules()
+        {
+            List<IRule> resultRules = new List<IRule>();
+            for (int i = 0; i < Rules.Count(); i++)
+            {
+                resultRules.Add(RuleFactory.GetInstance().Create(Rules[i]));
+            }
+
+            return resultRules;
+        }
+    }
 
     public partial class MainWindow : Window
     {
@@ -29,10 +80,11 @@ namespace batchRenameApp
         String FileDulicateErrorStatus = "Error: File duplicate";
         String FileNotExistErrorStatus = "Error: File not exist";
 
+        //How to use:
+        //StoreRules(userRules, @"D:\JSON\path.json");
         private void StoreRules(List<IRule> rules, string path)
         {
-            //How to use:
-            //StoreRules(allRules, @"D:\JSON\path.json");
+            
             List<RuleContainer> ruleContainers = new List<RuleContainer>();
             for (int i = 0; i < rules.Count(); i++)
             {
@@ -47,10 +99,11 @@ namespace batchRenameApp
             File.WriteAllText(path, json);
            
         }
+        //How to use:
+        //List<IRule> rules = ReadRules(@"D:\JSON\path.json");
         private List<IRule> ReadRules(string path)
         {
-            //How to use:
-            //List<IRule> rules = ReadRules(@"D:\JSON\path.json");
+            
             string outJson = File.ReadAllText(path);
             List<RuleContainer> outRuleContainers = (List<RuleContainer>)JsonSerializer.Deserialize(outJson, typeof(List<RuleContainer>));
             List<IRule> resultRules = new List<IRule>();
@@ -154,11 +207,23 @@ namespace batchRenameApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            AppState lastState = AppState.Parser(@"D:\JSON\path.json");
+            if (lastState != null)
+            {
+                this.Width = lastState.WindowWidth;
+                this.Height = lastState.WindowHeight;
+                this.Top = lastState.WindowTop;
+                this.Left = lastState.WindowLeft;
+                userRules = new BindingList<IRule>(lastState.GetRules());
+                filelist = new BindingList<MyFile>(lastState.Files);
+                folderlist = new BindingList<Folder>(lastState.Folders);
+                FileList.ItemsSource = filelist;
+                FolderList.ItemsSource = folderlist;
+            }
             //get all rule from DLL
             totalRule = RuleFactory.GetInstance().RuleAmount();
             for (int i = 0; i < totalRule; i++)
             {
-                allRules.Add(RuleFactory.GetInstance().Create(i));
                 allRules.Add(RuleFactory.GetInstance().Create(i));
                 allRulesName.Add(allRules[i].GetName());
             }
@@ -498,6 +563,36 @@ namespace batchRenameApp
                 DragDrop.DoDragDrop(draggedItem, data, DragDropEffects.Move);
                 draggedItem.IsSelected = true;
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            double height = this.ActualHeight;
+            double width = this.ActualWidth;
+            double left = this.Left;
+            double top = this.Top;
+            List<RuleContainer> ruleContainers = new List<RuleContainer>();
+            for (int i = 0; i < userRules.Count(); i++)
+            {
+                ruleContainers.Add(new RuleContainer()
+                {
+                    Name = userRules[i].GetName(),
+                    Data = userRules[i].ToJson()
+                });
+            }
+            AppState state = new AppState()
+            {
+                WindowHeight = height,
+                WindowWidth = width,
+                WindowLeft = left,
+                WindowTop = top,
+                Rules = ruleContainers,
+                Files = filelist.ToList(),
+                Folders = folderlist.ToList()
+            };
+
+            state.StoreData(@"D:\JSON\path.json");
+            //MessageBox.Show("Closed called");
         }
     }
 }

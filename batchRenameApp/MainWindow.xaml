@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:batchRenameApp"
         mc:Ignorable="d"
-        Title="MyFS" Height="580" Width="1315"  Loaded="Window_Loaded">
+        Title="MyFS"  
+        Height="580" Width="1315"
+        Loaded="Window_Loaded" Closed="Window_Closed">
     <StackPanel Orientation ="Vertical" Margin="10px">
         <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
             <Button Content="Start Batching" Click="StartBatching_Click" Width="100" Margin="5px">
