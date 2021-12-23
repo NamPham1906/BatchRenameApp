@@ -28,6 +28,7 @@ namespace ChangeFileNameRule
         {
             Name = "Change File Name";
             this.NewName = "";
+            IsInUse = false;
             ConfigurationUI = new ChangeFileNameWindow(this);
         }
 
@@ -36,6 +37,7 @@ namespace ChangeFileNameRule
             Name = "Change File Name";
             this.NewName = newname;
             ConfigurationUI = new ChangeFileNameWindow(this);
+            IsInUse = false;
 
         }
 

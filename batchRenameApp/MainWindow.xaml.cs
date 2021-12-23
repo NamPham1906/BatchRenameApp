@@ -66,6 +66,21 @@ namespace batchRenameApp
         }
     }
 
+    public class Preset
+    {
+        public string PresetName { get; set; }
+        public List<IRule> PresetRules { get; set; }
+        public Preset()
+        {
+            PresetName = "";
+            PresetRules = null;
+        }
+        public Preset(string name, List<IRule> rules)
+        {
+            PresetName = name;
+            PresetRules = rules;
+        }
+    }
     public partial class MainWindow : Window
     {
 
@@ -75,11 +90,12 @@ namespace batchRenameApp
         BindingList<IRule> userRules = new BindingList<IRule>();
         BindingList<MyFile> filelist = new BindingList<MyFile>();
         BindingList<Folder> folderlist = new BindingList<Folder>();
-       
+        int totalPreset = 0;
+        List<Preset> presets = new List<Preset>();
 
         //How to use:
         //StoreRules(userRules, @"D:\JSON\path.json");
-        private void StoreRules(List<IRule> rules, string path)
+        private void StoreRules(BindingList<IRule> rules, string path)
         {
             
             List<RuleContainer> ruleContainers = new List<RuleContainer>();
@@ -600,12 +616,44 @@ namespace batchRenameApp
             };
 
             state.StoreData(@"D:\JSON\path.json");
+            for (int i = 1; i <= totalPreset; i++)
+            {
+                File.Delete($@"D:\JSON\preset{i}.json");
+            }
             //MessageBox.Show("Closed called");
         }
 
         private void Clear_All_Rule_Btn_Click(object sender, RoutedEventArgs e)
         {
             userRules.Clear();
+        }
+        private void PresetComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int index = PresetComboBox.SelectedIndex;
+            userRules = new BindingList<IRule>(presets[index].PresetRules);
+            //RuleList.Items.Clear();
+            RuleList.ItemsSource = userRules;
+        }
+
+        private void SaveRule_Click(object sender, RoutedEventArgs e)
+        {
+            //save preset
+            totalPreset++;
+            
+            StoreRules(userRules, $@"D:\JSON\preset{totalPreset}.json");
+
+
+            List<IRule> preset = ReadRules($@"D:\JSON\preset{totalPreset}.json");
+            string presetName = "";
+            foreach (var item in preset)
+            {
+                presetName += item.GetName() + totalPreset.ToString() + " ";
+            }
+            Preset ps = new Preset(presetName, preset);
+            
+
+            presets.Add(ps);
+            PresetComboBox.Items.Add(presetName);
         }
     }
 }
