@@ -169,7 +169,7 @@
                             </ListView.ContextMenu>
 
                             <ListView.View>
-                                <GridView>
+                                <GridView >
                                     <GridViewColumn>
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
@@ -180,7 +180,7 @@
                                     <GridViewColumn Width="200" Header="File Name"  DisplayMemberBinding="{Binding filename}"/>
                                     <GridViewColumn Width="200" Header="New file name" DisplayMemberBinding="{Binding newfilename}"/>
                                     <GridViewColumn Width="100" Header="File Extendsion" DisplayMemberBinding="{Binding fileextension}"/>
-                                    <GridViewColumn  Header="File Extendsion" DisplayMemberBinding="{Binding filepath}"/>
+                                    <GridViewColumn  Header="File Path" DisplayMemberBinding="{Binding filepath}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -217,9 +217,9 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Width="200" Header="File Name"  DisplayMemberBinding="{Binding foldername}"/>
-                                    <GridViewColumn Width="200" Header="New file name" DisplayMemberBinding="{Binding newfoldername}"/>
-                                    <GridViewColumn Width="400" Header="File Extendsion" DisplayMemberBinding="{Binding folderpath}"/>
+                                    <GridViewColumn Width="200" Header="Folder Name"  DisplayMemberBinding="{Binding foldername}"/>
+                                    <GridViewColumn Width="200" Header="New folder name" DisplayMemberBinding="{Binding newfoldername}"/>
+                                    <GridViewColumn Width="400" Header="Folder Path" DisplayMemberBinding="{Binding folderpath}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
