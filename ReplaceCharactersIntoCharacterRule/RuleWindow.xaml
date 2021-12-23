@@ -5,13 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ReplaceCharactersRule"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="150"
+             HorizontalContentAlignment="Stretch"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch"
              Background="White"
              Loaded="UserControl_Loaded">
     <StackPanel Margin="10">
-        <Label FontWeight="Bold">Replace:</Label>
-        <TextBox x:Name="needleInput" Text="{Binding Needle}" TextChanged="needleInput_TextChanged"/>
-        <Label FontWeight="Bold">Into:</Label>
-        <TextBox x:Name="replacerInput" Text="{Binding Replacer}" TextChanged="replacerInput_TextChanged"/>
+        <TextBlock HorizontalAlignment="left" FontWeight="Bold">Replace:</TextBlock>
+        <TextBox HorizontalAlignment="Stretch" x:Name="needleInput" Text="{Binding Needle}" TextChanged="needleInput_TextChanged" PreviewTextInput="ValidationTextBox1"/>
+        <TextBlock HorizontalAlignment="left" FontWeight="Bold">Into:</TextBlock>
+        <TextBox HorizontalAlignment="Stretch" x:Name="replacerInput" Text="{Binding Replacer}" TextChanged="replacerInput_TextChanged" PreviewTextInput="ValidationTextBox2"/>
     </StackPanel>
 </UserControl>

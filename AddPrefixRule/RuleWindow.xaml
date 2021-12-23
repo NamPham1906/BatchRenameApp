@@ -14,6 +14,6 @@
     <StackPanel Margin="10">
         <TextBlock FontWeight="Bold" HorizontalAlignment="left">Add Prefix:</TextBlock>
         <TextBox x:Name="prefixInput" Text="{Binding Prefix}" TextChanged="prefixInput_TextChanged"
-                 HorizontalAlignment="Stretch"/>
+                 PreviewTextInput="ValidationTextBox" HorizontalAlignment="Stretch"/>
     </StackPanel>
 </UserControl>

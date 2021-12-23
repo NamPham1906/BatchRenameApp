@@ -113,13 +113,13 @@
                                         <Image Source="/images/clear.png"/>
                                     </Button>
                                 </Grid>
-                                <UserControl Height="210" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Name="ConfigurationUI" Content="{Binding ConfigurationUI}"></UserControl>
+                                <UserControl Height="160" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Name="ConfigurationUI" Content="{Binding ConfigurationUI}"></UserControl>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.Resources>
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
-                            <Setter Property="Padding" Value="0,5,0,5"/>
+                            <Setter Property="Padding" Value="5,5,5,5"/>
                             <Setter Property="Margin" Value="0,0,0,0"/>
                             <Setter Property="MinHeight" Value="40"/>
                             <Setter Property="MaxHeight" Value="40"/>
@@ -135,16 +135,16 @@
                                     <Trigger.EnterActions>
                                         <BeginStoryboard>
                                             <Storyboard>
-                                                <DoubleAnimation Storyboard.TargetProperty="MinHeight" From="40" To="240" Duration="0:0:0.5" />
-                                                <DoubleAnimation Storyboard.TargetProperty="MaxHeight" From="40" To="240" Duration="0:0:0.5" />
+                                                <DoubleAnimation Storyboard.TargetProperty="MinHeight" From="40" To="195" Duration="0:0:0.5" />
+                                                <DoubleAnimation Storyboard.TargetProperty="MaxHeight" From="40" To="195" Duration="0:0:0.5" />
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </Trigger.EnterActions>
                                     <Trigger.ExitActions>
                                         <BeginStoryboard>
                                             <Storyboard>
-                                                <DoubleAnimation Storyboard.TargetProperty="MinHeight" From="240" To="40" Duration="0:0:0.5" />
-                                                <DoubleAnimation Storyboard.TargetProperty="MaxHeight" From="240" To="40" Duration="0:0:0.5" />
+                                                <DoubleAnimation Storyboard.TargetProperty="MinHeight" From="195" To="40" Duration="0:0:0.5" />
+                                                <DoubleAnimation Storyboard.TargetProperty="MaxHeight" From="195" To="40" Duration="0:0:0.5" />
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </Trigger.ExitActions>

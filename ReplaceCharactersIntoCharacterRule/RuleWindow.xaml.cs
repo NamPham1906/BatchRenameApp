@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -41,6 +42,18 @@ namespace ReplaceCharactersRule
         private void replacerInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             this.rule.Replacer = replacerInput.Text;
+        }
+
+        private void ValidationTextBox1(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@"[\/:*?""<>|]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void ValidationTextBox2(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@"[\/:*?""<>|]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }
