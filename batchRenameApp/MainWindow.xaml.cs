@@ -10,6 +10,7 @@ using System.ComponentModel;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Contract;
+using System.Text.Json;
 
 namespace batchRenameApp
 {
@@ -21,9 +22,6 @@ namespace batchRenameApp
         List<IRule> allRules = new List<IRule>();
         List<String> allRulesName = new List<String>();
         BindingList<IRule> userRules = new BindingList<IRule>();
-        List<UserControl> userControls = new List<UserControl>();
-        MyPikaFile testingFile = new MyPikaFile();
-        string backupName = "    Pikachu   .txt";
         BindingList<MyFile> filelist = new BindingList<MyFile>();
         BindingList<Folder> folderlist = new BindingList<Folder>();
         String BatchingSuccessStatus = "Batching successfully";
@@ -31,7 +29,38 @@ namespace batchRenameApp
         String FileDulicateErrorStatus = "Error: File duplicate";
         String FileNotExistErrorStatus = "Error: File not exist";
 
+        private void StoreRules(List<IRule> rules, string path)
+        {
+            //How to use:
+            //StoreRules(allRules, @"D:\JSON\path.json");
+            List<RuleContainer> ruleContainers = new List<RuleContainer>();
+            for (int i = 0; i < rules.Count(); i++)
+            {
+                ruleContainers.Add(new RuleContainer()
+                {
+                    Name = rules[i].GetName(),
+                    Data = rules[i].ToJson()
+                });
+            }
 
+            string json = JsonSerializer.Serialize(ruleContainers);
+            File.WriteAllText(path, json);
+           
+        }
+        private List<IRule> ReadRules(string path)
+        {
+            //How to use:
+            //List<IRule> rules = ReadRules(@"D:\JSON\path.json");
+            string outJson = File.ReadAllText(path);
+            List<RuleContainer> outRuleContainers = (List<RuleContainer>)JsonSerializer.Deserialize(outJson, typeof(List<RuleContainer>));
+            List<IRule> resultRules = new List<IRule>();
+            for (int i = 0; i < outRuleContainers.Count(); i++)
+            {
+                resultRules.Add(RuleFactory.GetInstance().Create(outRuleContainers[i]));
+            }
+
+            return resultRules;
+        }
         private void addFile(string filedir) {
             if (isFileNotExist(filedir))
             {
@@ -130,14 +159,11 @@ namespace batchRenameApp
             for (int i = 0; i < totalRule; i++)
             {
                 allRules.Add(RuleFactory.GetInstance().Create(i));
-                //userControls.Add(allRules[i].GetUI());
-                //userRules.Add(allRules[i]);
+                allRules.Add(RuleFactory.GetInstance().Create(i));
                 allRulesName.Add(allRules[i].GetName());
             }
             RuleComboBox.ItemsSource = allRulesName;
             RuleList.ItemsSource = userRules;
-            this.DataContext = testingFile;
-
         }
 
         public MainWindow()
@@ -429,17 +455,10 @@ namespace batchRenameApp
         private void RuleComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int index = RuleComboBox.SelectedIndex;
-            userRules.Add(allRules[index].Clone());
-        }
-
-        private void ListBoxItem_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if (sender is ListBoxItem)
+            if(index >= 0 && index < allRules.Count)
             {
-                ListBoxItem draggedItem = sender as ListBoxItem;
-                DataObject data = new DataObject("RULE", draggedItem.DataContext);
-                DragDrop.DoDragDrop(draggedItem, data, DragDropEffects.Move);
-                //draggedItem.IsSelected = true;
+                userRules.Add(allRules[index].Clone());
+                RuleComboBox.SelectedIndex = -1;
             }
         }
 
@@ -467,6 +486,17 @@ namespace batchRenameApp
                         userRules.RemoveAt(remIdx);
                     }
                 }
+            }
+        }
+
+        private void ListBoxItem_PreviewMouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (sender is ListBoxItem)
+            {
+                ListBoxItem draggedItem = sender as ListBoxItem;
+                DataObject data = new DataObject("RULE", draggedItem.DataContext);
+                DragDrop.DoDragDrop(draggedItem, data, DragDropEffects.Move);
+                draggedItem.IsSelected = true;
             }
         }
     }

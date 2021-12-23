@@ -1,11 +1,22 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using Contract;
+using System.Text.Json;
+
 namespace RemoveExtraSpaceRule
 {
+
+    public class RemoveExtraSpaceData 
+    {
+        public int Configuration { get; set; }
+        public string Name { get; set; }
+
+        public bool IsInUse { get; set; }
+    }
     public class RemoveExtraSpace : IRule, INotifyPropertyChanged
 
     {
@@ -49,6 +60,16 @@ namespace RemoveExtraSpaceRule
         public bool IsUse()
         {
             return IsInUse;
+        }
+
+        public string ToJson()
+        {
+            RemoveExtraSpaceData data = new RemoveExtraSpaceData();
+            data.Configuration = this.Configuration;
+            data.Name = this.Name;
+            data.IsInUse = this.IsInUse;
+            string json = JsonSerializer.Serialize(data);
+            return json;
         }
         public List<string> Rename(List<string> originals, int type)
         {
@@ -107,6 +128,17 @@ namespace RemoveExtraSpaceRule
                     return originals;
             }
             return result;
+        }
+
+        public IRule Clone(string json)
+        {
+            RemoveExtraSpaceData ruleData = (RemoveExtraSpaceData)JsonSerializer.Deserialize(json, typeof(RemoveExtraSpaceData));
+            RemoveExtraSpace rule = new RemoveExtraSpace();
+            rule.Name = ruleData.Name;
+            rule.Configuration = ruleData.Configuration;
+            rule.IsInUse = ruleData.IsInUse;
+
+            return rule;
         }
     }
 }

@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChangeExtension", "ChangeEx
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddCounter", "AddCounter\AddCounter.csproj", "{B80538C4-714B-40A5-9BD6-D69B0B547269}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChangeFileNameRule", "ChangeFileName\ChangeFileNameRule.csproj", "{4945183C-9DCD-44B8-BA12-DD09D96A56E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{B80538C4-714B-40A5-9BD6-D69B0B547269}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B80538C4-714B-40A5-9BD6-D69B0B547269}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B80538C4-714B-40A5-9BD6-D69B0B547269}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4945183C-9DCD-44B8-BA12-DD09D96A56E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4945183C-9DCD-44B8-BA12-DD09D96A56E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4945183C-9DCD-44B8-BA12-DD09D96A56E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4945183C-9DCD-44B8-BA12-DD09D96A56E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

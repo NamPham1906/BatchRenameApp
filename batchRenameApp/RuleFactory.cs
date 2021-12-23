@@ -16,7 +16,7 @@ namespace batchRenameApp
         {
             string exePath = Assembly.GetExecutingAssembly().Location;
             string folder = Path.GetDirectoryName(exePath);
-            var fis = new DirectoryInfo(folder+"\\DLL").GetFiles("*.dll");
+            var fis = new DirectoryInfo(folder+"\\DLL2").GetFiles("*.dll");
 
             foreach (var f in fis)
             {
@@ -46,6 +46,21 @@ namespace batchRenameApp
         public IRule Create(int type)
         {
             return _prototypes[type].Clone();
+        }
+
+        public IRule Create(RuleContainer ruleContainer)
+        {
+            int totalRule = _prototypes.Count();
+            IRule result = null;
+            for(int i = 0; i < totalRule; i++)
+            {
+                if(_prototypes[i].Name == ruleContainer.Name)
+                {
+                    result = _prototypes[i].Clone(ruleContainer.Data);
+                    break;
+                }
+            }
+            return result;
         }
 
         public int RuleAmount()
