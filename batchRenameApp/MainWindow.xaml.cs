@@ -28,6 +28,7 @@ namespace batchRenameApp
         String BatchingUnsuccessErrorStatus = "Error: Batching unsuccessfully";
         String FileDulicateErrorStatus = "Error: File duplicate";
         String FileNotExistErrorStatus = "Error: File not exist";
+        String FileNameNotChangeErrorStatus = "Error: File name not change";
 
         private void StoreRules(List<IRule> rules, string path)
         {
@@ -158,7 +159,6 @@ namespace batchRenameApp
             totalRule = RuleFactory.GetInstance().RuleAmount();
             for (int i = 0; i < totalRule; i++)
             {
-                allRules.Add(RuleFactory.GetInstance().Create(i));
                 allRules.Add(RuleFactory.GetInstance().Create(i));
                 allRulesName.Add(allRules[i].GetName());
             }
@@ -316,7 +316,10 @@ namespace batchRenameApp
                 if (!file.Exists)
                 {
                     filelist[i].status = FileNotExistErrorStatus;
-                    
+                } else if (filelist[i].filename.Equals(filelist[i].newfilename))
+                {
+                    filelist[i].status = FileNameNotChangeErrorStatus;
+
                 } else if (newfile.Exists)
                 {
                     filelist[i].status = FileDulicateErrorStatus;

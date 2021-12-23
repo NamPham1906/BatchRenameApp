@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:batchRenameApp"
         mc:Ignorable="d"
         Title="MyFS" Height="580" Width="1315"  Loaded="Window_Loaded">
+    <Window.Resources>
+        <local:StatusColorConverter x:Key="StatusColorConverter" />
+    </Window.Resources>
     <StackPanel Orientation ="Vertical" Margin="10px">
         <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
             <Button Content="Start Batching" Click="StartBatching_Click" Width="100" Margin="5px">
@@ -204,13 +207,11 @@
                                     <GridViewColumn Width="150" Header="File Name" DisplayMemberBinding="{Binding filename}"/>
                                     <GridViewColumn Width="150" Header="New file name" DisplayMemberBinding="{Binding newfilename}"/>
                                     <GridViewColumn Width="110" Header="File Extendsion" DisplayMemberBinding="{Binding fileextension}"/>
-                                    <GridViewColumn Width="320" Header="File Path" DisplayMemberBinding="{Binding filepath}"/>
-                                    <GridViewColumn Width="150" Header="Status" DisplayMemberBinding="{Binding status}" />
-
-                                    <GridViewColumn Width="150" Header="Status">
+                                    <GridViewColumn Width="280" Header="File Path" DisplayMemberBinding="{Binding filepath}"/>
+                                    <GridViewColumn Width="180" Header="Status">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock x:Name="StatusText" Text="{Binding status}" Foreground="Yellow" />
+                                                <TextBlock x:Name="StatusText" Text="{Binding status}" FontWeight="Bold" Foreground="{Binding status, Converter={StaticResource StatusColorConverter}}" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
@@ -254,8 +255,8 @@
                                     </GridViewColumn>
                                     <GridViewColumn Width="150" Header="Folder Name"  DisplayMemberBinding="{Binding foldername}"/>
                                     <GridViewColumn Width="150" Header="New folder name" DisplayMemberBinding="{Binding newfoldername}"/>
-                                    <GridViewColumn Width="430" Header="Folder Path" DisplayMemberBinding="{Binding folderpath}"/>
-                                    <GridViewColumn Width="150" Header="Status" DisplayMemberBinding="{Binding status}"/>
+                                    <GridViewColumn Width="400" Header="Folder Path" DisplayMemberBinding="{Binding folderpath}"/>
+                                    <GridViewColumn Width="180" Header="Status" DisplayMemberBinding="{Binding status}"/>
                                 </GridView>
                             </ListView.View>
                             <!--<ListView.ItemContainerStyle>
