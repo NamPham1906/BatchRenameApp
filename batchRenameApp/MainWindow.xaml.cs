@@ -602,5 +602,10 @@ namespace batchRenameApp
             state.StoreData(@"D:\JSON\path.json");
             //MessageBox.Show("Closed called");
         }
+
+        private void Clear_All_Rule_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            userRules.Clear();
+        }
     }
 }
