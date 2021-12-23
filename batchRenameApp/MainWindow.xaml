@@ -123,9 +123,9 @@
                             <Setter Property="VerticalContentAlignment" Value="Top"/>
                             <Setter Property="ContentTemplate" Value="{StaticResource DefaultItemTemplate}" />
                             <Setter Property="Background" Value="White"/>
-                            <Setter Property="AllowDrop" Value="true"/>
+                            <!--<Setter Property="AllowDrop" Value="true"/>
                             <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListBoxItem_PreviewMouseLeftButtonDown"/>
-                            <EventSetter Event="Drop" Handler="ListBoxItem_Drop"/>
+                            <EventSetter Event="Drop" Handler="ListBoxItem_Drop"/>-->
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
                                     <Trigger.EnterActions>
