@@ -569,7 +569,7 @@ namespace batchRenameApp
         {
             //save preset
             totalPreset++;
-            
+
             StoreRules(userRules, $@"D:\JSON\preset{totalPreset}.json");
 
 
@@ -580,11 +580,11 @@ namespace batchRenameApp
                 presetName += item.GetName() + totalPreset.ToString() + " ";
             }
             Preset ps = new Preset(presetName, preset);
-            
+
 
             presets.Add(ps);
             PresetComboBox.Items.Add(presetName);
-
+        }
         private void openInFileExplorer_Click(object sender, RoutedEventArgs e)
         {
             int selectedfile = FileList.SelectedIndex;
