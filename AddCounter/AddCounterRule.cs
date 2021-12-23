@@ -2,11 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Text.Json;
 using System.Windows.Controls;
 using Contract;
 
 namespace AddCounter 
 {
+    public class AddCounterData
+    {
+        public int Start { get; set; }
+        public int Step { get; set; }
+        public int Digits { get; set; }
+        public string Name { get; set; }
+
+        public bool IsInUse { get; set; }
+    }
     public class AddCounterRule: IRule, INotifyPropertyChanged
     {
         public int Start { get; set; }
@@ -85,6 +95,30 @@ namespace AddCounter
                     return originals;
             }
             
+        }
+        public string ToJson()
+        {
+            AddCounterData data = new AddCounterData();
+            data.Start = this.Start;
+            data.Step = this.Step;
+            data.Digits = this.Digits;
+            data.Name = this.Name;
+            data.IsInUse = this.IsInUse;
+            string json = JsonSerializer.Serialize(data);
+            return json;
+        }
+
+        public IRule Clone(string json)
+        {
+            AddCounterData ruleData = (AddCounterData)JsonSerializer.Deserialize(json, typeof(AddCounterData));
+            AddCounterRule rule = new AddCounterRule();
+            rule.Name = ruleData.Name;
+            rule.Start = ruleData.Start;
+            rule.Step = ruleData.Step;
+            rule.Digits = ruleData.Digits;
+            rule.IsInUse = ruleData.IsInUse;
+
+            return rule;
         }
 
         public IRule Clone()

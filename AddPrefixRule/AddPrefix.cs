@@ -1,11 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 using System.Windows.Controls;
 using Contract;
 
 namespace AddPrefixRule
 {
+    public class AddPrefixData
+    {
+        public string Prefix { get; set; }
+        public string Name { get; set; }
+        public bool IsInUse { get; set; }
+    }
+
     public class AddPrefix : IRule, INotifyPropertyChanged
     {
         public string Name { get; set; }
@@ -34,6 +42,26 @@ namespace AddPrefixRule
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public string ToJson()
+        {
+            AddPrefixData data = new AddPrefixData();
+            data.Prefix = this.Prefix;
+            data.Name = this.Name;
+            data.IsInUse = this.IsInUse;
+            string json = JsonSerializer.Serialize(data);
+            return json;
+        }
+
+        public IRule Clone(string json)
+        {
+            AddPrefixData ruleData = (AddPrefixData)JsonSerializer.Deserialize(json, typeof(AddPrefixData));
+            AddPrefix rule = new AddPrefix();
+            rule.Name = ruleData.Name;
+            rule.Prefix = ruleData.Prefix;
+            rule.IsInUse = ruleData.IsInUse;
+
+            return rule;
+        }
         public IRule Clone()
         {
             return new AddPrefix(Prefix);
