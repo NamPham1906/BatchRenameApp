@@ -32,6 +32,7 @@ namespace batchRenameApp
         String FileNotExistErrorStatus = "Error: File not exist";
         String FileNameNotChangeErrorStatus = "Error: File name not change";
         String LastProjectAddress = @"LastProject\LastProject.json";
+        String DefaultProjectAddress = @"LastProject\Untitled.json";
         String AppTitle = "Batch Rename";
         RenameProject currentProject = null;
         LastProject lastProject = null;
@@ -60,6 +61,32 @@ namespace batchRenameApp
             currentProject.Folders = folderlist.ToList();
         }
 
+        private void InitProject()
+        {
+            this.Width = currentProject.WindowWidth;
+            this.Height = currentProject.WindowHeight;
+            this.Top = currentProject.WindowTop;
+            this.Left = currentProject.WindowLeft;
+            if (currentProject.Rules == null)
+            {
+                currentProject.Rules = new List<RuleContainer>();
+            }
+            if (currentProject.Files == null)
+            {
+                currentProject.Files = new List<MyFile>();
+            }
+            if (currentProject.Folders == null)
+            {
+                currentProject.Folders = new List<Folder>();
+            }
+            userRules = new BindingList<IRule>(currentProject.GetRules());
+            filelist = new BindingList<MyFile>(currentProject.Files);
+            folderlist = new BindingList<Folder>(currentProject.Folders);
+            FileList.ItemsSource = filelist;
+            FolderList.ItemsSource = folderlist;
+            this.Title = AppTitle + " - " + currentProject.GetName();
+            RuleList.ItemsSource = userRules;
+        }
         private void StoreRules(List<IRule> rules, string path)
         {
 
@@ -192,46 +219,44 @@ namespace batchRenameApp
                 allRulesName.Add(allRules[i].GetName());
             }
             RuleComboBox.ItemsSource = allRulesName;
-            lastProject = LastProject.Parse(LastProjectAddress);
+            bool isParseAble = true;
+            try
+            {
+                lastProject = LastProject.Parse(LastProjectAddress);
+            }
+            catch (Exception)
+            {
+                lastProject = null;
+            }
+
             if (lastProject != null)
             {
-                currentProject = RenameProject.Parser(lastProject.Address);
+               
+                RenameProject project = null;
+                try
+                {
+                    project = RenameProject.Parser(lastProject.Address);
+                }
+                catch (Exception)
+                {
+                    isParseAble = false;
+                }
+                if (isParseAble && project != null && project.Rules != null && project.Folders != null && project.Files != null)
+                {
+                    project.ProjectAddress = lastProject.Address;
+                    currentProject = project;
+                }
+                else
+                {
+                    currentProject = new RenameProject();
+                }
             }
             else
             {
                 currentProject = new RenameProject();
             }
-            if (currentProject != null)
-            {
-                this.Width = currentProject.WindowWidth;
-                this.Height = currentProject.WindowHeight;
-                this.Top = currentProject.WindowTop;
-                this.Left = currentProject.WindowLeft;
-                if (currentProject.Rules == null)
-                {
-                    currentProject.Rules = new List<RuleContainer>();
-                }
-                if (currentProject.Files == null)
-                {
-                    currentProject.Files = new List<MyFile>();
-                }
-                if (currentProject.Folders == null)
-                {
-                    currentProject.Folders = new List<Folder>();
-                }
-                userRules = new BindingList<IRule>(currentProject.GetRules());
-                filelist = new BindingList<MyFile>(currentProject.Files);
-                folderlist = new BindingList<Folder>(currentProject.Folders);
-                FileList.ItemsSource = filelist;
-                FolderList.ItemsSource = folderlist;
-            }
-            else
-            {
-                currentProject = new RenameProject();
-            }
-            this.Title = AppTitle + " - " + currentProject.GetName();
 
-            RuleList.ItemsSource = userRules;
+            InitProject();
         }
 
         public MainWindow()
@@ -583,7 +608,7 @@ namespace batchRenameApp
             if (currentProject.ProjectAddress == null || currentProject.ProjectAddress.Length <= 0)
             {
                 StoreToProject();
-                currentProject.ProjectAddress = @"LastProject\Untitled.json";
+                currentProject.ProjectAddress = DefaultProjectAddress;
             }
             lastProject = new LastProject()
             {
@@ -595,6 +620,50 @@ namespace batchRenameApp
 
         private void Open_Project_Btn_Click(object sender, RoutedEventArgs e)
         {
+            if (!currentProject.isDefaul())
+            {
+                if (currentProject.ProjectAddress == null || currentProject.ProjectAddress.Length <= 0)
+                {
+                    MessageBoxResult result = HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
+                    {
+                        Message = "Do you want to save the currrent project",
+                        Caption = "Save Project",
+                        Button = MessageBoxButton.YesNo,
+                        IconBrushKey = ResourceToken.AccentBrush,
+                        IconKey = ResourceToken.AskGeometry,
+                        StyleKey = "MessageBoxCustom"
+                    });
+
+                    switch (result)
+                    {
+                        case MessageBoxResult.Yes:
+                            double height = this.ActualHeight;
+                            double width = this.ActualWidth;
+                            double left = this.Left;
+                            double top = this.Top;
+                            StoreToProject();
+                            currentProject.ProjectAddress = DefaultProjectAddress;
+                            SaveFileDialog saveFileDialog = new SaveFileDialog();
+                            saveFileDialog.FileName = currentProject.GetName();
+                            saveFileDialog.DefaultExt = ".json";
+                            saveFileDialog.Filter = "JSON files(*.json)|*.json";
+                            if (saveFileDialog.ShowDialog() == true)
+                            {
+                                string path = saveFileDialog.FileName;
+                                currentProject.ProjectAddress = path;
+                            }
+                            currentProject.StoreData(currentProject.ProjectAddress);
+                            break;
+                        case MessageBoxResult.No:
+                            break;
+                    }
+                }
+                else
+                {
+                    StoreToProject();
+                    currentProject.StoreData(currentProject.ProjectAddress);
+                }
+            }
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "JSON files only (*.json)|*.json";
             if (openFileDialog.ShowDialog() == true)
@@ -617,18 +686,9 @@ namespace batchRenameApp
                         if (project.Rules != null && project.Folders != null && project.Files != null)
                         {
                             project.ProjectAddress = path;
-                            this.Width = project.WindowWidth;
-                            this.Height = project.WindowHeight;
-                            this.Top = project.WindowTop;
-                            this.Left = project.WindowLeft;
-                            userRules = new BindingList<IRule>(project.GetRules());
-                            filelist = new BindingList<MyFile>(project.Files);
-                            folderlist = new BindingList<Folder>(project.Folders);
-                            RuleList.ItemsSource = userRules;
-                            FileList.ItemsSource = filelist;
-                            FolderList.ItemsSource = folderlist;
+                            
                             currentProject = project;
-                            this.Title = AppTitle + " - " + currentProject.GetName();
+                            InitProject();
                         }
                         else
                         {
@@ -673,12 +733,6 @@ namespace batchRenameApp
 
         private void Save_Project_Btn_Click(object sender, RoutedEventArgs e)
         {
-            double height = this.ActualHeight;
-            double width = this.ActualWidth;
-            double left = this.Left;
-            double top = this.Top;
-            
-
             if (currentProject.ProjectAddress != null && currentProject.ProjectAddress.Length > 0)
             {
                 StoreToProject();
@@ -686,7 +740,7 @@ namespace batchRenameApp
             else
             {
                 StoreToProject();
-                currentProject.ProjectAddress = @"LastProject\Untitled.json";
+                currentProject.ProjectAddress = DefaultProjectAddress;
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.FileName = currentProject.GetName();
                 saveFileDialog.DefaultExt = ".json";
@@ -703,12 +757,67 @@ namespace batchRenameApp
 
         private void New_Project_Btn_Click(object sender, RoutedEventArgs e)
         {
+            if (currentProject.isDefaul())
+            {
+                return;
+            }
+            if (currentProject.ProjectAddress == null || currentProject.ProjectAddress.Length <= 0)
+            {
+                MessageBoxResult result = HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
+                {
+                    Message = "Do you want to save the currrent project",
+                    Caption = "Save Project",
+                    Button = MessageBoxButton.YesNo,
+                    IconBrushKey = ResourceToken.AccentBrush,
+                    IconKey = ResourceToken.AskGeometry,
+                    StyleKey = "MessageBoxCustom"
+                });
 
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        StoreToProject();
+                        currentProject.ProjectAddress = DefaultProjectAddress;
+                        SaveFileDialog saveFileDialog = new SaveFileDialog();
+                        saveFileDialog.FileName = currentProject.GetName();
+                        saveFileDialog.DefaultExt = ".json";
+                        saveFileDialog.Filter = "JSON files(*.json)|*.json";
+                        if (saveFileDialog.ShowDialog() == true)
+                        {
+                            string path = saveFileDialog.FileName;
+                            currentProject.ProjectAddress = path;
+                        }
+                        currentProject.StoreData(currentProject.ProjectAddress);
+                        break;
+                    case MessageBoxResult.No:
+                        break;
+                }
+            }
+            else
+            {
+                StoreToProject();
+                currentProject.StoreData(currentProject.ProjectAddress);
+            }
+            currentProject = new RenameProject();
+            InitProject();
+            
         }
 
         private void Save_As_Project_Btn_Click(object sender, RoutedEventArgs e)
         {
-
+            StoreToProject();
+            currentProject.ProjectAddress = DefaultProjectAddress;
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = currentProject.GetName();
+            saveFileDialog.DefaultExt = ".json";
+            saveFileDialog.Filter = "JSON files(*.json)|*.json";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string path = saveFileDialog.FileName;
+                currentProject.ProjectAddress = path;
+            }
+            InitProject();
+            currentProject.StoreData(currentProject.ProjectAddress);
         }
     }
 }

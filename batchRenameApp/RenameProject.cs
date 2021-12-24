@@ -48,8 +48,8 @@ namespace batchRenameApp
             ProjectAddress = "";
             WindowWidth = 1315;
             WindowHeight = 580;
-            WindowLeft = 0;
-            WindowTop = 0;
+            WindowLeft = 100;
+            WindowTop = 100;
             Rules = null;
             Folders = null;
             Files = null;
@@ -94,6 +94,22 @@ namespace batchRenameApp
             }
 
             return resultRules;
+        }
+
+        public bool isDefaul()
+        {
+            if(
+                (ProjectAddress == null || ProjectAddress.Length <= 0) &&
+                Rules.Count() <= 0 &&
+                Files.Count() <= 0 &&
+                Folders.Count() <= 0
+            )
+            {
+                return true;
+            }
+
+            return false;
+            
         }
     }
 }
