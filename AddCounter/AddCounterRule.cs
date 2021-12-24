@@ -38,10 +38,10 @@ namespace AddCounter
             Digits = 1;
             ConfigurationUI = new AddCounterWindow(this);
         }
-        public AddCounterRule(int start, int step, int digits)
+        public AddCounterRule(int start, int step, int digits, bool isInUse)
         {
             Name = "Add Counter";
-            IsInUse = false;
+            IsInUse = isInUse;
             Start = start;
             Step = step;
             Digits = digits;
@@ -123,7 +123,7 @@ namespace AddCounter
 
         public IRule Clone()
         {
-            return new AddCounterRule();
+            return new AddCounterRule(Start, Step, Digits, IsInUse);
         }
 
         public UserControl GetUI()

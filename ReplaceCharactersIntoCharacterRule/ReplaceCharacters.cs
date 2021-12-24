@@ -36,12 +36,12 @@ namespace ReplaceCharactersRule
             this.ConfigurationUI = new RuleWindow(this);
         }
 
-        public ReplaceCharacters(string needle, string replacer)
+        public ReplaceCharacters(string needle, string replacer, bool isInUse)
         {
             this.Needle = needle;
             this.Replacer = replacer;
             this.Name = "Replace Characters";
-            this.IsInUse = false;
+            this.IsInUse = isInUse;
             this.ConfigurationUI = new RuleWindow(this);
         }
 
@@ -49,7 +49,7 @@ namespace ReplaceCharactersRule
 
         public IRule Clone()
         {
-            return new ReplaceCharacters(Needle, Replacer);
+            return new ReplaceCharacters(Needle, Replacer, IsInUse);
         }
 
         public List<string> Rename(List<string> originals, int type)
