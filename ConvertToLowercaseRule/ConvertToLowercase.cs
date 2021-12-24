@@ -28,11 +28,18 @@ namespace ConvertToLowercaseRule
             IsInUse = false;
         }
 
+        public ConvertToLowercase(bool isInUse)
+        {
+            this.Name = "Convert To Lowercase";
+            ConfigurationUI = new RuleWindow(this);
+            IsInUse = isInUse;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public IRule Clone()
         {
-            return new ConvertToLowercase();
+            return new ConvertToLowercase(IsInUse);
         }
 
         public string GetName()

@@ -32,11 +32,11 @@ namespace RemoveExtraSpaceRule
             IsInUse = false;
             ConfigurationUI = new RuleWindow(this);
         }
-        public RemoveExtraSpace(int configuration = 1)
+        public RemoveExtraSpace(int configuration = 1, bool isInUse = false)
         {
             Name = "Remove Extra Space";
             Configuration = configuration;
-            IsInUse = false;
+            IsInUse = isInUse;
             ConfigurationUI = new RuleWindow(this);
         }
 
@@ -44,7 +44,7 @@ namespace RemoveExtraSpaceRule
 
         public IRule Clone()
         {
-            return new RemoveExtraSpace(1);
+            return new RemoveExtraSpace(Configuration, IsInUse);
         }
 
 
