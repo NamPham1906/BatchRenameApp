@@ -15,26 +15,11 @@ using System.Globalization;
 using HandyControl.Data;
 using System.Diagnostics;
 using System.Reflection;
-
+using System.Windows.Input;
 
 namespace batchRenameApp
 {
   
-    public class Preset
-    {
-        public string PresetName { get; set; }
-        public List<IRule> PresetRules { get; set; }
-        public Preset()
-        {
-            PresetName = "";
-            PresetRules = null;
-        }
-        public Preset(string name, List<IRule> rules)
-        {
-            PresetName = name;
-            PresetRules = rules;
-        }
-    }
     public partial class MainWindow : Window
     {
         int currentfilepage = 1;
@@ -50,7 +35,7 @@ namespace batchRenameApp
 
         int unnamedPreset = 0;
 
-        String LastProjectAddress = @"LastProject\LastProject.json";
+        String LastProjectAddress = @"LastProject\lastprojectaddress.json";
         String DefaultProjectAddress = @"LastProject\Untitled.json";
         String AppTitle = "Batch Rename";
         RenameProject currentProject = null;
@@ -65,6 +50,17 @@ namespace batchRenameApp
             double width = this.ActualWidth;
             double left = this.Left;
             double top = this.Top;
+            currentProject.CurrentFilePage = currentfilepage;
+            currentProject.CurrentFolderPage = currentfolderpage;
+            int presetIndex = PresetComboBox.SelectedIndex;
+            if(presetIndex <= 0)
+            {
+                currentProject.PresetName = "";
+            }
+            else
+            {
+                currentProject.PresetName = presets[presetIndex].PresetName;
+            }
             List<RuleContainer> ruleContainers = new List<RuleContainer>();
             for (int i = 0; i < userRules.Count(); i++)
             {
@@ -89,6 +85,8 @@ namespace batchRenameApp
             this.Height = currentProject.WindowHeight;
             this.Top = currentProject.WindowTop;
             this.Left = currentProject.WindowLeft;
+            currentfilepage = currentProject.CurrentFilePage;
+            currentfolderpage = currentProject.CurrentFolderPage;
             if (currentProject.Rules == null)
             {
                 currentProject.Rules = new List<RuleContainer>();
@@ -101,11 +99,30 @@ namespace batchRenameApp
             {
                 currentProject.Folders = new List<Folder>();
             }
+            if(currentProject.PresetName.Length > 0)
+            {
+                int n = presets.Count();
+                for(int i = 0; i < n; i++)
+                {
+                    if(presets[i].PresetName == currentProject.PresetName)
+                    {
+                        PresetComboBox.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                PresetComboBox.SelectedIndex = -1;
+            }
+            
             userRules = new BindingList<IRule>(currentProject.GetRules());
             filelist = new BindingList<MyFile>(currentProject.Files);
             folderlist = new BindingList<Folder>(currentProject.Folders);
             FileList.ItemsSource = filelist;
             FolderList.ItemsSource = folderlist;
+            update_Filepage();
+            update_Folderpage();
             this.Title = AppTitle + " - " + currentProject.GetName();
             RuleList.ItemsSource = userRules;
         }
@@ -355,11 +372,9 @@ namespace batchRenameApp
             {
                 currentProject = new RenameProject();
             }
-
             InitProject();
         }
 
-      
 
         public MainWindow()
         {
@@ -635,9 +650,9 @@ namespace batchRenameApp
 
         private void Window_Closed(object sender, EventArgs e)
         {
+            StoreToProject();
             if (currentProject.ProjectAddress == null || currentProject.ProjectAddress.Length <= 0)
             {
-                StoreToProject();
                 currentProject.ProjectAddress = DefaultProjectAddress;
             }
             lastProject = new LastProject()
@@ -783,6 +798,7 @@ namespace batchRenameApp
                 }
             }
             currentProject.StoreData(currentProject.ProjectAddress);
+            this.Title = AppTitle + " - " + currentProject.GetName();
         }
 
         private void New_Project_Btn_Click(object sender, RoutedEventArgs e)
@@ -1055,6 +1071,34 @@ namespace batchRenameApp
                 file.Delete();
             }
             PresetComboBox.SelectedIndex = -1;
+        }
+
+        private void CutContractKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                if (currentProject.ProjectAddress != null && currentProject.ProjectAddress.Length > 0)
+                {
+                    StoreToProject();
+                }
+                else
+                {
+                    StoreToProject();
+                    currentProject.ProjectAddress = DefaultProjectAddress;
+                    SaveFileDialog saveFileDialog = new SaveFileDialog();
+                    saveFileDialog.FileName = currentProject.GetName();
+                    saveFileDialog.DefaultExt = ".json";
+                    saveFileDialog.Filter = "JSON files(*.json)|*.json";
+                    if (saveFileDialog.ShowDialog() == true)
+                    {
+                        string path = saveFileDialog.FileName;
+                        currentProject.ProjectAddress = path;
+
+                    }
+                }
+                currentProject.StoreData(currentProject.ProjectAddress);
+                this.Title = AppTitle + " - " + currentProject.GetName();
+            }
         }
     }
 }

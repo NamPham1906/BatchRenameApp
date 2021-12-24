@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="StripRule.RuleWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:StripRule"
+             mc:Ignorable="d" 
+             HorizontalContentAlignment="Stretch"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch"
+             Loaded="UserControl_Loaded"
+             Background="White">
+    <StackPanel Margin="10">
+        <StackPanel Orientation="Horizontal" Margin="0,3,0,3">
+            <CheckBox IsChecked="{Binding StripLetter}" Width="90" VerticalAlignment="Center" HorizontalAlignment="Left" >Alphabet</CheckBox>
+            <Label VerticalAlignment="Center" Content="{Binding Letter}"></Label>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,3,0,3">
+            <CheckBox IsChecked="{Binding StripNumber}" Width="90" VerticalAlignment="Center" HorizontalAlignment="Left" >Number</CheckBox>
+            <Label VerticalAlignment="Center" Content="{Binding Number}"></Label>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,3,0,3">
+            <CheckBox IsChecked="{Binding StripSymbol}" Width="90" VerticalAlignment="Center" HorizontalAlignment="Left" >Symbol</CheckBox>
+            <Label VerticalAlignment="Center" Content="{Binding Symbol}"></Label>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,3,0,3">
+            <CheckBox IsChecked="{Binding StripCustom}" Width="90" VerticalAlignment="Center" HorizontalAlignment="Left" >User define</CheckBox>
+            <TextBox Text="{Binding CustomString}" Width="149" Padding="10,0,10,0"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>
