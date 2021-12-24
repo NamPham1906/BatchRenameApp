@@ -11,11 +11,11 @@
              Loaded="UserControl_Loaded"
              Background="White">
     <StackPanel Margin="10" >
-        <TextBlock FontWeight="Bold" HorizontalAlignment="left">Enter starting number</TextBlock>
+        <TextBlock FontWeight="Bold" HorizontalAlignment="left">Enter starting number:</TextBlock>
         <TextBox PreviewTextInput="NumberValidationTextBox1" MaxLength="9" HorizontalAlignment="Stretch"  x:Name="startInput" TextChanged="startInput_TextChange" Text="{Binding Start}"></TextBox>
-        <TextBlock FontWeight="Bold" HorizontalAlignment="left">Enter step</TextBlock>
+        <TextBlock FontWeight="Bold" HorizontalAlignment="left">Enter step:</TextBlock>
         <TextBox PreviewTextInput="NumberValidationTextBox2" MaxLength="9" HorizontalAlignment="Stretch"  x:Name="stepInput" TextChanged="stepInputt_TextChange" Text="{Binding Step}"></TextBox>
-        <TextBlock FontWeight="Bold" HorizontalAlignment="left">Enter number of digits</TextBlock>
+        <TextBlock FontWeight="Bold" HorizontalAlignment="left">Enter number of digits:</TextBlock>
         <TextBox PreviewTextInput="NumberValidationTextBox3" MaxLength="9" HorizontalAlignment="Stretch"  x:Name="digitsInput" TextChanged="digitsInput_TextChange" Text="{Binding Digits}"></TextBox>
     </StackPanel>
 </UserControl>
