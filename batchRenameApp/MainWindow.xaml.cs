@@ -18,59 +18,7 @@ using System.Reflection;
 
 namespace batchRenameApp
 {
-    public class AppState
-    {
-        public double WindowWidth { get; set; }
-        public double WindowHeight { get; set; }
-        public double WindowLeft { get; set; }
-        public double WindowTop { get; set; }
-
-        public List<RuleContainer> Rules { get; set; }
-        public List<MyFile> Files { get; set; }
-        public List<Folder> Folders { get; set; }
-
-        
-        public AppState()
-        {
-            WindowWidth = 1315;
-            WindowHeight = 580;
-            WindowLeft = 0;
-            WindowTop = 0;
-            Rules = null;
-            Folders = null;
-        }
-
-
-        public void StoreData(string path)
-        {
-            string json = JsonSerializer.Serialize(this);
-            File.WriteAllText(path, json);
-        }
-
-        public static AppState Parser(string path)
-        {
-            FileInfo file = new FileInfo(path);
-            if (!file.Exists)
-            {
-                return null;
-            }
-            string outJson = File.ReadAllText(path);
-            AppState result = (AppState)JsonSerializer.Deserialize(outJson, typeof(AppState));
-            return result;
-        }
-
-        public List<IRule> GetRules()
-        {
-            List<IRule> resultRules = new List<IRule>();
-            for (int i = 0; i < Rules.Count(); i++)
-            {
-                resultRules.Add(RuleFactory.GetInstance().Create(Rules[i]));
-            }
-
-            return resultRules;
-        }
-    }
-
+  
     public class Preset
     {
         public string PresetName { get; set; }
@@ -314,11 +262,26 @@ namespace batchRenameApp
 
         }
 
+        private void CreateLastProjectFolder()
+        {
+            string exePath = Assembly.GetExecutingAssembly().Location;
+            string folderPath = Path.GetDirectoryName(exePath);
+            folderPath += @"\LastProject";
+            DirectoryInfo folder = new DirectoryInfo(folderPath);
+            if (!folder.Exists)
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CreateJSONFolder();
+            CreateLastProjectFolder();
             FilePagination.MaxPageCount = (int)Math.Ceiling(filelist.Count() * 1.0 / 6);
-            
+            FolderPagination.MaxPageCount = (int)Math.Ceiling(folderlist.Count() * 1.0 / 6);
+
             //get all rule from DLL
             totalRule = RuleFactory.GetInstance().RuleAmount();
             for (int i = 0; i < totalRule; i++)

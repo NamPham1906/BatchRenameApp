@@ -148,14 +148,23 @@ namespace batchRenameApp
             }
             else if (file.Exists && !newfile.Exists)
             {
-                System.IO.File.Move(this.filepath, newfilepath);
-                FileInfo myfile = new FileInfo(newfilepath);
-                this.filename = myfile.Name;
-                this.newfilename = this.filename;
-                this.fileextension = myfile.Extension;
-                this.filepath = newfilepath;
-                this.status = BatchingSuccessStatus;
-                return true;
+
+                try
+                {
+                    System.IO.File.Move(this.filepath, newfilepath);
+                    FileInfo myfile = new FileInfo(newfilepath);
+                    this.filename = myfile.Name;
+                    this.newfilename = this.filename;
+                    this.fileextension = myfile.Extension;
+                    this.filepath = newfilepath;
+                    this.status = BatchingSuccessStatus;
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    this.status = BatchingUnsuccessErrorStatus;
+                    return false;
+                }
 
             }
             return false;
