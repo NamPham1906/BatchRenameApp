@@ -44,6 +44,7 @@ namespace StripRule
             StripNumber = false;
             StripSymbol = false;
             StripCustom = false;
+            ConfigurationUI = new RuleWindow(this);
             CustomString = "";
         }
         public IRule Clone()
