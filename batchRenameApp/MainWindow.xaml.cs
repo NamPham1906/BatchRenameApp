@@ -565,10 +565,6 @@ namespace batchRenameApp
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            double height = this.ActualHeight;
-            double width = this.ActualWidth;
-            double left = this.Left;
-            double top = this.Top;
             if (currentProject.ProjectAddress == null || currentProject.ProjectAddress.Length <= 0)
             {
                 StoreToProject();
@@ -605,10 +601,6 @@ namespace batchRenameApp
                     switch (result)
                     {
                         case MessageBoxResult.Yes:
-                            double height = this.ActualHeight;
-                            double width = this.ActualWidth;
-                            double left = this.Left;
-                            double top = this.Top;
                             StoreToProject();
                             currentProject.ProjectAddress = DefaultProjectAddress;
                             SaveFileDialog saveFileDialog = new SaveFileDialog();
