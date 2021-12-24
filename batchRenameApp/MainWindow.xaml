@@ -206,8 +206,11 @@
                         <StackPanel Orientation ="Horizontal">
                             <Button   Content="Add new file" Click="AddFile_Click" Width="120" Margin="5px"/>
                             <Button   Content="Clear all" Click="ClearAllFile_Click" Width="120" Margin="5px"/>
+                            
                         </StackPanel>
-                        <ListView x:Name="FileList" Height="400px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFileList" Drop="DropFileList">
+                     
+                       
+                        <ListView x:Name="FileList" Height="370px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFileList" Drop="DropFileList">
                             <ListView.Resources>
                                 <ContextMenu x:Key="ItemContextMenu">
                                     <MenuItem Header="Open in file explorer" Click="openInFileExplorer_Click" />
@@ -221,12 +224,9 @@
                             </ListView.ItemContainerStyle>
 
                             <ListView.View>
-                               
                                 <GridView>
-                                  
                                     <GridViewColumn>
-                                       
-                                          <GridViewColumn.CellTemplate>
+                                        <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Image Source="{Binding fileimage}" Height="30px"/>
                                             </DataTemplate>
@@ -247,7 +247,12 @@
                             </ListView.View>
                             
                         </ListView>
+                        <StackPanel Orientation ="Horizontal" HorizontalAlignment="Center">
+                            <hc:Pagination Name="FilePagination"  IsJumpEnabled="True" MaxPageInterval ="2" Margin="5px" PageUpdated="page_PageUpdated" PageIndex="1" />
+                        </StackPanel>
+                     
                     </StackPanel>
+                    
 
                 </TabItem>
                 <TabItem Header="Folder">
@@ -257,7 +262,7 @@
                             <Button   Content="Clear all" Click="ClearAllFolder_Click" Width="120" Margin="5px"/>
                         </StackPanel>
 
-                        <ListView x:Name="FolderList" Height="400px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFolderList" Drop="DropFolderList">
+                        <ListView x:Name="FolderList" Height="370px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFolderList" Drop="DropFolderList">
 
                             <ListView.Resources>
                                 <ContextMenu x:Key="ItemContextMenu">
@@ -299,7 +304,9 @@
                                 </Style>
                             </ListView.ItemContainerStyle>-->
                         </ListView>
-                      
+                        <StackPanel Orientation ="Horizontal" HorizontalAlignment="Center">
+                            <hc:Pagination Name="FolderPagination"  IsJumpEnabled="True" MaxPageInterval ="2" Margin="5px" PageUpdated="page_FolderPageUpdated" PageIndex="1" />
+                        </StackPanel>
                     </StackPanel>
                 </TabItem>
 

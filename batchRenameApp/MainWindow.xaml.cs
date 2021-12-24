@@ -14,9 +14,62 @@ using System.Text.Json;
 using System.Globalization;
 using HandyControl.Data;
 using System.Diagnostics;
-    
+using System.Reflection;
+
 namespace batchRenameApp
 {
+    public class AppState
+    {
+        public double WindowWidth { get; set; }
+        public double WindowHeight { get; set; }
+        public double WindowLeft { get; set; }
+        public double WindowTop { get; set; }
+
+        public List<RuleContainer> Rules { get; set; }
+        public List<MyFile> Files { get; set; }
+        public List<Folder> Folders { get; set; }
+
+        
+        public AppState()
+        {
+            WindowWidth = 1315;
+            WindowHeight = 580;
+            WindowLeft = 0;
+            WindowTop = 0;
+            Rules = null;
+            Folders = null;
+        }
+
+
+        public void StoreData(string path)
+        {
+            string json = JsonSerializer.Serialize(this);
+            File.WriteAllText(path, json);
+        }
+
+        public static AppState Parser(string path)
+        {
+            FileInfo file = new FileInfo(path);
+            if (!file.Exists)
+            {
+                return null;
+            }
+            string outJson = File.ReadAllText(path);
+            AppState result = (AppState)JsonSerializer.Deserialize(outJson, typeof(AppState));
+            return result;
+        }
+
+        public List<IRule> GetRules()
+        {
+            List<IRule> resultRules = new List<IRule>();
+            for (int i = 0; i < Rules.Count(); i++)
+            {
+                resultRules.Add(RuleFactory.GetInstance().Create(Rules[i]));
+            }
+
+            return resultRules;
+        }
+    }
 
     public class Preset
     {
@@ -35,12 +88,15 @@ namespace batchRenameApp
     }
     public partial class MainWindow : Window
     {
-
+        int currentfilepage = 1;
+        int currentfolderpage = 1;
+        int itemperpage = 6;
         int totalRule = 0;
         List<IRule> allRules = new List<IRule>();
         List<String> allRulesName = new List<String>();
         BindingList<IRule> userRules = new BindingList<IRule>();
         BindingList<MyFile> filelist = new BindingList<MyFile>();
+        BindingList<MyFile> datafilelist = new BindingList<MyFile>();
         BindingList<Folder> folderlist = new BindingList<Folder>();
         String LastProjectAddress = @"LastProject\LastProject.json";
         String DefaultProjectAddress = @"LastProject\Untitled.json";
@@ -49,6 +105,8 @@ namespace batchRenameApp
         LastProject lastProject = null;
         int totalPreset = 0;
         List<Preset> presets = new List<Preset>();
+
+
         private void StoreToProject()
         {
             double height = this.ActualHeight;
@@ -138,7 +196,7 @@ namespace batchRenameApp
         {
             if (isFileNotExist(filedir))
             {
-                if (System.IO.Path.GetExtension(filedir) == String.Empty)
+                if (Directory.Exists(filedir))
                 {
                     string[] InsideFilesList = Directory.GetFiles(filedir, "*", SearchOption.AllDirectories);
                     foreach (var item in InsideFilesList)
@@ -158,6 +216,7 @@ namespace batchRenameApp
                     FileList.ItemsSource = filelist;
                 }
             }
+            update_Filepage();
         }
 
         private void addFolder(string folderdir)
@@ -169,6 +228,7 @@ namespace batchRenameApp
                 folderlist.Add(newfolder);
                 FolderList.ItemsSource = folderlist;
             }
+            update_Folderpage();
         }
 
         private bool isFileNotExist(string filedir)
@@ -241,8 +301,24 @@ namespace batchRenameApp
 
         }
 
+        private void CreateJSONFolder()
+        {
+            string exePath = Assembly.GetExecutingAssembly().Location;
+            string folderPath = Path.GetDirectoryName(exePath);
+            folderPath += @"\JSON";
+            DirectoryInfo folder = new DirectoryInfo(folderPath);
+            if (!folder.Exists)
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            CreateJSONFolder();
+            FilePagination.MaxPageCount = (int)Math.Ceiling(filelist.Count() * 1.0 / 6);
+            
             //get all rule from DLL
             totalRule = RuleFactory.GetInstance().RuleAmount();
             for (int i = 0; i < totalRule; i++)
@@ -291,6 +367,8 @@ namespace batchRenameApp
             InitProject();
         }
 
+      
+
         public MainWindow()
         {
             InitializeComponent();
@@ -322,7 +400,7 @@ namespace batchRenameApp
             string[] droppedFoldernames = e.Data.GetData(DataFormats.FileDrop, true) as string[];
             foreach (string foldername in droppedFoldernames)
             {
-                if (System.IO.Path.GetExtension(foldername) == String.Empty)
+                if (Directory.Exists(foldername))
                 {
                     addFolder(foldername);
                 }
@@ -339,7 +417,7 @@ namespace batchRenameApp
 
                 foreach (string foldername in foldernames)
                 {
-                    if (System.IO.Path.GetExtension(foldername) != String.Empty)
+                    if (!Directory.Exists(foldername))
                     {
                         dropEnabled = false;
                         break;
@@ -794,15 +872,17 @@ namespace batchRenameApp
             RuleList.ItemsSource = userRules;
         }
 
+       
         private void SaveRule_Click(object sender, RoutedEventArgs e)
         {
             //save preset
             totalPreset++;
+            string exePath = Assembly.GetExecutingAssembly().Location;
+            string folder = Path.GetDirectoryName(exePath);
+            StoreRules(userRules, folder + $@"\JSON\preset{totalPreset}.json");
 
-            StoreRules(userRules, $@"D:\JSON\preset{totalPreset}.json");
 
-
-            List<IRule> preset = ReadRules($@"D:\JSON\preset{totalPreset}.json");
+            List<IRule> preset = ReadRules(folder + $@"\JSON\preset{totalPreset}.json");
             string presetName = "";
             foreach (var item in preset)
             {
@@ -816,32 +896,34 @@ namespace batchRenameApp
         }
         private void openInFileExplorer_Click(object sender, RoutedEventArgs e)
         {
-            int selectedfile = FileList.SelectedIndex;
+            int selectedfile = (currentfilepage - 1) * itemperpage + FileList.SelectedIndex;
 
             Process.Start("explorer.exe", filelist[selectedfile].filepath.Substring(0, filelist[selectedfile].filepath.LastIndexOf(@"\") + 1));
         }
 
         private void deleteFileMenu_Click(object sender, RoutedEventArgs e)
         {
-            int selectedfile = FileList.SelectedIndex;
+            int selectedfile = (currentfilepage - 1) * itemperpage + FileList.SelectedIndex;
             if (selectedfile >= 0)
             {
                 filelist.Remove(filelist[selectedfile]);
             }
+            update_Filepage();
         }
 
         private void deleteFolderMenu_Click(object sender, RoutedEventArgs e)
         {
-            int selectedfolder = FolderList.SelectedIndex;
+            int selectedfolder = (currentfolderpage - 1) * itemperpage + FolderList.SelectedIndex;
             if (selectedfolder >= 0)
             {
                 folderlist.Remove(folderlist[selectedfolder]);
             }
+            update_Folderpage();
         }
 
         private void openInFolderExplorer_Click(object sender, RoutedEventArgs e)
         {
-            int selectedfolder = FolderList.SelectedIndex;
+            int selectedfolder = (currentfolderpage - 1) * itemperpage + FolderList.SelectedIndex;
 
             Process.Start("explorer.exe", folderlist[selectedfolder].folderpath);
         }
@@ -849,11 +931,39 @@ namespace batchRenameApp
         private void ClearAllFile_Click(object sender, RoutedEventArgs e)
         {
             filelist.Clear();
+            update_Filepage();
         }
 
         private void ClearAllFolder_Click(object sender, RoutedEventArgs e)
         {
             folderlist.Clear();
+            update_Folderpage();
+        }
+
+
+        private void update_Filepage(){
+            FilePagination.MaxPageCount = (int)Math.Ceiling(filelist.Count()*1.0/6);
+            IEnumerable<MyFile> datafilelist = filelist.Skip((currentfilepage - 1) * itemperpage).Take(itemperpage);
+            FileList.ItemsSource = datafilelist;
+        }
+
+
+        private void update_Folderpage(){
+            FolderPagination.MaxPageCount = (int)Math.Ceiling(folderlist.Count() * 1.0 / 6);
+            IEnumerable<Folder> datafolderlist = folderlist.Skip((currentfolderpage - 1) * itemperpage).Take(itemperpage);
+            FolderList.ItemsSource = datafolderlist;
+        }
+
+        private void page_PageUpdated(object sender, HandyControl.Data.FunctionEventArgs<int> e)
+        {
+            currentfilepage = e.Info;
+            update_Filepage();
+        }
+
+        private void page_FolderPageUpdated(object sender, HandyControl.Data.FunctionEventArgs<int> e)
+        {
+            currentfolderpage = e.Info;
+            update_Folderpage();
         }
     }
 }
