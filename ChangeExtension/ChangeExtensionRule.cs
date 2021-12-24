@@ -33,12 +33,12 @@ namespace ChangeExtension
             IsInUse = false;
         }
 
-        public ChangeExtensionRule(string extension)
+        public ChangeExtensionRule(string extension, bool isInUse)
         {
             Name = "Change Extension";
             this.Extension = extension;
             ConfigurationUI = new ChangeExtensionWindow(this);
-            IsInUse = false;
+            IsInUse = isInUse;
 
         }
 
@@ -98,7 +98,7 @@ namespace ChangeExtension
 
         public IRule Clone()
         {
-            return new ChangeExtensionRule(Extension);
+            return new ChangeExtensionRule(Extension,IsInUse);
         }
 
         public UserControl GetUI()

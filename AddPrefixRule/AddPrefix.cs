@@ -32,12 +32,12 @@ namespace AddPrefixRule
             IsInUse = false;
         }
 
-        public AddPrefix(string prefix)
+        public AddPrefix(string prefix, bool isInUse)
         {
             this.Name = "Add Prefix";
             this.Prefix = prefix;
             ConfigurationUI = new RuleWindow(this);
-            IsInUse = false;
+            IsInUse = isInUse;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -64,7 +64,7 @@ namespace AddPrefixRule
         }
         public IRule Clone()
         {
-            return new AddPrefix(Prefix);
+            return new AddPrefix(Prefix, IsInUse);
         }
 
         public List<string> Rename(List<string> originals, int type)

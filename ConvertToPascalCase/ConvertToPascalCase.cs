@@ -29,11 +29,18 @@ namespace ConvertToPascalCaseRule
             IsInUse = false;
         }
 
+        public ConvertToPascalCase(bool isInUse)
+        {
+            Name = "Convert To PascalCase";
+            ConfigurationUI = new RuleWindow(this);
+            IsInUse = isInUse;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public IRule Clone()
         {
-            return new ConvertToPascalCase();
+            return new ConvertToPascalCase(IsInUse);
         }
 
         public string GetName()
