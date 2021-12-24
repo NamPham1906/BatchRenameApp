@@ -139,13 +139,21 @@ namespace batchRenameApp
             }
             else if (Directory.Exists(this.folderpath) && !Directory.Exists(newfolderpath))
             {
-                System.IO.Directory.Move(this.folderpath, newfolderpath);
-                DirectoryInfo myfolder = new DirectoryInfo(newfolderpath);    
-                this.foldername = myfolder.Name;
-                this.newfoldername = this.foldername; 
-                this.folderpath = newfolderpath;
-                this.status = BatchingSuccessStatus;
-                return true;
+                try
+                {
+                    System.IO.Directory.Move(this.folderpath, newfolderpath);
+                    DirectoryInfo myfolder = new DirectoryInfo(newfolderpath);
+                    this.foldername = myfolder.Name;
+                    this.newfoldername = this.foldername;
+                    this.folderpath = newfolderpath;
+                    this.status = BatchingSuccessStatus;
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    this.status = BatchingUnsuccessErrorStatus;
+                    return false;
+                }
 
             }
             return false;
