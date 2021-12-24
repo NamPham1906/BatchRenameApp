@@ -16,6 +16,7 @@ using HandyControl.Data;
 using System.Diagnostics;
 using System.Reflection;
 
+
 namespace batchRenameApp
 {
   
@@ -46,6 +47,9 @@ namespace batchRenameApp
         BindingList<MyFile> filelist = new BindingList<MyFile>();
         BindingList<MyFile> datafilelist = new BindingList<MyFile>();
         BindingList<Folder> folderlist = new BindingList<Folder>();
+
+        int unnamedPreset = 0;
+
         String LastProjectAddress = @"LastProject\LastProject.json";
         String DefaultProjectAddress = @"LastProject\Untitled.json";
         String AppTitle = "Batch Rename";
@@ -290,6 +294,27 @@ namespace batchRenameApp
                 allRulesName.Add(allRules[i].GetName());
             }
             RuleComboBox.ItemsSource = allRulesName;
+
+           
+            //preset
+            DirectoryInfo d = new DirectoryInfo(@"D:\PRESET");
+            FileInfo[] Files = d.GetFiles("*.json");
+            foreach (FileInfo file in Files)
+            {
+                List<IRule> rulesInPreset = ReadRules($@"D:\PRESET\{file.Name}");
+
+                string[] tokens = file.Name.Split(".");
+                string filename = "";
+                for(int i = 0; i < tokens.Length - 2; i++)
+                {
+                    filename += tokens[i] + ".";
+                }
+                filename += tokens[tokens.Length - 2];
+                Preset ps = new Preset(filename, rulesInPreset);
+                presets.Add(ps);
+                PresetComboBox.Items.Add(filename);
+            }    
+                
             bool isParseAble = true;
             try
             {
@@ -829,34 +854,109 @@ namespace batchRenameApp
 
         private void PresetComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+           
             int index = PresetComboBox.SelectedIndex;
-            userRules = new BindingList<IRule>(presets[index].PresetRules);
-            //RuleList.Items.Clear();
-            RuleList.ItemsSource = userRules;
+            if(index != -1)
+            {
+                userRules = new BindingList<IRule>();
+                foreach (var rule in presets[index].PresetRules)
+                {
+                    userRules.Add(rule.Clone());
+                }
+                //RuleList.Items.Clear();
+                RuleList.ItemsSource = userRules;
+            }   
+           
         }
 
        
         private void SaveRule_Click(object sender, RoutedEventArgs e)
         {
-            //save preset
-            totalPreset++;
-            string exePath = Assembly.GetExecutingAssembly().Location;
-            string folder = Path.GetDirectoryName(exePath);
-            StoreRules(userRules, folder + $@"\JSON\preset{totalPreset}.json");
-
-
-            List<IRule> preset = ReadRules(folder + $@"\JSON\preset{totalPreset}.json");
-            string presetName = "";
-            foreach (var item in preset)
+          //save preset
+            if (presetNameInput.Text == "")
             {
-                presetName += item.GetName() + totalPreset.ToString() + " ";
+                unnamedPreset++;
+                string presetName = "";
+                foreach (var item in userRules)
+                {
+                    presetName += item.GetName() + unnamedPreset.ToString() + " ";
+                }
+                StoreRules(userRules, $@"D:\JSON\{presetName}.json");
+                List<IRule> rulesInPreset = ReadRules($@"D:\JSON\{presetName}.json");
+                Preset ps = new Preset(presetName, rulesInPreset);
+
+                presets.Add(ps);
+                PresetComboBox.Items.Add(presetName);
+                MessageBoxResult result = HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
+                {
+                    Message = "Save preset succeeded",
+                    Caption = "Save Preset",
+                    Button = MessageBoxButton.OK,
+                    IconBrushKey = ResourceToken.AccentBrush,
+                    IconKey = ResourceToken.AskGeometry,
+                    StyleKey = "MessageBoxCustom"
+                });
             }
-            Preset ps = new Preset(presetName, preset);
-
-
-            presets.Add(ps);
-            PresetComboBox.Items.Add(presetName);
+            else
+            {
+                string presetNameInput = this.presetNameInput.Text;
+                List<IRule> rulesInPreset = new List<IRule>();
+                Preset ps = new Preset();
+                int indexDuplicate = -1;
+                
+                for(int i = 0; i < presets.Count; i++)
+                {
+                    if(presets[i].PresetName == presetNameInput)
+                    {
+                        indexDuplicate = i;
+                        MessageBoxResult result = HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
+                        {
+                            Message = $"Preset {presetNameInput} already exits. Do you want to replace it?",
+                            Caption = "Save Preset",
+                            Button = MessageBoxButton.YesNo,
+                            IconBrushKey = ResourceToken.AccentBrush,
+                            IconKey = ResourceToken.AskGeometry,
+                            StyleKey = "MessageBoxCustom"
+                        });
+                        switch (result)
+                        {
+                            case MessageBoxResult.Yes: //save and replace preset json
+                                PresetComboBox.Items.Remove(presetNameInput);
+                                presets.RemoveAt(indexDuplicate);
+                                StoreRules(userRules, $@"D:\PRESET\{presetNameInput}.json");
+                                rulesInPreset = ReadRules($@"D:\PRESET\{presetNameInput}.json");
+                                ps.PresetName = presetNameInput;
+                                ps.PresetRules = rulesInPreset;
+                                presets.Add(ps);
+                                PresetComboBox.Items.Add(presetNameInput);
+                                break;
+                            case MessageBoxResult.No: //cancle save
+                                break;
+                        }
+                        break;
+                    }    
+                }
+                if(indexDuplicate == -1)
+                {
+                    StoreRules(userRules, $@"D:\PRESET\{presetNameInput}.json");
+                    rulesInPreset = ReadRules($@"D:\PRESET\{presetNameInput}.json");
+                    ps.PresetName = presetNameInput;
+                    ps.PresetRules = rulesInPreset;
+                    presets.Add(ps);
+                    PresetComboBox.Items.Add(presetNameInput);
+                    MessageBoxResult result = HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
+                    {
+                        Message = "Save preset succeeded!",
+                        Caption = "Save Preset",
+                        Button = MessageBoxButton.OK,
+                        IconBrushKey = ResourceToken.DarkSuccessBrush,
+                        IconKey = ResourceToken.CheckedGeometry,
+                        StyleKey = "MessageBoxCustom"
+                    });
+                }    
+            }
         }
+        
         private void openInFileExplorer_Click(object sender, RoutedEventArgs e)
         {
             int selectedfile = (currentfilepage - 1) * itemperpage + FileList.SelectedIndex;
@@ -927,6 +1027,20 @@ namespace batchRenameApp
         {
             currentfolderpage = e.Info;
             update_Folderpage();
+        }
+
+        private void Clear_All_Preset_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            
+            presets.Clear();
+            PresetComboBox.Items.Clear();
+            DirectoryInfo d = new DirectoryInfo(@"D:\PRESET");
+            FileInfo[] Files = d.GetFiles("*.json");
+            foreach (FileInfo file in Files)
+            {
+                file.Delete();
+            }
+            PresetComboBox.SelectedIndex = -1;
         }
     }
 }
