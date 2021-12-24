@@ -131,10 +131,25 @@ namespace batchRenameApp
         private void addFile(string filedir) {
             if (isFileNotExist(filedir))
             {
-                MyFile newfile = new MyFile(filedir);
-                newfile.fileimage = "images/file.png";
-                filelist.Add(newfile);
-                FileList.ItemsSource = filelist;
+                if (System.IO.Path.GetExtension(filedir) == String.Empty)
+                {
+                    string[] InsideFilesList = Directory.GetFiles(filedir, "*", SearchOption.AllDirectories);
+                    foreach (var item in InsideFilesList)
+                    {
+                        MyFile newfile = new MyFile(item);
+                        newfile.fileimage = "images/file.png";
+                        filelist.Add(newfile);
+                        FileList.ItemsSource = filelist;
+                    }
+
+                }
+                else
+                {
+                    MyFile newfile = new MyFile(filedir);
+                    newfile.fileimage = "images/file.png";
+                    filelist.Add(newfile);
+                    FileList.ItemsSource = filelist;
+                }
             }
         }
 
