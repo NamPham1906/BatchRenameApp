@@ -220,6 +220,7 @@
                         <ListView x:Name="FileList" Height="370px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFileList" Drop="DropFileList">
                             <ListView.Resources>
                                 <ContextMenu x:Key="ItemContextMenu">
+                                    <MenuItem Header="Open this file" Click="openThisFile_Click" />
                                     <MenuItem Header="Open in file explorer" Click="openInFileExplorer_Click" />
                                     <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
                                 </ContextMenu>

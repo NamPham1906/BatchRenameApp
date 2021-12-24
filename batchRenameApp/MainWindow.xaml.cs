@@ -253,11 +253,11 @@ namespace batchRenameApp
 
         }
 
-        private void CreateJSONFolder()
+        private void CreatePresetFolder()
         {
             string exePath = Assembly.GetExecutingAssembly().Location;
             string folderPath = Path.GetDirectoryName(exePath);
-            folderPath += @"\JSON";
+            folderPath += @"\PRESET";
             DirectoryInfo folder = new DirectoryInfo(folderPath);
             if (!folder.Exists)
             {
@@ -281,7 +281,7 @@ namespace batchRenameApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            CreateJSONFolder();
+            CreatePresetFolder();
             CreateLastProjectFolder();
             FilePagination.MaxPageCount = (int)Math.Ceiling(filelist.Count() * 1.0 / 6);
             FolderPagination.MaxPageCount = (int)Math.Ceiling(folderlist.Count() * 1.0 / 6);
@@ -295,13 +295,17 @@ namespace batchRenameApp
             }
             RuleComboBox.ItemsSource = allRulesName;
 
-           
+
             //preset
-            DirectoryInfo d = new DirectoryInfo(@"D:\PRESET");
+            string exePath = Assembly.GetExecutingAssembly().Location;
+            string folderPath = Path.GetDirectoryName(exePath);
+            folderPath += @"\PRESET";
+            DirectoryInfo d = new DirectoryInfo(folderPath);
+          
             FileInfo[] Files = d.GetFiles("*.json");
             foreach (FileInfo file in Files)
             {
-                List<IRule> rulesInPreset = ReadRules($@"D:\PRESET\{file.Name}");
+                List<IRule> rulesInPreset = ReadRules($@"PRESET\{file.Name}");
 
                 string[] tokens = file.Name.Split(".");
                 string filename = "";
@@ -644,7 +648,7 @@ namespace batchRenameApp
             currentProject.StoreData(currentProject.ProjectAddress);
             for (int i = 1; i <= totalPreset; i++)
             {
-                File.Delete($@"D:\JSON\preset{i}.json");
+                File.Delete($@"PRESET\preset{i}.json");
             }
         }
 
@@ -881,8 +885,8 @@ namespace batchRenameApp
                 {
                     presetName += item.GetName() + unnamedPreset.ToString() + " ";
                 }
-                StoreRules(userRules, $@"D:\JSON\{presetName}.json");
-                List<IRule> rulesInPreset = ReadRules($@"D:\JSON\{presetName}.json");
+                StoreRules(userRules, $@"PRESET\{presetName}.json");
+                List<IRule> rulesInPreset = ReadRules($@"PRESET\{presetName}.json");
                 Preset ps = new Preset(presetName, rulesInPreset);
 
                 presets.Add(ps);
@@ -923,8 +927,8 @@ namespace batchRenameApp
                             case MessageBoxResult.Yes: //save and replace preset json
                                 PresetComboBox.Items.Remove(presetNameInput);
                                 presets.RemoveAt(indexDuplicate);
-                                StoreRules(userRules, $@"D:\PRESET\{presetNameInput}.json");
-                                rulesInPreset = ReadRules($@"D:\PRESET\{presetNameInput}.json");
+                                StoreRules(userRules, $@"PRESET\{presetNameInput}.json");
+                                rulesInPreset = ReadRules($@"PRESET\{presetNameInput}.json");
                                 ps.PresetName = presetNameInput;
                                 ps.PresetRules = rulesInPreset;
                                 presets.Add(ps);
@@ -938,8 +942,8 @@ namespace batchRenameApp
                 }
                 if(indexDuplicate == -1)
                 {
-                    StoreRules(userRules, $@"D:\PRESET\{presetNameInput}.json");
-                    rulesInPreset = ReadRules($@"D:\PRESET\{presetNameInput}.json");
+                    StoreRules(userRules, $@"PRESET\{presetNameInput}.json");
+                    rulesInPreset = ReadRules($@"PRESET\{presetNameInput}.json");
                     ps.PresetName = presetNameInput;
                     ps.PresetRules = rulesInPreset;
                     presets.Add(ps);
@@ -961,7 +965,14 @@ namespace batchRenameApp
         {
             int selectedfile = (currentfilepage - 1) * itemperpage + FileList.SelectedIndex;
 
-            Process.Start("explorer.exe", filelist[selectedfile].filepath.Substring(0, filelist[selectedfile].filepath.LastIndexOf(@"\") + 1));
+            Process.Start("explorer.exe", "/select, \"" + filelist[selectedfile].filepath + "\"");
+        }
+
+        private void openThisFile_Click(object sender, RoutedEventArgs e)
+        {
+            int selectedfile = (currentfilepage - 1) * itemperpage + FileList.SelectedIndex;
+
+            Process.Start("explorer.exe", filelist[selectedfile].filepath);
         }
 
         private void deleteFileMenu_Click(object sender, RoutedEventArgs e)
@@ -1034,7 +1045,10 @@ namespace batchRenameApp
             
             presets.Clear();
             PresetComboBox.Items.Clear();
-            DirectoryInfo d = new DirectoryInfo(@"D:\PRESET");
+            string exePath = Assembly.GetExecutingAssembly().Location;
+            string folderPath = Path.GetDirectoryName(exePath);
+            folderPath += @"\PRESET";
+            DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] Files = d.GetFiles("*.json");
             foreach (FileInfo file in Files)
             {
