@@ -8,7 +8,8 @@
         mc:Ignorable="d"
         Title="MyFS"  
         Height="580" Width="1335"
-        Loaded="Window_Loaded" Closed="Window_Closed">
+        Loaded="Window_Loaded" Closed="Window_Closed"
+        >
     <Window.Resources>
         <local:StatusColorConverter x:Key="StatusColorConverter" />
     </Window.Resources>
@@ -21,8 +22,9 @@
            
             <StackPanel Orientation="Vertical">
                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,0">
-                    <TextBlock VerticalAlignment="Center"  Text="Preset: " Margin="0,0,15,0"/>
-                    <hc:ComboBox Name="PresetComboBox" Width="261" SelectionChanged="PresetComboBox_SelectionChanged" HorizontalAlignment="Stretch" Margin="5px" VerticalContentAlignment="Center"/>
+                    <TextBlock VerticalAlignment="Center"  Text="Preset: " Margin="0,0,16,0"/>
+                    <hc:ComboBox Name="PresetComboBox" Width="163" SelectionChanged="PresetComboBox_SelectionChanged" HorizontalAlignment="Stretch" Margin="5px" VerticalContentAlignment="Center"/>
+                    <Button Content="Clear Preset"  Cursor="Hand" Name="Clear_All_Preset_Btn" Click="Clear_All_Preset_Btn_Click" Margin="5px"/>
                 </StackPanel>
                 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,0">
@@ -169,7 +171,12 @@
 
                     </ListView.ItemContainerStyle>
                 </ListView>
-                <Button Content="Save Rules" Click="SaveRule_Click" Width="100" Margin="5px"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,0">
+                    <TextBlock VerticalAlignment="Center"  Text="Preset Name: " Margin="0,0,5,0"/>
+                    <TextBox x:Name="presetNameInput" Width="142" Height="30" Margin="0,0,5,0"></TextBox>
+                    <Button Content="Save Preset" Click="SaveRule_Click" Width="90" Margin="5px"/>
+                </StackPanel>
+                
             </StackPanel>
             
             <TabControl>
