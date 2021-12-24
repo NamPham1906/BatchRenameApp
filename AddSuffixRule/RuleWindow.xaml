@@ -5,11 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AddSuffixRule"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="150"
              Background="White"
-             Loaded="UserControl_Loaded">
+             Loaded="UserControl_Loaded"
+             HorizontalContentAlignment="Stretch"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch">
     <StackPanel Margin="10">
-        <Label FontWeight="Bold">Add Suffix:</Label>
-        <TextBox x:Name="suffixInput" Text="{Binding Suffix}" TextChanged="suffixInput_TextChanged"/>
+        <TextBlock FontWeight="Bold" HorizontalAlignment="left">Add Suffix:</TextBlock>
+        <TextBox x:Name="suffixInput" Text="{Binding Suffix}" TextChanged="suffixInput_TextChanged"
+                 PreviewTextInput="ValidationTextBox" HorizontalAlignment="Stretch"/>
     </StackPanel>
 </UserControl>

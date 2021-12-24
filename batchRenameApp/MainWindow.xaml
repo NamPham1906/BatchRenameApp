@@ -1,4 +1,5 @@
-﻿<Window xmlns:hc="https://handyorg.github.io/handycontrol"  x:Class="batchRenameApp.MainWindow"
+
+<Window xmlns:hc="https://handyorg.github.io/handycontrol"  x:Class="batchRenameApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -48,15 +49,26 @@
         <StackPanel Orientation="Horizontal" >
            
             <StackPanel Orientation="Vertical">
+               <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,0">
+                    <TextBlock VerticalAlignment="Center"  Text="Preset: " Margin="0,0,15,0"/>
+                    <hc:ComboBox Name="PresetComboBox" Width="261" SelectionChanged="PresetComboBox_SelectionChanged" HorizontalAlignment="Stretch" Margin="5px" VerticalContentAlignment="Center"/>
+                </StackPanel>
+                
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,0">
                     <TextBlock VerticalAlignment="Center" Text="Add Rule: "/>
-                    <hc:ComboBox Name="RuleComboBox" Width="261" SelectionChanged="RuleComboBox_SelectionChanged" HorizontalAlignment="Stretch" Margin="5px" VerticalContentAlignment="Center"/>
+                    <hc:ComboBox Name="RuleComboBox" Width="163" SelectionChanged="RuleComboBox_SelectionChanged" HorizontalAlignment="Stretch" Margin="5px" VerticalContentAlignment="Center"/>
+                    <Button Cursor="Hand" Name="Clear_All_Rule_Btn" Click="Clear_All_Rule_Btn_Click" Margin="5px">
+                        <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
+                            <Image Source="images/clear_all.png" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <TextBlock Text="Clear All"/>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
                 <ListView 
                 SelectionMode="Multiple"
                 SelectionChanged="RuleList_SelectionChanged" 
                 LayoutUpdated="RuleList_LayoutUpdated" 
-                Height="435"
+                Height="365"
                 Width="320"
                 Margin="5,0,5,0"
                 Name="RuleList" 
@@ -144,7 +156,7 @@
                                         <Image Source="/images/clear.png"/>
                                     </Button>
                                 </Grid>
-                                <UserControl Height="210" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Name="ConfigurationUI" Content="{Binding ConfigurationUI}"></UserControl>
+                                <UserControl Height="160" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Name="ConfigurationUI" Content="{Binding ConfigurationUI}"></UserControl>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.Resources>
@@ -160,22 +172,21 @@
                             <Setter Property="AllowDrop" Value="true"/>
                             <EventSetter Event="PreviewMouseRightButtonDown" Handler="ListBoxItem_PreviewMouseRightButtonDown"/>
                             <EventSetter Event="Drop" Handler="ListBoxItem_Drop"/>
-
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
                                     <Trigger.EnterActions>
                                         <BeginStoryboard>
                                             <Storyboard>
-                                                <DoubleAnimation Storyboard.TargetProperty="MinHeight" From="40" To="240" Duration="0:0:0.5" />
-                                                <DoubleAnimation Storyboard.TargetProperty="MaxHeight" From="40" To="240" Duration="0:0:0.5" />
+                                                <DoubleAnimation Storyboard.TargetProperty="MinHeight" From="40" To="195" Duration="0:0:0.5" />
+                                                <DoubleAnimation Storyboard.TargetProperty="MaxHeight" From="40" To="195" Duration="0:0:0.5" />
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </Trigger.EnterActions>
                                     <Trigger.ExitActions>
                                         <BeginStoryboard>
                                             <Storyboard>
-                                                <DoubleAnimation Storyboard.TargetProperty="MinHeight" From="240" To="40" Duration="0:0:0.5" />
-                                                <DoubleAnimation Storyboard.TargetProperty="MaxHeight" From="240" To="40" Duration="0:0:0.5" />
+                                                <DoubleAnimation Storyboard.TargetProperty="MinHeight" From="195" To="40" Duration="0:0:0.5" />
+                                                <DoubleAnimation Storyboard.TargetProperty="MaxHeight" From="195" To="40" Duration="0:0:0.5" />
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </Trigger.ExitActions>
@@ -186,50 +197,36 @@
 
                     </ListView.ItemContainerStyle>
                 </ListView>
+                <Button Content="Save Rules" Click="SaveRule_Click" Width="100" Margin="5px"/>
             </StackPanel>
             
             <TabControl>
                 <TabItem Header="File">
-                    <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="950">
+                    <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="970">
                         <StackPanel Orientation ="Horizontal">
-                            <Button   Content="Add new file" Click="AddFile_Click" Width="120" Margin="5px">
-                            </Button>
+                            <Button   Content="Add new file" Click="AddFile_Click" Width="120" Margin="5px"/>
+                            <Button   Content="Clear all" Click="ClearAllFile_Click" Width="120" Margin="5px"/>
                         </StackPanel>
                         <ListView x:Name="FileList" Height="400px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFileList" Drop="DropFileList">
-
-
-                            <!--<ListView.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="Lock" Click="lockFileMenu_Click" />
-                                    <MenuItem Header="Unlock" Click="unlockFileMenu_Click" />
-                                    <MenuItem Header="Change password" Click="changePasswordFileMenu_Click" />
-                                    <MenuItem Header="Rename" Click="renameFileMenu_Click" />
-                                    <MenuItem Header="Export this file" Click="exportFileMenu_Click" />
-                                    <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
-                                </ContextMenu>
-                            </ListView.ContextMenu>-->
-                            <!--<ListView.Resources>
+                            <ListView.Resources>
                                 <ContextMenu x:Key="ItemContextMenu">
-                                    <MenuItem Header="Lock" Click="lockFileMenu_Click" />
-                                    <MenuItem Header="Unlock" Click="unlockFileMenu_Click" />
-                                    <MenuItem Header="Change password" Click="changePasswordFileMenu_Click" />
-                                    <MenuItem Header="Rename" Click="renameFileMenu_Click" />
-                                    <MenuItem Header="Export this file" Click="exportFileMenu_Click" />
+                                    <MenuItem Header="Open in file explorer" Click="openInFileExplorer_Click" />
                                     <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
                                 </ContextMenu>
                             </ListView.Resources>
                             <ListView.ItemContainerStyle>
-                                <Style TargetType="{x:Type ListViewItem}" >
+                                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ListViewItemBaseStyle}" >
                                     <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
-                                    <Setter Property="Background" Value="White"/>
-                                    <Setter Property="Padding" Value="10"/>
                                 </Style>
-                            </ListView.ItemContainerStyle>-->
-                           
+                            </ListView.ItemContainerStyle>
+
                             <ListView.View>
-                                <GridView >
+                               
+                                <GridView>
+                                  
                                     <GridViewColumn>
-                                        <GridViewColumn.CellTemplate>
+                                       
+                                          <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Image Source="{Binding fileimage}" Height="30px"/>
                                             </DataTemplate>
@@ -239,7 +236,7 @@
                                     <GridViewColumn Width="150" Header="New file name" DisplayMemberBinding="{Binding newfilename}"/>
                                     <GridViewColumn Width="110" Header="File Extendsion" DisplayMemberBinding="{Binding fileextension}"/>
                                     <GridViewColumn Width="280" Header="File Path" DisplayMemberBinding="{Binding filepath}"/>
-                                    <GridViewColumn Width="180" Header="Status">
+                                    <GridViewColumn Width="250" Header="Status">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock x:Name="StatusText" Text="{Binding status}" FontWeight="Bold" Foreground="{Binding status, Converter={StaticResource StatusColorConverter}}" />
@@ -254,27 +251,27 @@
 
                 </TabItem>
                 <TabItem Header="Folder">
-                    <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="950" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
+                    <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="970" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
                         <StackPanel Orientation ="Horizontal">
-                            <Button  Content="Add new folder" Click="AddFolder_Click"  Width="120" Margin="5px">
-                            </Button>
+                            <Button  Content="Add new folder" Click="AddFolder_Click"  Width="120" Margin="5px"/>
+                            <Button   Content="Clear all" Click="ClearAllFolder_Click" Width="120" Margin="5px"/>
                         </StackPanel>
 
                         <ListView x:Name="FolderList" Height="400px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFolderList" Drop="DropFolderList">
 
-
-                            <!--<ListView.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="Lock" Click="lockFileMenu_Click" />
-                                    <MenuItem Header="Unlock" Click="unlockFileMenu_Click" />
-                                    <MenuItem Header="Change password" Click="changePasswordFileMenu_Click" />
-                                    <MenuItem Header="Rename" Click="renameFileMenu_Click" />
-                                    <MenuItem Header="Export this file" Click="exportFileMenu_Click" />
-                                    <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
+                            <ListView.Resources>
+                                <ContextMenu x:Key="ItemContextMenu">
+                                    <MenuItem Header="Open in file explorer" Click="openInFolderExplorer_Click" />
+                                    <MenuItem Header="Delete" Click="deleteFolderMenu_Click" />
                                 </ContextMenu>
-                            </ListView.ContextMenu>-->
-                          
-                           
+                            </ListView.Resources>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ListViewItemBaseStyle}" >
+                                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+
+
                             <ListView.View>
                                 <GridView x:Name="FileGrid">
                                     <GridViewColumn>
@@ -287,7 +284,13 @@
                                     <GridViewColumn Width="150" Header="Folder Name"  DisplayMemberBinding="{Binding foldername}"/>
                                     <GridViewColumn Width="150" Header="New folder name" DisplayMemberBinding="{Binding newfoldername}"/>
                                     <GridViewColumn Width="400" Header="Folder Path" DisplayMemberBinding="{Binding folderpath}"/>
-                                    <GridViewColumn Width="180" Header="Status" DisplayMemberBinding="{Binding status}"/>
+                                    <GridViewColumn Width="250" Header="Status">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock x:Name="StatusText" Text="{Binding status}" FontWeight="Bold" Foreground="{Binding status, Converter={StaticResource StatusColorConverter}}" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
                                 </GridView>
                             </ListView.View>
                             <!--<ListView.ItemContainerStyle>
@@ -303,4 +306,5 @@
             </TabControl>
         </StackPanel>
     </StackPanel>
+
 </Window>

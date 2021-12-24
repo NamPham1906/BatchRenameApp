@@ -5,10 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ChangeFileNameRule"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded"
-             Background="White">
+             HorizontalContentAlignment="Stretch"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch"
+             Background="White"
+             Loaded="UserControl_Loaded">
     <StackPanel Margin="10">
-        <Label FontWeight="Bold">Enter new file name</Label>
-        <TextBox  x:Name="nameInput" TextChanged="nameInput_TextChange" Text="{Binding NewName}"></TextBox>
+        <TextBlock FontWeight="Bold" HorizontalAlignment="left">Enter new file name</TextBlock>
+        <TextBox HorizontalAlignment="Stretch" x:Name="nameInput" TextChanged="nameInput_TextChange" Text="{Binding NewName}"
+                 PreviewTextInput="ValidationTextBox"></TextBox>
     </StackPanel>
 </UserControl>

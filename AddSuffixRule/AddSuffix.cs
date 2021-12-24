@@ -31,12 +31,12 @@ namespace AddSuffixRule
             IsInUse = false;
         }
 
-        public AddSuffix(string suffix)
+        public AddSuffix(string suffix, bool isInUse)
         {
             this.Suffix = suffix;
             this.Name = "Add Suffix";
             ConfigurationUI = new RuleWindow(this);
-            IsInUse = false;
+            IsInUse = isInUse;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -63,7 +63,7 @@ namespace AddSuffixRule
         }
         public IRule Clone()
         {
-            return new AddSuffix(Suffix);
+            return new AddSuffix(Suffix, IsInUse);
         }
 
         public List<string> Rename(List<string> originals, int type)

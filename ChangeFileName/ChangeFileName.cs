@@ -28,15 +28,17 @@ namespace ChangeFileNameRule
         {
             Name = "Change File Name";
             this.NewName = "";
+            IsInUse = false;
             ConfigurationUI = new ChangeFileNameWindow(this);
+            IsInUse = false;
         }
 
-        public ChangeFileName(string newname)
+        public ChangeFileName(string newname, bool isInUse)
         {
             Name = "Change File Name";
             this.NewName = newname;
             ConfigurationUI = new ChangeFileNameWindow(this);
-
+            IsInUse = isInUse;
         }
 
         public List<string> Rename(List<string> originals, int type)
@@ -96,7 +98,7 @@ namespace ChangeFileNameRule
         }
         public IRule Clone()
         {
-            return new ChangeFileName(NewName);
+            return new ChangeFileName(NewName, IsInUse);
         }
 
         public UserControl GetUI()

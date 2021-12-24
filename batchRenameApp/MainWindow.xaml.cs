@@ -13,10 +13,26 @@ using Contract;
 using System.Text.Json;
 using System.Globalization;
 using HandyControl.Data;
-
+using System.Diagnostics;
+    
 namespace batchRenameApp
 {
-    
+
+    public class Preset
+    {
+        public string PresetName { get; set; }
+        public List<IRule> PresetRules { get; set; }
+        public Preset()
+        {
+            PresetName = "";
+            PresetRules = null;
+        }
+        public Preset(string name, List<IRule> rules)
+        {
+            PresetName = name;
+            PresetRules = rules;
+        }
+    }
     public partial class MainWindow : Window
     {
 
@@ -26,17 +42,13 @@ namespace batchRenameApp
         BindingList<IRule> userRules = new BindingList<IRule>();
         BindingList<MyFile> filelist = new BindingList<MyFile>();
         BindingList<Folder> folderlist = new BindingList<Folder>();
-        String BatchingSuccessStatus = "Batching successfully";
-        String BatchingUnsuccessErrorStatus = "Error: Batching unsuccessfully";
-        String FileDulicateErrorStatus = "Error: File duplicate";
-        String FileNotExistErrorStatus = "Error: File not exist";
-        String FileNameNotChangeErrorStatus = "Error: File name not change";
         String LastProjectAddress = @"LastProject\LastProject.json";
         String DefaultProjectAddress = @"LastProject\Untitled.json";
         String AppTitle = "Batch Rename";
         RenameProject currentProject = null;
         LastProject lastProject = null;
-
+        int totalPreset = 0;
+        List<Preset> presets = new List<Preset>();
         private void StoreToProject()
         {
             double height = this.ActualHeight;
@@ -87,7 +99,10 @@ namespace batchRenameApp
             this.Title = AppTitle + " - " + currentProject.GetName();
             RuleList.ItemsSource = userRules;
         }
-        private void StoreRules(List<IRule> rules, string path)
+
+        //How to use:
+        //StoreRules(userRules, @"D:\JSON\path.json");
+        private void StoreRules(BindingList<IRule> rules, string path)
         {
 
             List<RuleContainer> ruleContainers = new List<RuleContainer>();
@@ -104,6 +119,8 @@ namespace batchRenameApp
             File.WriteAllText(path, json);
 
         }
+        //How to use:
+        //List<IRule> rules = ReadRules(@"D:\JSON\path.json");
         private List<IRule> ReadRules(string path)
         {
 
@@ -121,10 +138,25 @@ namespace batchRenameApp
         {
             if (isFileNotExist(filedir))
             {
-                MyFile newfile = new MyFile(filedir);
-                newfile.fileimage = "images/file.png";
-                filelist.Add(newfile);
-                FileList.ItemsSource = filelist;
+                if (System.IO.Path.GetExtension(filedir) == String.Empty)
+                {
+                    string[] InsideFilesList = Directory.GetFiles(filedir, "*", SearchOption.AllDirectories);
+                    foreach (var item in InsideFilesList)
+                    {
+                        MyFile newfile = new MyFile(item);
+                        newfile.fileimage = "images/file.png";
+                        filelist.Add(newfile);
+                        FileList.ItemsSource = filelist;
+                    }
+
+                }
+                else
+                {
+                    MyFile newfile = new MyFile(filedir);
+                    newfile.fileimage = "images/file.png";
+                    filelist.Add(newfile);
+                    FileList.ItemsSource = filelist;
+                }
             }
         }
 
@@ -277,84 +309,12 @@ namespace batchRenameApp
                 addFile(openFileDialog.FileName);
         }
 
-        private void unlockMenu_Click(object sender, RoutedEventArgs e)
-        {
-        }
-        private void deleteMenu_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void lockMenu_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void changePasswordMenu_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void renameMenu_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void importMenu_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void unlockFileMenu_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void lockFileMenu_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void deleteFileMenu_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void renameFileMenu_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void changePasswordFileMenu_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void exportFileMenu_Click(object sender, RoutedEventArgs e)
-        {
-
-
-        }
-
-        private void ExportVolume_Click(object sender, RoutedEventArgs e)
-        {
-
-
-        }
-
         private void AddFolder_Click(object sender, RoutedEventArgs e)
         {
             CommonOpenFileDialog dialog = new CommonOpenFileDialog();
             dialog.IsFolderPicker = true;
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
                 addFolder(dialog.FileName);
-        }
-
-        private void ChangePasswordVolume_Click(object sender, RoutedEventArgs e)
-        {
-
-
-        }
-
-        private void ChangeNameVolume_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void CreateNewVolume_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void DropFolderList(object sender, DragEventArgs e)
@@ -402,39 +362,15 @@ namespace batchRenameApp
         {
             for (int i = 0; i < filelist.Count(); i++)
             {
-                FileInfo file = new FileInfo(filelist[i].filepath);
-                string newfilepath = filelist[i].filepath.Substring(0, filelist[i].filepath.LastIndexOf(@"\") + 1);
-                newfilepath += filelist[i].newfilename;
-                FileInfo newfile = new FileInfo(newfilepath);
-                if (!file.Exists)
-                {
-                    filelist[i].status = FileNotExistErrorStatus;
-                }
-                else if (filelist[i].filename.Equals(filelist[i].newfilename))
-                {
-                    filelist[i].status = FileNameNotChangeErrorStatus;
+                filelist[i].changeName();
+            }
 
-                }
-                else if (newfile.Exists)
-                {
-                    filelist[i].status = FileDulicateErrorStatus;
-                }
-                else if (file.Exists && !newfile.Exists)
-                {
-
-                    System.IO.File.Move(filelist[i].filepath, newfilepath);
-
-                    if (filelist[i].changeName(newfilepath))
-                    {
-                        filelist[i].status = BatchingSuccessStatus;
-                    }
-                    else
-                    {
-                        filelist[i].status = BatchingUnsuccessErrorStatus;
-                    }
-                }
+            for (int i = 0; i < folderlist.Count(); i++)
+            {
+                folderlist[i].changeName();
             }
         }
+
 
         private void RuleList_LayoutUpdated(object sender, EventArgs e)
         {
@@ -499,6 +435,7 @@ namespace batchRenameApp
             //code here
 
             List<string> listOfFileName = new List<string>();
+            List<string> listOfFolderName = new List<string>();
 
             for (int i = 0; i < filelist.Count(); i++)
             {
@@ -506,15 +443,29 @@ namespace batchRenameApp
                 filelist[i].newfilename = filelist[i].filename;
             }
 
+            for (int i = 0; i < folderlist.Count(); i++)
+            {
+                listOfFolderName.Add(folderlist[i].foldername);
+                folderlist[i].newfoldername = folderlist[i].foldername;
+            }
+
             for (int i = 0; i < userRules.Count(); i++)
             {
                 if (userRules[i].IsUse())
                 {
                     List<string> temp = userRules[i].Rename(listOfFileName, 1);
+
+                    List<string> temp2 = userRules[i].Rename(listOfFolderName, 2);
                     for (int j = 0; j < filelist.Count(); j++)
                     {
                         filelist[j].newfilename = temp[j];
                         listOfFileName[j] = temp[j];
+                    }
+
+                    for (int j = 0; j < folderlist.Count(); j++)
+                    {
+                        folderlist[j].newfoldername = temp2[j];
+                        listOfFolderName[j] = temp2[j];
                     }
                 }
             }
@@ -528,6 +479,7 @@ namespace batchRenameApp
             //code here
 
             List<string> listOfFileName = new List<string>();
+            List<string> listOfFolderName = new List<string>();
 
             for (int i = 0; i < filelist.Count(); i++)
             {
@@ -535,20 +487,32 @@ namespace batchRenameApp
                 filelist[i].newfilename = filelist[i].filename;
             }
 
+            for (int i = 0; i < folderlist.Count(); i++)
+            {
+                listOfFolderName.Add(folderlist[i].foldername);
+                folderlist[i].newfoldername = folderlist[i].foldername;
+            }
+
             for (int i = 0; i < userRules.Count(); i++)
             {
                 if (userRules[i].IsUse())
                 {
                     List<string> temp = userRules[i].Rename(listOfFileName, 1);
+
+                    List<string> temp2 = userRules[i].Rename(listOfFolderName, 2);
                     for (int j = 0; j < filelist.Count(); j++)
                     {
                         filelist[j].newfilename = temp[j];
                         listOfFileName[j] = temp[j];
                     }
+
+                    for (int j = 0; j < folderlist.Count(); j++)
+                    {
+                        folderlist[j].newfoldername = temp2[j];
+                        listOfFolderName[j] = temp2[j];
+                    }
                 }
             }
-
-
         }
 
         private void RuleComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -616,6 +580,10 @@ namespace batchRenameApp
             };
             lastProject.StoreData(LastProjectAddress);
             currentProject.StoreData(currentProject.ProjectAddress);
+            for (int i = 1; i <= totalPreset; i++)
+            {
+                File.Delete($@"D:\JSON\preset{i}.json");
+            }
         }
 
         private void Open_Project_Btn_Click(object sender, RoutedEventArgs e)
@@ -818,6 +786,82 @@ namespace batchRenameApp
             }
             InitProject();
             currentProject.StoreData(currentProject.ProjectAddress);
+
+        }
+
+        private void Clear_All_Rule_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            userRules.Clear();
+        }
+
+        private void PresetComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int index = PresetComboBox.SelectedIndex;
+            userRules = new BindingList<IRule>(presets[index].PresetRules);
+            //RuleList.Items.Clear();
+            RuleList.ItemsSource = userRules;
+        }
+
+        private void SaveRule_Click(object sender, RoutedEventArgs e)
+        {
+            //save preset
+            totalPreset++;
+
+            StoreRules(userRules, $@"D:\JSON\preset{totalPreset}.json");
+
+
+            List<IRule> preset = ReadRules($@"D:\JSON\preset{totalPreset}.json");
+            string presetName = "";
+            foreach (var item in preset)
+            {
+                presetName += item.GetName() + totalPreset.ToString() + " ";
+            }
+            Preset ps = new Preset(presetName, preset);
+
+
+            presets.Add(ps);
+            PresetComboBox.Items.Add(presetName);
+        }
+        private void openInFileExplorer_Click(object sender, RoutedEventArgs e)
+        {
+            int selectedfile = FileList.SelectedIndex;
+
+            Process.Start("explorer.exe", filelist[selectedfile].filepath.Substring(0, filelist[selectedfile].filepath.LastIndexOf(@"\") + 1));
+        }
+
+        private void deleteFileMenu_Click(object sender, RoutedEventArgs e)
+        {
+            int selectedfile = FileList.SelectedIndex;
+            if (selectedfile >= 0)
+            {
+                filelist.Remove(filelist[selectedfile]);
+            }
+        }
+
+        private void deleteFolderMenu_Click(object sender, RoutedEventArgs e)
+        {
+            int selectedfolder = FolderList.SelectedIndex;
+            if (selectedfolder >= 0)
+            {
+                folderlist.Remove(folderlist[selectedfolder]);
+            }
+        }
+
+        private void openInFolderExplorer_Click(object sender, RoutedEventArgs e)
+        {
+            int selectedfolder = FolderList.SelectedIndex;
+
+            Process.Start("explorer.exe", folderlist[selectedfolder].folderpath);
+        }
+
+        private void ClearAllFile_Click(object sender, RoutedEventArgs e)
+        {
+            filelist.Clear();
+        }
+
+        private void ClearAllFolder_Click(object sender, RoutedEventArgs e)
+        {
+            folderlist.Clear();
         }
     }
 }

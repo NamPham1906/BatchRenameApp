@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -35,6 +36,12 @@ namespace ChangeExtension
         private void extensionInput_TextChange(object sender, TextChangedEventArgs e)
         {
             this.rule.Extension = extensionInput.Text;
+        }
+
+        private void ValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@"[\/:*?""<>|]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }
