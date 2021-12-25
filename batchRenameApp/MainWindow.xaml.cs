@@ -24,7 +24,7 @@ namespace batchRenameApp
         public int currentfilepage { get; set; }
 
         int currentfolderpage = 1;
-        int itemperpage = 6;
+        int itemperpage = 7;
         int totalRule = 0;
         int autoSaveTime = 1;
         bool IsAutoSave = true;
@@ -44,6 +44,7 @@ namespace batchRenameApp
         int unnamedPreset = 0;
         List<Preset> presets = new List<Preset>();
 
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void StoreToProject()
         {

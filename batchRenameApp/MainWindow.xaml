@@ -83,6 +83,10 @@
                         </StackPanel>
                     </Button>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,5">
+                     <ToggleButton Cursor="Hand" Name="All_Rule" Unchecked="All_Rule_Unchecked" Margin="5,0,0,0" Checked="All_Rule_Checked" Style="{StaticResource ToggleButtonSwitch}" HorizontalAlignment="Stretch" Height="22"/>
+                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="7px">Use All Rules</TextBlock>
+                </StackPanel>
                 <ListView 
                 SelectionMode="Multiple"
                 SelectionChanged="RuleList_SelectionChanged" 
@@ -226,8 +230,7 @@
                             <TextBlock Text="Save Preset" Margin="5,0,0,0"/>
                         </StackPanel>
                     </Button>
-                    <ToggleButton Cursor="Hand" Name="All_Rule" Unchecked="All_Rule_Unchecked" Margin="5,0,0,0" Checked="All_Rule_Checked" Style="{StaticResource ToggleButtonSwitch}" HorizontalAlignment="Stretch" Height="22"/>
-                   <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0">Use All Rule</TextBlock>
+                    
                 </StackPanel>
 
             </StackPanel>
@@ -256,7 +259,7 @@
                                 </StackPanel>
                             </DockPanel>
                         </StackPanel>
-                        <ListView x:Name="FileList" Height="365px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFileList" Drop="DropFileList" >
+                        <ListView x:Name="FileList" Height="400px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFileList" Drop="DropFileList" >
                             <ListView.Resources>
                                 <ContextMenu x:Key="ItemContextMenu">
                                     <MenuItem Header="Open This File" Click="openThisFile_Click">
@@ -341,7 +344,7 @@
                             
                         </StackPanel>
 
-                        <ListView x:Name="FolderList" Height="365px" Margin="5px" AllowDrop="True" DragOver="DragOverFolderList" Drop="DropFolderList">
+                        <ListView x:Name="FolderList" Height="400px" Margin="5px" AllowDrop="True" DragOver="DragOverFolderList" Drop="DropFolderList">
 
                             <ListView.Resources>
                                 <ContextMenu x:Key="ItemContextMenu">
