@@ -34,7 +34,10 @@ namespace RemoveAccentRule
             ConfigurationUI = new RuleWindow(this);
             IsInUse = isInUse;
         }
-
+        public void SetIsUse(bool use)
+        {
+            IsInUse = use;
+        }
         static string RemoveDiacritics(string text)
         {
             var normalizedString = text.Normalize(NormalizationForm.FormD);

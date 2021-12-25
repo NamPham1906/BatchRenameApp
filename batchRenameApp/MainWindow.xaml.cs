@@ -313,58 +313,6 @@ namespace batchRenameApp
             }
         }
 
-        List<string> listOfNewFileName = new List<string>();
-        List<string> listOfNewFolderName = new List<string>();
-
-        private void ResetPreview(int action, int type) //action = 0:reset off   action = 1:reset on
-        {
-            
-            //file
-            if (action == 1 && type == 1)
-            {
-                for (int i = 0; i < filelist.Count(); i++)
-                {
-                    listOfNewFileName.Add(filelist[i].newfilename);
-                }
-                for (int i = 0; i < filelist.Count(); i++)
-                {
-                    filelist[i].newfilename = filelist[i].filename;
-                }
-            }
-
-            if (action == 0 && type == 1)
-            {
-                for (int i = 0; i < filelist.Count(); i++)
-                {
-                    filelist[i].newfilename = listOfNewFileName[i];
-                }
-                listOfNewFileName.Clear();
-            }
-
-            //folder
-            if (action == 1 && type == 2)
-            {
-                for (int i = 0; i < folderlist.Count(); i++)
-                {
-                    listOfNewFolderName.Add(folderlist[i].newfoldername);
-                }
-                for (int i = 0; i < folderlist.Count(); i++)
-                {
-                    folderlist[i].newfoldername = folderlist[i].foldername;
-                }
-            }
-
-            if (action == 0 && type == 2)
-            {
-                for (int i = 0; i < folderlist.Count(); i++)
-                {
-                    folderlist[i].newfoldername = listOfNewFolderName[i];
-                }
-                listOfNewFolderName.Clear();
-            }
-
-        }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CreatePresetFolder();
@@ -1443,53 +1391,23 @@ namespace batchRenameApp
             }
                 
         }
-        private void ResetFileName_MouseDown(object sender, MouseButtonEventArgs e)
+       
+        private void All_Rule_Unchecked(object sender, RoutedEventArgs e)
         {
-            //MessageBox.Show("ResetFileName_MouseLeftButtonDown");
-            ResetPreview(1, 1);
-
+            foreach(var rule in userRules)
+            {
+                rule.SetIsUse(false);
+                UpdatePreview();
+            }    
         }
 
-        private void ResetFileName_MouseUp(object sender, MouseButtonEventArgs e)
+        private void All_Rule_Checked(object sender, RoutedEventArgs e)
         {
-            ResetPreview(0, 1);
-
+            foreach (var rule in userRules)
+            {
+                rule.SetIsUse(true);
+                UpdatePreview();
+            }
         }
-
-        private void ResetFileName_MouseDown_Preview(object sender, MouseButtonEventArgs e)
-        {
-
-            ResetFileName_MouseDown(sender, e);
-        }
-
-        private void ResetFileName_MouseUp_Preview(object sender, MouseButtonEventArgs e)
-        {
-            ResetFileName_MouseUp(sender, e);
-        }
-
-        private void ResetFolderName_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            ResetPreview(1, 2);
-
-        }
-
-        private void ResetFolderName_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            ResetPreview(0, 2);
-
-        }
-
-        private void ResetFolderName_MouseDown_Preview(object sender, MouseButtonEventArgs e)
-        {
-            ResetFolderName_MouseDown(sender, e);
-        }
-
-
-        private void ResetFolderName_MouseUp_Preview(object sender, MouseButtonEventArgs e)
-        {
-            ResetFolderName_MouseUp(sender, e);
-        }
-
-        
     }
 }

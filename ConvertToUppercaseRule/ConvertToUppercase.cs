@@ -21,6 +21,10 @@ namespace ConvertToUppercaseRule
         public RuleWindow ConfigurationUI { get; set; }
 
         public bool IsInUse { get; set; }
+        public void SetIsUse(bool use)
+        {
+            IsInUse = use;
+        }
         public ConvertToUppercase()
         {
             this.Name = "Convert To Uppercase";

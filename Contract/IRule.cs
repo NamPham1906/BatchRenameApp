@@ -21,6 +21,7 @@ namespace Contract
 
         string ToJson();
 
+        void SetIsUse(bool use);
         IRule Clone(string json);
 
     }
