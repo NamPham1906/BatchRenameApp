@@ -8,7 +8,7 @@
         mc:Ignorable="d"
 
         Title="Batch Rename"  
-        Height="595" Width="1343"
+        Height="590" Width="1360"
         Icon="images/icon.png"
         Loaded="Window_Loaded" Closed="Window_Closed" KeyDown="CutContractKeyDown">
     <Window.Resources>
@@ -217,9 +217,14 @@
                     </ListView.ItemContainerStyle>
                 </ListView>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5px">
-                    <TextBlock VerticalAlignment="Center"  Text="Preset Name: " Margin="0,0,5,0"/>
+                    <TextBlock VerticalAlignment="Center"  Text="Preset Name: " Margin="5,0,5,0"/>
                     <TextBox x:Name="presetNameInput" Width="142" Height="30" Margin="0,0,5,0"></TextBox>
-                    <Button Content="Save Preset" Click="SaveRule_Click" Width="90" Margin="5px"/>
+                    <Button Click="SaveRule_Click" Width="110px" Margin="5,5,0,5">
+                        <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
+                            <Image Source="images/save.png" Margin="0,0,0,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <TextBlock Text="Save Preset" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
                 
             </StackPanel>
@@ -240,27 +245,31 @@
                                     <TextBlock Text="Clear All"/>
                                 </StackPanel>
                             </Button>
-                            <Button  PreviewMouseDown="ResetFileName_MouseDown_Preview"
-                                     PreviewMouseUp="ResetFileName_MouseUp_Preview"
-                                     Content="Turn Off Preview" MouseDown="ResetFileName_MouseDown"
-                                     MouseUp="ResetFileName_MouseUp" Width="120" Margin="580,5,5,5"/>
+                            <DockPanel Width="705px" Margin="5px">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                    <Image Source="images/file.png" Height="12px" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,5,0"/>
+                                    <TextBlock x:Name="NumberOfFiles" Text="{Binding}"></TextBlock>
+                                    <TextBlock Text=" Files "></TextBlock>
+                                </StackPanel>
+                            </DockPanel>
+
                         </StackPanel>
                         <ListView x:Name="FileList" Height="365px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFileList" Drop="DropFileList" >
                             <ListView.Resources>
                                 <ContextMenu x:Key="ItemContextMenu">
                                     <MenuItem Header="Open This File" Click="openThisFile_Click">
                                         <MenuItem.Icon>
-                                            <Image Source="images/open-file.png"/>
+                                            <Image Source="images/open-file.png"  RenderOptions.BitmapScalingMode="HighQuality"/>
                                         </MenuItem.Icon>
                                     </MenuItem>
                                     <MenuItem Header="Open In File Explorer" Click="openInFileExplorer_Click" >
                                         <MenuItem.Icon>
-                                            <Image Source="images/search.png"/>
+                                            <Image Source="images/search.png"  RenderOptions.BitmapScalingMode="HighQuality"/>
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Header="Delete" Click="deleteFileMenu_Click" >
+                                    <MenuItem Header="Delete Path" Click="deleteFileMenu_Click" >
                                         <MenuItem.Icon>
-                                            <Image Source="images/clear-file-folder.png"/>
+                                            <Image Source="images/clear-file-folder.png"  RenderOptions.BitmapScalingMode="HighQuality"/>
                                         </MenuItem.Icon>
                                     </MenuItem>
                                 </ContextMenu>
@@ -320,10 +329,14 @@
                                     <TextBlock Text="Clear All"/>
                                 </StackPanel>
                             </Button>
-                            <Button  PreviewMouseDown="ResetFolderName_MouseDown_Preview"
-                                     PreviewMouseUp="ResetFolderName_MouseUp_Preview"
-                                     Content="Turn Off Preview" MouseDown="ResetFolderName_MouseDown"
-                                     MouseUp="ResetFolderName_MouseUp" Width="120" Margin="580,5,5,5"/>
+                            <DockPanel Width="705px" Margin="5px">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                    <Image Source="images/folder.png" Height="12px" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,5,0"/>
+                                    <TextBlock x:Name="NumberOfFolders" Text="{Binding}"></TextBlock>
+                                    <TextBlock Text=" Folders "></TextBlock>
+                                </StackPanel>
+                            </DockPanel>
+                            
                         </StackPanel>
 
                         <ListView x:Name="FolderList" Height="365px" Margin="5px" AllowDrop="True" DragOver="DragOverFolderList" Drop="DropFolderList">
@@ -332,13 +345,13 @@
                                 <ContextMenu x:Key="ItemContextMenu">
                                     <MenuItem Header="Open In File Explorer" Click="openInFolderExplorer_Click">
                                         <MenuItem.Icon>
-                                            <Image Source="images/search.png"/>
+                                            <Image Source="images/search.png"  RenderOptions.BitmapScalingMode="HighQuality"/>
                                         </MenuItem.Icon>
                                     </MenuItem>
 
-                                    <MenuItem Header="Delete" Click="deleteFolderMenu_Click">
+                                    <MenuItem Header="Delete Path" Click="deleteFolderMenu_Click">
                                         <MenuItem.Icon>
-                                            <Image Source="images/clear-file-folder.png"/>
+                                            <Image Source="images/clear-file-folder.png"  RenderOptions.BitmapScalingMode="HighQuality"/>
                                         </MenuItem.Icon>
                                     </MenuItem>
                                 </ContextMenu>
