@@ -46,7 +46,6 @@
                     <TextBlock Text="Start Batching"/>
                 </StackPanel>
             </Button>
-            <Label Name="Timer_Text"></Label>
         </StackPanel>
         <StackPanel Orientation="Horizontal" >
            
