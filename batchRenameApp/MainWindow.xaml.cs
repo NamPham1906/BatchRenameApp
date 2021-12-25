@@ -16,7 +16,6 @@ using HandyControl.Data;
 using System.Diagnostics;
 using System.Reflection;
 
-
 namespace batchRenameApp
 {
   
@@ -219,38 +218,14 @@ namespace batchRenameApp
         private void DropFileList(object sender, DragEventArgs e)
         {
             string[] droppedFilenames = e.Data.GetData(DataFormats.FileDrop, true) as string[];
-            foreach (string filename in droppedFilenames)
+            if (droppedFilenames != null)
             {
+                foreach (string filename in droppedFilenames)
+                {
 
-                addFile(filename);
+                    addFile(filename);
+                }
             }
-
-            //bool dropEnabled = true;
-            //  if (e.Data.GetDataPresent(DataFormats.FileDrop, true))
-            // {
-            //     string[] filenames =
-            //                     e.Data.GetData(DataFormats.FileDrop, true) as string[];
-
-            //    foreach (string filename in filenames)
-            //    {
-            //        if (System.IO.Path.GetExtension(filename).ToUpperInvariant() != ".CS")
-            //       {
-            //           dropEnabled = false;
-            //           break;
-            //      }
-            //  }
-            //  }
-            //  else
-            // {
-            //     dropEnabled = false;
-            // }
-
-            // if (!dropEnabled)
-            // {
-            //     e.Effects = DragDropEffects.None;
-            //    e.Handled = true;
-            // }
-
         }
 
         private void CreatePresetFolder()
@@ -1056,5 +1031,67 @@ namespace batchRenameApp
             }
             PresetComboBox.SelectedIndex = -1;
         }
+
+     
+
+        private void FileList_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent("FILE"))
+            {
+                MyFile droppedData = e.Data.GetData("FILE") as MyFile;
+                MyFile target = ((ListViewItem)(sender)).DataContext as MyFile;
+
+                int removedIdx =filelist.IndexOf(droppedData);
+                int targetIdx = filelist.IndexOf(target);
+                if (removedIdx<0 || targetIdx<0||removedIdx>filelist.Count || targetIdx>filelist.Count)
+                {
+                    return;
+                } else if (removedIdx < targetIdx)
+                {
+                    filelist.Insert(targetIdx + 1, droppedData);
+                    filelist.RemoveAt(removedIdx);
+                }
+                else
+                {
+                    int remIdx = removedIdx + 1;
+                    if (filelist.Count + 1 > remIdx)
+                    {
+                        filelist.Insert(targetIdx, droppedData);
+                        filelist.RemoveAt(remIdx);
+                    }
+                }
+            }
+            update_Filepage();
+        }
+
+        private void FileList_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (sender is ListViewItem)
+            {
+                ListViewItem draggedItem = sender as ListViewItem;
+                DataObject data = new DataObject("FILE", draggedItem.DataContext);
+                DragDrop.DoDragDrop(draggedItem, data, DragDropEffects.Move);
+                draggedItem.IsSelected = true;
+            }
+        }
+
+        private void DragOverFilePage(object sender, HandyControl.Data.FunctionEventArgs<int> e)
+        {
+
+           
+        }
+
+        private void DragEnterFilePage(object sender, DragEventArgs e)
+        {
+            // sender.ToString();
+            // e.ToString();
+            Point a = e.GetPosition(FilePagination);
+            if (currentfilepage < FilePagination.MaxPageCount) currentfilepage++;
+            FilePagination.PageIndex = currentfilepage;
+            update_Filepage();
+   
+        }
+
+      
     }
 }
