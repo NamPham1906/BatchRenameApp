@@ -73,5 +73,15 @@ namespace AddCounter
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
+
+        private void Prefix_Checked(object sender, RoutedEventArgs e)
+        {
+            this.rule.Position = 0;
+        }
+
+        private void Suffix_Checked(object sender, RoutedEventArgs e)
+        {
+            this.rule.Position = 1;
+        }
     }
 }
