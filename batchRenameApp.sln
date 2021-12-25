@@ -25,9 +25,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddCounter", "AddCounter\Ad
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChangeFileNameRule", "ChangeFileName\ChangeFileNameRule.csproj", "{4945183C-9DCD-44B8-BA12-DD09D96A56E2}"
 EndProject
+
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StripRule", "StripRule\StripRule.csproj", "{2BFBFCEE-1427-4E9B-AC46-CBCB89FDFBBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoveAccentRule", "RemoveAccentRule\RemoveAccentRule.csproj", "{DBCB6DF4-2498-4C3A-91B3-0C6411D613E7}"
+
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertToUppercaseRule", "ConvertToUppercaseRule\ConvertToUppercaseRule.csproj", "{FE37EA06-FA38-486A-9588-8E9C21F1FF6E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertToCamelCaseRule", "ConvertToCamelCaseRule\ConvertToCamelCaseRule.csproj", "{5E5C6C81-2CBE-4DA9-8377-CB192E9A5808}"
+
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +85,16 @@ Global
 		{4945183C-9DCD-44B8-BA12-DD09D96A56E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4945183C-9DCD-44B8-BA12-DD09D96A56E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4945183C-9DCD-44B8-BA12-DD09D96A56E2}.Release|Any CPU.Build.0 = Release|Any CPU
+
+		{2BFBFCEE-1427-4E9B-AC46-CBCB89FDFBBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BFBFCEE-1427-4E9B-AC46-CBCB89FDFBBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BFBFCEE-1427-4E9B-AC46-CBCB89FDFBBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BFBFCEE-1427-4E9B-AC46-CBCB89FDFBBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBCB6DF4-2498-4C3A-91B3-0C6411D613E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBCB6DF4-2498-4C3A-91B3-0C6411D613E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBCB6DF4-2498-4C3A-91B3-0C6411D613E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBCB6DF4-2498-4C3A-91B3-0C6411D613E7}.Release|Any CPU.Build.0 = Release|Any CPU
+
 		{FE37EA06-FA38-486A-9588-8E9C21F1FF6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FE37EA06-FA38-486A-9588-8E9C21F1FF6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE37EA06-FA38-486A-9588-8E9C21F1FF6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -87,6 +103,7 @@ Global
 		{5E5C6C81-2CBE-4DA9-8377-CB192E9A5808}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E5C6C81-2CBE-4DA9-8377-CB192E9A5808}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E5C6C81-2CBE-4DA9-8377-CB192E9A5808}.Release|Any CPU.Build.0 = Release|Any CPU
+
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
