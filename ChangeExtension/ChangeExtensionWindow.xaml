@@ -10,7 +10,7 @@
              Background="White"
              Loaded="UserControl_Loaded">
     <StackPanel Margin="10">
-        <TextBlock HorizontalAlignment="left" FontWeight="Bold">Enter new extension</TextBlock>
+        <TextBlock HorizontalAlignment="left" FontWeight="Bold">Enter new extension:</TextBlock>
         <TextBox HorizontalAlignment="Stretch" x:Name="extensionInput" TextChanged="extensionInput_TextChange" Text="{Binding Extension}" PreviewTextInput="ValidationTextBox"></TextBox>
     </StackPanel>
 </UserControl>
