@@ -1,25 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.IO;
-using System.ComponentModel;
+﻿using Contract;
+using HandyControl.Data;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using Contract;
-using System.Text.Json;
-using System.Globalization;
-using HandyControl.Data;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
 
+
+using System.Text.Json;
+using System.Windows;
+using System.Windows.Controls;
+
+
 namespace batchRenameApp
 {
-  
+
+    public class Preset
+    {
+        public string PresetName { get; set; }
+        public List<IRule> PresetRules { get; set; }
+        public Preset()
+        {
+            PresetName = "";
+            PresetRules = null;
+        }
+        public Preset(string name, List<IRule> rules)
+        {
+            PresetName = name;
+            PresetRules = rules;
+        }
+    }
     public partial class MainWindow : Window
     {
         int currentfilepage = 1;
@@ -33,14 +48,13 @@ namespace batchRenameApp
         BindingList<MyFile> datafilelist = new BindingList<MyFile>();
         BindingList<Folder> folderlist = new BindingList<Folder>();
 
-        int unnamedPreset = 0;
 
         String LastProjectAddress = @"LastProject\lastprojectaddress.json";
         String DefaultProjectAddress = @"LastProject\Untitled.json";
         String AppTitle = "Batch Rename";
         RenameProject currentProject = null;
         LastProject lastProject = null;
-        int totalPreset = 0;
+        int unnamedPreset = 0;
         List<Preset> presets = new List<Preset>();
 
 
@@ -661,10 +675,7 @@ namespace batchRenameApp
             };
             lastProject.StoreData(LastProjectAddress);
             currentProject.StoreData(currentProject.ProjectAddress);
-            for (int i = 1; i <= totalPreset; i++)
-            {
-                File.Delete($@"PRESET\preset{i}.json");
-            }
+            
         }
 
         private void Open_Project_Btn_Click(object sender, RoutedEventArgs e)
@@ -869,6 +880,7 @@ namespace batchRenameApp
 
         private void Clear_All_Rule_Btn_Click(object sender, RoutedEventArgs e)
         {
+            PresetComboBox.SelectedIndex = -1;
             userRules.Clear();
         }
 
@@ -878,6 +890,7 @@ namespace batchRenameApp
             int index = PresetComboBox.SelectedIndex;
             if(index != -1)
             {
+                presetNameInput.Text = presets[index].PresetName;
                 userRules = new BindingList<IRule>();
                 foreach (var rule in presets[index].PresetRules)
                 {
@@ -885,8 +898,7 @@ namespace batchRenameApp
                 }
                 //RuleList.Items.Clear();
                 RuleList.ItemsSource = userRules;
-            }   
-           
+            }
         }
 
        
@@ -895,25 +907,13 @@ namespace batchRenameApp
           //save preset
             if (presetNameInput.Text == "")
             {
-                unnamedPreset++;
-                string presetName = "";
-                foreach (var item in userRules)
-                {
-                    presetName += item.GetName() + unnamedPreset.ToString() + " ";
-                }
-                StoreRules(userRules, $@"PRESET\{presetName}.json");
-                List<IRule> rulesInPreset = ReadRules($@"PRESET\{presetName}.json");
-                Preset ps = new Preset(presetName, rulesInPreset);
-
-                presets.Add(ps);
-                PresetComboBox.Items.Add(presetName);
                 MessageBoxResult result = HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
                 {
-                    Message = "Save preset succeeded",
+                    Message = "You must enter the preset name",
                     Caption = "Save Preset",
                     Button = MessageBoxButton.OK,
                     IconBrushKey = ResourceToken.AccentBrush,
-                    IconKey = ResourceToken.AskGeometry,
+                    IconKey = ResourceToken.WarningGeometry,
                     StyleKey = "MessageBoxCustom"
                 });
             }
@@ -949,6 +949,7 @@ namespace batchRenameApp
                                 ps.PresetRules = rulesInPreset;
                                 presets.Add(ps);
                                 PresetComboBox.Items.Add(presetNameInput);
+                                PresetComboBox.SelectedIndex = -1;
                                 break;
                             case MessageBoxResult.No: //cancle save
                                 break;
@@ -973,7 +974,9 @@ namespace batchRenameApp
                         IconKey = ResourceToken.CheckedGeometry,
                         StyleKey = "MessageBoxCustom"
                     });
-                }    
+                    PresetComboBox.SelectedIndex = -1;
+
+                }
             }
         }
         
@@ -1061,6 +1064,7 @@ namespace batchRenameApp
             
             presets.Clear();
             PresetComboBox.Items.Clear();
+            presetNameInput.Text = "";
             string exePath = Assembly.GetExecutingAssembly().Location;
             string folderPath = Path.GetDirectoryName(exePath);
             folderPath += @"\PRESET";
