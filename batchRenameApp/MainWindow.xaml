@@ -46,6 +46,12 @@
                     <TextBlock Text="Start Batching"/>
                 </StackPanel>
             </Button>
+            <Button Cursor="Hand" Click="StartBatchingToFolder_Click" Margin="5px">
+                <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
+                    <Image Source="images/batching-folder.png" Margin="0,0,10,0"/>
+                    <TextBlock Text="Start Batching To Folder"/>
+                </StackPanel>
+            </Button>
             <StackPanel Orientation="Horizontal" Margin="5px" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <ToggleButton Cursor="Hand" Name="Auto_Save_Check" Unchecked="Auto_Save_Check_Unchecked" Checked="Auto_Save_Check_Checked" Style="{StaticResource ToggleButtonSwitch}" HorizontalAlignment="Stretch" Height="22"/>
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0">Auto-save</TextBlock>
@@ -276,7 +282,7 @@
                             
                         </ListView>
                         <StackPanel Orientation ="Horizontal" HorizontalAlignment="Center">
-                            <hc:Pagination Name="FilePagination" AllowDrop="True" DragEnter="DragEnterFilePage" IsJumpEnabled="True" MaxPageInterval ="2" Margin="5px" PageUpdated="page_PageUpdated" PageIndex="1" />
+                            <hc:Pagination Name="FilePagination" AllowDrop="True" DragOver="DragOverFilePage" IsJumpEnabled="True" MaxPageInterval ="2" PageUpdated="page_FilePageUpdated" PageIndex="1" />
                         </StackPanel>
                      
                     </StackPanel>
@@ -311,7 +317,8 @@
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ListViewItemBaseStyle}" >
                                     <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
-                                   
+                                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="FolderList_PreviewMouseLeftButtonDown"/>
+                                    <EventSetter Event="Drop" Handler="FolderList_Drop"/>
                                 </Style>
                             </ListView.ItemContainerStyle>
 
@@ -344,7 +351,7 @@
                             </ListView.ItemContainerStyle>-->
                         </ListView>
                         <StackPanel Orientation ="Horizontal" HorizontalAlignment="Center">
-                            <hc:Pagination Name="FolderPagination"  IsJumpEnabled="True" MaxPageInterval ="2" Margin="5px" PageUpdated="page_FolderPageUpdated" PageIndex="1" />
+                            <hc:Pagination Name="FolderPagination" AllowDrop="True"  DragOver="DragOverFolderPage" IsJumpEnabled="True" MaxPageInterval ="2" PageUpdated="page_FolderPageUpdated" PageIndex="1" />
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
