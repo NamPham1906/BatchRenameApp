@@ -6,16 +6,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:batchRenameApp"
         mc:Ignorable="d"
-
         Title="Batch Rename"  
-        Height="580" Width="1330"
+        MinHeight="580" MinWidth="1330" ResizeMode="CanResizeWithGrip"
         Icon="images/icon.png"
         Loaded="Window_Loaded" Closed="Window_Closed" KeyDown="CutContractKeyDown">
     <Window.Resources>
         <local:StatusColorConverter x:Key="StatusColorConverter" />
     </Window.Resources>
-    <StackPanel Orientation ="Vertical" Margin="10px">
-        <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
+    <DockPanel LastChildFill="True" Margin="10px">
+        <StackPanel Orientation ="Horizontal" VerticalAlignment="Center" DockPanel.Dock="Top">
             <Button Cursor="Hand" Name="New_Project_Btn" Click="New_Project_Btn_Click" Margin="5px">
                 <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
                     <Image Source="images/new-document.png" Margin="0,0,10,0"/>
@@ -53,18 +52,19 @@
                 </StackPanel>
             </Button>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" >
+        <DockPanel LastChildFill="True">
            
-            <StackPanel Orientation="Vertical">
-               <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,0">
+            <DockPanel DockPanel.Dock="Left" LastChildFill="True">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,0"
+                           DockPanel.Dock="Top">
                     <TextBlock VerticalAlignment="Center"  Text="Preset: " Margin="0,0,16,0"/>
-                    <hc:ComboBox Name="PresetComboBox" Width="163" SelectionChanged="PresetComboBox_SelectionChanged" HorizontalAlignment="Stretch" Margin="5px" VerticalContentAlignment="Center"/>
+                    <hc:ComboBox Name="PresetComboBox" Width="170" SelectionChanged="PresetComboBox_SelectionChanged" HorizontalAlignment="Stretch" Margin="5px" VerticalContentAlignment="Center"/>
                     <Button Content="Clear Preset"  Cursor="Hand" Name="Clear_All_Preset_Btn" Click="Clear_All_Preset_Btn_Click" Margin="5px"/>
                 </StackPanel>
-                
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,0"
+                            DockPanel.Dock="Top">
                     <TextBlock VerticalAlignment="Center" Text="Add Rule: "/>
-                    <hc:ComboBox Name="RuleComboBox" Width="163" SelectionChanged="RuleComboBox_SelectionChanged" HorizontalAlignment="Stretch" Margin="5px" VerticalContentAlignment="Center"/>
+                    <hc:ComboBox Name="RuleComboBox" Width="170" SelectionChanged="RuleComboBox_SelectionChanged" HorizontalAlignment="Stretch" Margin="5px" VerticalContentAlignment="Center"/>
                     <Button Cursor="Hand" Name="Clear_All_Rule_Btn" Click="Clear_All_Rule_Btn_Click" Margin="5px">
                         <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
                             <Image Source="images/clear_all.png" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>
@@ -72,18 +72,20 @@
                         </StackPanel>
                     </Button>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,0"
+                            DockPanel.Dock="Bottom">
+                    <TextBlock VerticalAlignment="Center"  Text="Preset Name: " Margin="0,0,5,0"/>
+                    <TextBox x:Name="presetNameInput" Width="142" Height="30" Margin="0,0,5,0"></TextBox>
+                    <Button Content="Save Preset" Click="SaveRule_Click" Width="90" Margin="5px"/>
+                </StackPanel>
                 <ListView 
                 SelectionMode="Multiple"
                 SelectionChanged="RuleList_SelectionChanged" 
-                LayoutUpdated="RuleList_LayoutUpdated" 
-                Height="365"
-                Width="320"
+                LayoutUpdated="RuleList_LayoutUpdated"
                 Margin="5,0,5,0"
-                Name="RuleList" 
-                VerticalAlignment="Top" 
-                HorizontalAlignment="Left"
+                Name="RuleList"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                ScrollViewer.VerticalScrollBarVisibility="Auto" >
+                ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <ListView.Resources>
                         <Style TargetType="GridViewColumnHeader">
                             <Setter Property="Visibility" Value="Collapsed" />
@@ -205,25 +207,20 @@
 
                     </ListView.ItemContainerStyle>
                 </ListView>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,0">
-                    <TextBlock VerticalAlignment="Center"  Text="Preset Name: " Margin="0,0,5,0"/>
-                    <TextBox x:Name="presetNameInput" Width="142" Height="30" Margin="0,0,5,0"></TextBox>
-                    <Button Content="Save Preset" Click="SaveRule_Click" Width="90" Margin="5px"/>
-                </StackPanel>
-                
-            </StackPanel>
+            </DockPanel>
             
-            <TabControl>
+            <TabControl DockPanel.Dock="Right">
                 <TabItem Header="File">
-                    <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="970">
-                        <StackPanel Orientation ="Horizontal">
+                    <DockPanel>
+                        <StackPanel Orientation ="Horizontal" DockPanel.Dock="Top">
                             <Button   Content="Add new file" Click="AddFile_Click" Width="120" Margin="5px"/>
                             <Button   Content="Clear all" Click="ClearAllFile_Click" Width="120" Margin="5px"/>
-                            
+
                         </StackPanel>
-                     
-                       
-                        <ListView x:Name="FileList" Height="370px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFileList" Drop="DropFileList" >
+                        <StackPanel Orientation ="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom" MinHeight="35">
+                            <hc:Pagination Name="FilePagination" AllowDrop="True" DragOver="DragOverFilePage" IsJumpEnabled="True" MaxPageInterval ="2" PageUpdated="page_FilePageUpdated" PageIndex="1" />
+                        </StackPanel>
+                        <ListView x:Name="FileList" Margin="5px" AllowDrop="True"  DragOver="DragOverFileList" Drop="DropFileList" >
                             <ListView.Resources>
                                 <ContextMenu x:Key="ItemContextMenu">
                                     <MenuItem Header="Open this file" Click="openThisFile_Click" />
@@ -261,25 +258,20 @@
                                     </GridViewColumn>
                                 </GridView>
                             </ListView.View>
-                            
                         </ListView>
-                        <StackPanel Orientation ="Horizontal" HorizontalAlignment="Center">
-                            <hc:Pagination Name="FilePagination" AllowDrop="True" DragOver="DragOverFilePage" IsJumpEnabled="True" MaxPageInterval ="2" PageUpdated="page_FilePageUpdated" PageIndex="1" />
-                        </StackPanel>
-                     
-                    </StackPanel>
-                    
-
+                    </DockPanel>
                 </TabItem>
+                
                 <TabItem Header="Folder">
-                    <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="970" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
-                        <StackPanel Orientation ="Horizontal">
+                    <DockPanel>
+                        <StackPanel Orientation ="Horizontal" DockPanel.Dock="Top">
                             <Button  Content="Add new folder" Click="AddFolder_Click"  Width="120" Margin="5px"/>
                             <Button   Content="Clear all" Click="ClearAllFolder_Click" Width="120" Margin="5px"/>
                         </StackPanel>
-
-                        <ListView x:Name="FolderList" Height="370px" Margin="5px" AllowDrop="True" DragOver="DragOverFolderList" Drop="DropFolderList">
-
+                        <StackPanel Orientation ="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom" MinHeight="35">
+                            <hc:Pagination Name="FolderPagination" AllowDrop="True"  DragOver="DragOverFolderPage" IsJumpEnabled="True" MaxPageInterval ="2" PageUpdated="page_FolderPageUpdated" PageIndex="1" />
+                        </StackPanel>
+                        <ListView x:Name="FolderList" Margin="5px" AllowDrop="True" DragOver="DragOverFolderList" Drop="DropFolderList">
                             <ListView.Resources>
                                 <ContextMenu x:Key="ItemContextMenu">
                                     <MenuItem Header="Open in file explorer" Click="openInFolderExplorer_Click" />
@@ -322,14 +314,11 @@
                                 </Style>
                             </ListView.ItemContainerStyle>-->
                         </ListView>
-                        <StackPanel Orientation ="Horizontal" HorizontalAlignment="Center">
-                            <hc:Pagination Name="FolderPagination" AllowDrop="True"  DragOver="DragOverFolderPage" IsJumpEnabled="True" MaxPageInterval ="2" PageUpdated="page_FolderPageUpdated" PageIndex="1" />
-                        </StackPanel>
-                    </StackPanel>
+                    </DockPanel>
                 </TabItem>
 
             </TabControl>
-        </StackPanel>
-    </StackPanel>
+        </DockPanel>
+    </DockPanel>
 
 </Window>
