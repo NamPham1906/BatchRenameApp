@@ -258,7 +258,7 @@
                             
                         </ListView>
                         <StackPanel Orientation ="Horizontal" HorizontalAlignment="Center">
-                            <hc:Pagination Name="FilePagination" AllowDrop="True" DragEnter="DragEnterFilePage" IsJumpEnabled="True" MaxPageInterval ="2" Margin="5px" PageUpdated="page_PageUpdated" PageIndex="1" />
+                            <hc:Pagination Name="FilePagination" AllowDrop="True" DragOver="DragOverFilePage" IsJumpEnabled="True" MaxPageInterval ="2" PageUpdated="page_FilePageUpdated" PageIndex="1" />
                         </StackPanel>
                      
                     </StackPanel>
@@ -283,7 +283,8 @@
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ListViewItemBaseStyle}" >
                                     <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
-                                   
+                                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="FolderList_PreviewMouseLeftButtonDown"/>
+                                    <EventSetter Event="Drop" Handler="FolderList_Drop"/>
                                 </Style>
                             </ListView.ItemContainerStyle>
 
@@ -316,7 +317,7 @@
                             </ListView.ItemContainerStyle>-->
                         </ListView>
                         <StackPanel Orientation ="Horizontal" HorizontalAlignment="Center">
-                            <hc:Pagination Name="FolderPagination"  IsJumpEnabled="True" MaxPageInterval ="2" Margin="5px" PageUpdated="page_FolderPageUpdated" PageIndex="1" />
+                            <hc:Pagination Name="FolderPagination" AllowDrop="True"  DragOver="DragOverFolderPage" IsJumpEnabled="True" MaxPageInterval ="2" PageUpdated="page_FolderPageUpdated" PageIndex="1" />
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
