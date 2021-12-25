@@ -19,21 +19,6 @@ using System.Windows.Controls;
 namespace batchRenameApp
 {
 
-    public class Preset
-    {
-        public string PresetName { get; set; }
-        public List<IRule> PresetRules { get; set; }
-        public Preset()
-        {
-            PresetName = "";
-            PresetRules = null;
-        }
-        public Preset(string name, List<IRule> rules)
-        {
-            PresetName = name;
-            PresetRules = rules;
-        }
-    }
     public partial class MainWindow : Window
     {
         int currentfilepage = 1;
@@ -1112,6 +1097,32 @@ namespace batchRenameApp
    
         }
 
-      
+        private void CutContractKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                if (currentProject.ProjectAddress != null && currentProject.ProjectAddress.Length > 0)
+                {
+                    StoreToProject();
+                }
+                else
+                {
+                    StoreToProject();
+                    currentProject.ProjectAddress = DefaultProjectAddress;
+                    SaveFileDialog saveFileDialog = new SaveFileDialog();
+                    saveFileDialog.FileName = currentProject.GetName();
+                    saveFileDialog.DefaultExt = ".json";
+                    saveFileDialog.Filter = "JSON files(.json)|.json";
+                    if (saveFileDialog.ShowDialog() == true)
+                    {
+                        string path = saveFileDialog.FileName;
+                        currentProject.ProjectAddress = path;
+
+                    }
+                }
+                currentProject.StoreData(currentProject.ProjectAddress);
+                this.Title = AppTitle + " - " + currentProject.GetName();
+            }
+        }
     }
 }
