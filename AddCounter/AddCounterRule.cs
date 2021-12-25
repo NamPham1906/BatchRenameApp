@@ -32,6 +32,10 @@ namespace AddCounter
         {
             return IsInUse;
         }
+        public void SetIsUse(bool use)
+        {
+            IsInUse = use;
+        }
         public AddCounterRule()
         {
             Name = "Add Counter";

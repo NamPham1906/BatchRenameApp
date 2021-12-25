@@ -27,6 +27,10 @@ namespace ReplaceCharactersRule
 
         public string Replacer { get; set; }
 
+        public void SetIsUse(bool use)
+        {
+            IsInUse = use;
+        }
         public ReplaceCharacters()
         {
             this.Needle = "";

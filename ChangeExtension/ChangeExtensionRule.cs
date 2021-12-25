@@ -24,7 +24,10 @@ namespace ChangeExtension
         {
             return IsInUse;
         }
-
+        public void SetIsUse(bool use)
+        {
+            IsInUse = use;
+        }
         public ChangeExtensionRule()
         {
             Name = "Change Extension";
