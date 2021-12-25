@@ -8,7 +8,7 @@
         mc:Ignorable="d"
 
         Title="Batch Rename"  
-        Height="580" Width="1343"
+        Height="595" Width="1343"
         Icon="images/icon.png"
         Loaded="Window_Loaded" Closed="Window_Closed" KeyDown="CutContractKeyDown">
     <Window.Resources>
@@ -65,21 +65,21 @@
                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,0">
                     <TextBlock VerticalAlignment="Center"  Text="Preset: " Margin="0,0,16,0"/>
                     <hc:ComboBox Name="PresetComboBox" Width="163" SelectionChanged="PresetComboBox_SelectionChanged" HorizontalAlignment="Stretch" Margin="5px" VerticalContentAlignment="Center"/>
-                    <Button Cursor="Hand" Name="Clear_All_Preset_Btn" Click="Clear_All_Preset_Btn_Click" Margin="5px">
+                    <Button Cursor="Hand" Name="Clear_All_Preset_Btn" Click="Clear_All_Preset_Btn_Click" Margin="5px" Width="110">
                         <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
-                            <Image Source="images/clearAll.png" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <TextBlock Text="Clear Preset"/>
+                            <Image Source="images/clear-file-folder.png" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <TextBlock Text="Clear Presets"/>
                         </StackPanel>
                     </Button> 
                 </StackPanel>
                 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,5">
                     <TextBlock VerticalAlignment="Center" Text="Add Rule: "/>
                     <hc:ComboBox Name="RuleComboBox" Width="163" SelectionChanged="RuleComboBox_SelectionChanged" HorizontalAlignment="Stretch" Margin="5px" VerticalContentAlignment="Center"/>
-                    <Button Cursor="Hand" Width="106" Name="Clear_All_Rule_Btn" Click="Clear_All_Rule_Btn_Click" Margin="5px">
+                    <Button Cursor="Hand" Name="Clear_All_Rule_Btn" Click="Clear_All_Rule_Btn_Click" Margin="5px" Width="110">
                         <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
-                            <Image Source="images/clear_all.png" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <TextBlock Text="Clear All"/>
+                            <Image Source="images/clear-file-folder.png" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <TextBlock Text="Clear Rules"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -216,7 +216,7 @@
 
                     </ListView.ItemContainerStyle>
                 </ListView>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5px">
                     <TextBlock VerticalAlignment="Center"  Text="Preset Name: " Margin="0,0,5,0"/>
                     <TextBox x:Name="presetNameInput" Width="142" Height="30" Margin="0,0,5,0"></TextBox>
                     <Button Content="Save Preset" Click="SaveRule_Click" Width="90" Margin="5px"/>
@@ -227,17 +227,17 @@
             <TabControl>
                 <TabItem Header="File">
                     <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="970">
-                        <StackPanel Orientation ="Horizontal">
+                        <StackPanel Orientation ="Horizontal"  Margin="0,9,0,0">
                             <Button Click="AddFile_Click" Width="140" Margin="5,5,5,5">
                                 <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
                                     <Image Source="images/addFile.png" Margin="0,0,0,0" RenderOptions.BitmapScalingMode="HighQuality"/>
-                                    <TextBlock Text="Add new file" Margin="5,0,0,0"/>
+                                    <TextBlock Text="Add New File" Margin="5,0,0,0"/>
                                 </StackPanel>
                             </Button>
                             <Button Click="ClearAllFile_Click" Margin="5px">
                                 <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
                                     <Image Source="images/clear-file-folder.png" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>
-                                    <TextBlock Text="Clear all"/>
+                                    <TextBlock Text="Clear All"/>
                                 </StackPanel>
                             </Button>
                             <Button  PreviewMouseDown="ResetFileName_MouseDown_Preview"
@@ -245,17 +245,15 @@
                                      Content="Turn Off Preview" MouseDown="ResetFileName_MouseDown"
                                      MouseUp="ResetFileName_MouseUp" Width="120" Margin="580,5,5,5"/>
                         </StackPanel>
-                     
-                       
-                        <ListView x:Name="FileList" Height="370px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFileList" Drop="DropFileList" >
+                        <ListView x:Name="FileList" Height="365px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFileList" Drop="DropFileList" >
                             <ListView.Resources>
                                 <ContextMenu x:Key="ItemContextMenu">
-                                    <MenuItem Header="Open this file" Click="openThisFile_Click">
+                                    <MenuItem Header="Open This File" Click="openThisFile_Click">
                                         <MenuItem.Icon>
                                             <Image Source="images/open-file.png"/>
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Header="Open in file explorer" Click="openInFileExplorer_Click" >
+                                    <MenuItem Header="Open In File Explorer" Click="openInFileExplorer_Click" >
                                         <MenuItem.Icon>
                                             <Image Source="images/search.png"/>
                                         </MenuItem.Icon>
@@ -300,7 +298,7 @@
                             
                         </ListView>
                         <StackPanel Orientation ="Horizontal" HorizontalAlignment="Center">
-                            <hc:Pagination Name="FilePagination" AllowDrop="True" DragOver="DragOverFilePage" IsJumpEnabled="True" MaxPageInterval ="2" PageUpdated="page_FilePageUpdated" PageIndex="1" />
+                            <hc:Pagination Name="FilePagination" Margin="5px"  AllowDrop="True" DragOver="DragOverFilePage" IsJumpEnabled="True" MaxPageInterval ="2" PageUpdated="page_FilePageUpdated" PageIndex="1" />
                         </StackPanel>
                      
                     </StackPanel>
@@ -309,17 +307,17 @@
                 </TabItem>
                 <TabItem Header="Folder">
                     <StackPanel Orientation ="Vertical" HorizontalAlignment="Right" Width="970" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
-                        <StackPanel Orientation ="Horizontal">
+                        <StackPanel Orientation ="Horizontal"  Margin="0,9,0,0">
                             <Button Click="AddFolder_Click" Width="140" Margin="5px">
                                 <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
                                     <Image Source="images/addFile.png" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>
-                                    <TextBlock Text="Add new folder"/>
+                                    <TextBlock Text="Add New Folder"/>
                                 </StackPanel>
                             </Button>
                             <Button  Click="ClearAllFolder_Click" Margin="5px">
                                 <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
                                     <Image Source="images/clear-file-folder.png" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>
-                                    <TextBlock Text="Clear all"/>
+                                    <TextBlock Text="Clear All"/>
                                 </StackPanel>
                             </Button>
                             <Button  PreviewMouseDown="ResetFolderName_MouseDown_Preview"
@@ -328,11 +326,11 @@
                                      MouseUp="ResetFolderName_MouseUp" Width="120" Margin="580,5,5,5"/>
                         </StackPanel>
 
-                        <ListView x:Name="FolderList" Height="370px" Margin="5px" AllowDrop="True" DragOver="DragOverFolderList" Drop="DropFolderList">
+                        <ListView x:Name="FolderList" Height="365px" Margin="5px" AllowDrop="True" DragOver="DragOverFolderList" Drop="DropFolderList">
 
                             <ListView.Resources>
                                 <ContextMenu x:Key="ItemContextMenu">
-                                    <MenuItem Header="Open in file explorer" Click="openInFolderExplorer_Click">
+                                    <MenuItem Header="Open In File Explorer" Click="openInFolderExplorer_Click">
                                         <MenuItem.Icon>
                                             <Image Source="images/search.png"/>
                                         </MenuItem.Icon>
@@ -382,7 +380,7 @@
                             </ListView.ItemContainerStyle>-->
                         </ListView>
                         <StackPanel Orientation ="Horizontal" HorizontalAlignment="Center">
-                            <hc:Pagination Name="FolderPagination" AllowDrop="True"  DragOver="DragOverFolderPage" IsJumpEnabled="True" MaxPageInterval ="2" PageUpdated="page_FolderPageUpdated" PageIndex="1" />
+                            <hc:Pagination Name="FolderPagination" AllowDrop="True" Margin="5px"  DragOver="DragOverFolderPage" IsJumpEnabled="True" MaxPageInterval ="2" PageUpdated="page_FolderPageUpdated" PageIndex="1" />
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
