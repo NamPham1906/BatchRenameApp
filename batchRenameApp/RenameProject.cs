@@ -52,7 +52,7 @@ namespace batchRenameApp
             CurrentFolderPage = 1;
             PresetName = "";
             ProjectAddress = "";
-            WindowWidth = 1315;
+            WindowWidth = 1343;
             WindowHeight = 580;
             WindowLeft = 100;
             WindowTop = 100;
