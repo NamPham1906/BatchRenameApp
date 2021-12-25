@@ -8,7 +8,9 @@
 
   <ItemGroup>
     <None Remove="images\add.png" />
+    <None Remove="images\addFile.png" />
     <None Remove="images\clear.png" />
+    <None Remove="images\clearAll.png" />
     <None Remove="images\clear_all.png" />
     <None Remove="images\file.png" />
     <None Remove="images\folder.png" />
@@ -25,7 +27,13 @@
     <Content Include="images\add.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="images\addFile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="images\clear.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\clearAll.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\clear_all.png">
