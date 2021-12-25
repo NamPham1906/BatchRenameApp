@@ -11,7 +11,6 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
 
-
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,11 +19,12 @@ using System.Windows.Threading;
 namespace batchRenameApp
 {
 
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        int currentfilepage = 1;
+        public int currentfilepage { get; set; }
+
         int currentfolderpage = 1;
-        int itemperpage = 6;
+        int itemperpage = 7;
         int totalRule = 0;
         int autoSaveTime = 1;
         bool IsAutoSave = true;
@@ -44,6 +44,7 @@ namespace batchRenameApp
         int unnamedPreset = 0;
         List<Preset> presets = new List<Preset>();
 
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void StoreToProject()
         {
@@ -124,6 +125,8 @@ namespace batchRenameApp
             FolderList.ItemsSource = folderlist;
             FilePagination.PageIndex = currentfilepage;
             FolderPagination.PageIndex = currentfolderpage;
+            NumberOfFiles.DataContext = filelist.Count();
+            
             update_Filepage();
             update_Folderpage();
             this.Title = AppTitle + " - " + currentProject.GetName();
@@ -321,6 +324,8 @@ namespace batchRenameApp
             FilePagination.MaxPageCount = (int)Math.Ceiling(filelist.Count() * 1.0 / 6);
             FolderPagination.MaxPageCount = (int)Math.Ceiling(folderlist.Count() * 1.0 / 6);
 
+            
+
             //get all rule from DLL
             totalRule = RuleFactory.GetInstance().RuleAmount();
             for (int i = 0; i < totalRule; i++)
@@ -398,6 +403,7 @@ namespace batchRenameApp
             {
                 dispatcherTimer.Start();
             }
+            
         }
         
         private void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -1071,6 +1077,7 @@ namespace batchRenameApp
             FilePagination.MaxPageCount = (int)Math.Ceiling(filelist.Count()*1.0/6);
             IEnumerable<MyFile> datafilelist = filelist.Skip((currentfilepage - 1) * itemperpage).Take(itemperpage);
             FileList.ItemsSource = datafilelist;
+            NumberOfFiles.DataContext = filelist.Count();
         }
 
 
@@ -1078,6 +1085,7 @@ namespace batchRenameApp
             FolderPagination.MaxPageCount = (int)Math.Ceiling(folderlist.Count() * 1.0 / 6);
             IEnumerable<Folder> datafolderlist = folderlist.Skip((currentfolderpage - 1) * itemperpage).Take(itemperpage);
             FolderList.ItemsSource = datafolderlist;
+            NumberOfFolders.DataContext = folderlist.Count();
         }
 
         
@@ -1391,6 +1399,24 @@ namespace batchRenameApp
                 }
             }
                 
+        }
+       
+        private void All_Rule_Unchecked(object sender, RoutedEventArgs e)
+        {
+            foreach(var rule in userRules)
+            {
+                rule.SetIsUse(false);
+                UpdatePreview();
+            }    
+        }
+
+        private void All_Rule_Checked(object sender, RoutedEventArgs e)
+        {
+            foreach (var rule in userRules)
+            {
+                rule.SetIsUse(true);
+                UpdatePreview();
+            }
         }
     }
 }
