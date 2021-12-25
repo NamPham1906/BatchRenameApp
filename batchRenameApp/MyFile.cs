@@ -169,5 +169,68 @@ namespace batchRenameApp
             }
             return false;
         }
+
+
+        public bool changeNameToFolder(string folderDir)
+        {
+            
+            string newfilepath = folderDir + @"\";
+            newfilepath += this.newfilename;
+            FileInfo file = new FileInfo(this.filepath);
+            FileInfo newfile = new FileInfo(newfilepath);
+            if (!file.Exists)
+            {
+                this.status = FileNotExistErrorStatus;
+                return false;
+            }
+            else if (this.filename.Equals(this.newfilename))
+            {
+                this.status = FileNameNotChangeErrorStatus;
+                return false;
+            }
+            else if (!isValidName(this.newfilename, 1))
+            {
+                this.status = FileNameNotValidErrorStatus;
+                return false;
+            }
+            else if (this.newfilename.Length > 255)
+            {
+
+                this.status = FileNameLengthErrorStatus;
+                return false;
+            }
+            else if (newfile.Exists)
+            {
+                this.status = FileDulicateErrorStatus;
+                return false;
+            }
+            else if (newfilepath.Length <= 0)
+            {
+                this.status = FileNameTooShortErrorStatus;
+                return false;
+            }
+            else if (file.Exists && !newfile.Exists)
+            {
+
+                try
+                {
+                    File.Copy(this.filepath, newfilepath, true);
+                    FileInfo myfile = new FileInfo(newfilepath);
+                    this.filename = myfile.Name;
+                    this.newfilename = this.filename;
+                    this.fileextension = myfile.Extension;
+                    this.filepath = newfilepath;
+                    this.status = BatchingSuccessStatus;
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    this.status = BatchingUnsuccessErrorStatus;
+                    return false;
+                }
+
+            }
+            return false;
+        }
     }
 }

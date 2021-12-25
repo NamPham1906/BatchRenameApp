@@ -158,5 +158,100 @@ namespace batchRenameApp
             }
             return false;
         }
+
+
+        public bool changeNameToFolder(string folderDir)
+        {
+            string newfolderpath = folderDir + @"\";
+            newfolderpath += this.newfoldername;
+            if (!Directory.Exists(this.folderpath))
+            {
+                this.status = FolderNotExistErrorStatus;
+                return false;
+            }
+            else if (this.foldername.Equals(this.newfoldername))
+            {
+                this.status = FolderNameNotChangeErrorStatus;
+                return false;
+            }
+            else if (!isValidName(this.newfoldername, 2))
+            {
+                this.status = FolderNameNotValidErrorStatus;
+                return false;
+            }
+            else if (this.newfoldername.Length > 255)
+            {
+
+                this.status = FolderNameLengthErrorStatus;
+                return false;
+            }
+            else if (Directory.Exists(newfolderpath))
+            {
+                this.status = FolderDulicateErrorStatus;
+                return false;
+            }
+            else if (newfolderpath.Length <= 0)
+            {
+                this.status = FolderNameTooShortErrorStatus;
+                return false;
+            }
+            else if (Directory.Exists(this.folderpath) && !Directory.Exists(newfolderpath))
+            {
+                try
+                {
+                    DirectoryCopy(this.folderpath, newfolderpath, true);
+                 
+                    DirectoryInfo myfolder = new DirectoryInfo(newfolderpath);
+                    this.foldername = myfolder.Name;
+                    this.newfoldername = this.foldername;
+                    this.folderpath = newfolderpath;
+                    this.status = BatchingSuccessStatus;
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    this.status = BatchingUnsuccessErrorStatus;
+                    return false;
+                }
+
+            }
+            return false;
+        }
+
+        private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
+        {
+            // Get the subdirectories for the specified directory.
+            DirectoryInfo dir = new DirectoryInfo(sourceDirName);
+
+            if (!dir.Exists)
+            {
+                throw new DirectoryNotFoundException(
+                    "Source directory does not exist or could not be found: "
+                    + sourceDirName);
+            }
+
+            DirectoryInfo[] dirs = dir.GetDirectories();
+
+            // If the destination directory doesn't exist, create it.       
+            Directory.CreateDirectory(destDirName);
+
+            // Get the files in the directory and copy them to the new location.
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                string tempPath = Path.Combine(destDirName, file.Name);
+                file.CopyTo(tempPath, false);
+            }
+
+            // If copying subdirectories, copy them and their contents to new location.
+            if (copySubDirs)
+            {
+                foreach (DirectoryInfo subdir in dirs)
+                {
+                    string tempPath = Path.Combine(destDirName, subdir.Name);
+                    DirectoryCopy(subdir.FullName, tempPath, copySubDirs);
+                }
+            }
+        }
     }
 }

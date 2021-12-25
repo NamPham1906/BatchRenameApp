@@ -444,12 +444,17 @@ namespace batchRenameApp
 
         private void DropFolderList(object sender, DragEventArgs e)
         {
+           
             string[] droppedFoldernames = e.Data.GetData(DataFormats.FileDrop, true) as string[];
-            foreach (string foldername in droppedFoldernames)
+            if (droppedFoldernames != null)
             {
-                if (Directory.Exists(foldername))
+
+                foreach (string foldername in droppedFoldernames)
                 {
-                    addFolder(foldername);
+                    if (Directory.Exists(foldername))
+                    {
+                        addFolder(foldername);
+                    }
                 }
             }
         }
@@ -457,6 +462,7 @@ namespace batchRenameApp
         private void DragOverFolderList(object sender, DragEventArgs e)
         {
             bool dropEnabled = true;
+           
             if (e.Data.GetDataPresent(DataFormats.FileDrop, true))
             {
                 string[] foldernames =
@@ -471,10 +477,7 @@ namespace batchRenameApp
                     }
                 }
             }
-            else
-            {
-                dropEnabled = false;
-            }
+            
 
             if (!dropEnabled)
             {
@@ -1077,12 +1080,7 @@ namespace batchRenameApp
             FolderList.ItemsSource = datafolderlist;
         }
 
-        private void page_PageUpdated(object sender, HandyControl.Data.FunctionEventArgs<int> e)
-        {
-            currentfilepage = e.Info;
-            update_Filepage();
-        }
-
+        
         private void page_FolderPageUpdated(object sender, HandyControl.Data.FunctionEventArgs<int> e)
         {
             currentfolderpage = e.Info;
@@ -1156,16 +1154,63 @@ namespace batchRenameApp
            
         }
 
-        private void DragEnterFilePage(object sender, DragEventArgs e)
+        private void DragOverFilePage(object sender, DragEventArgs e)
         {
-            // sender.ToString();
-            // e.ToString();
-            Point a = e.GetPosition(FilePagination);
-            if (currentfilepage < FilePagination.MaxPageCount) currentfilepage++;
-            FilePagination.PageIndex = currentfilepage;
-            update_Filepage();
-   
+            System.Windows.Controls.Border item = e.OriginalSource as System.Windows.Controls.Border;
+            bool isDragable = true;
+            if (item == null)
+            {
+                isDragable = false;
+            }
+            else
+            {
+                var s3 = item.Child as System.Windows.Controls.StackPanel;
+                if (s3 == null)
+                {
+                    isDragable = false;
+                }
+                else
+                {
+                    var s4 = s3.TemplatedParent as System.Windows.Controls.RadioButton;
+                    if (s4 == null)
+                    {
+                        isDragable = false;
+                    }
+                    else
+                    {
+                        string s5 = (string)s4.Content;
+                        int newpage = Int32.Parse(s5);
+                        if (newpage > 0 && newpage <= FilePagination.MaxPageCount)
+                        {
+                            currentfilepage = newpage;
+                            FilePagination.PageIndex = newpage;
+                            page_FilePageUpdated(this, new FunctionEventArgs<int>(newpage));
+                            update_Filepage();
+                        }
+                        else
+                        {
+                            isDragable = false;
+                        }
+                    }
+                    
+                }
+            }
+ 
+            if (!isDragable)
+            {
+                e.Effects = DragDropEffects.None;
+                e.Handled = true;
+                return;
+            }
+ 
         }
+
+        private void page_FilePageUpdated(object sender, HandyControl.Data.FunctionEventArgs<int> e)
+        {
+            currentfilepage = e.Info;
+            update_Filepage();
+        }
+
 
         private void CutContractKeyDown(object sender, KeyEventArgs e)
         {
@@ -1193,6 +1238,118 @@ namespace batchRenameApp
                 currentProject.StoreData(currentProject.ProjectAddress);
                 this.Title = AppTitle + " - " + currentProject.GetName();
             }
+        }
+
+        private void FolderList_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is ListViewItem)
+            {
+                ListViewItem draggedItem = sender as ListViewItem;
+                DataObject data = new DataObject("FOLDER", draggedItem.DataContext);
+                DragDrop.DoDragDrop(draggedItem, data, DragDropEffects.Move);
+                draggedItem.IsSelected = true;
+            }
+        }
+
+        private void FolderList_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent("FOLDER"))
+            {
+                Folder droppedData = e.Data.GetData("FOLDER") as Folder;
+                Folder target = ((ListViewItem)(sender)).DataContext as Folder;
+
+                int removedIdx = folderlist.IndexOf(droppedData);
+                int targetIdx = folderlist.IndexOf(target);
+                if (removedIdx < 0 || targetIdx < 0 || removedIdx > folderlist.Count || targetIdx > folderlist.Count)
+                {
+                    return;
+                }
+                else if (removedIdx < targetIdx)
+                {
+                    folderlist.Insert(targetIdx + 1, droppedData);
+                    folderlist.RemoveAt(removedIdx);
+                }
+                else
+                {
+                    int remIdx = removedIdx + 1;
+                    if (folderlist.Count + 1 > remIdx)
+                    {
+                        folderlist.Insert(targetIdx, droppedData);
+                        folderlist.RemoveAt(remIdx);
+                    }
+                }
+            }
+            update_Folderpage();
+        }
+
+        private void DragOverFolderPage(object sender, DragEventArgs e)
+        {
+            System.Windows.Controls.Border item = e.OriginalSource as System.Windows.Controls.Border;
+            bool isDragable = true;
+            if (item == null)
+            {
+                isDragable = false;
+            }
+            else
+            {
+                var s3 = item.Child as System.Windows.Controls.StackPanel;
+                if (s3 == null)
+                {
+                    isDragable = false;
+                }
+                else
+                {
+                    var s4 = s3.TemplatedParent as System.Windows.Controls.RadioButton;
+                    if (s4 == null)
+                    {
+                        isDragable = false;
+                    }
+                    else
+                    {
+                        string s5 = (string)s4.Content;
+                        int newpage = int.Parse(s5);
+                        if (newpage > 0 && newpage <= FolderPagination.MaxPageCount)
+                        {
+                            currentfolderpage = newpage;
+                            FolderPagination.PageIndex = newpage;
+                            page_FolderPageUpdated(this, new FunctionEventArgs<int>(newpage));
+                            update_Folderpage();
+                        }
+                        else
+                        {
+                            isDragable = false;
+                        }
+                    }
+
+                }
+            }
+
+            if (!isDragable)
+            {
+                e.Effects = DragDropEffects.None;
+                e.Handled = true;
+                return;
+            }
+        }
+
+        private void StartBatchingToFolder_Click(object sender, RoutedEventArgs e)
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+
+                for (int i = 0; i < filelist.Count(); i++)
+                {
+                    filelist[i].changeNameToFolder(dialog.FileName);
+                }
+
+                for (int i = 0; i < folderlist.Count(); i++)
+                {
+                    folderlist[i].changeNameToFolder(dialog.FileName);
+                }
+            }
+                
         }
 
 
