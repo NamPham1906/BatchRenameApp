@@ -927,6 +927,7 @@ namespace batchRenameApp
                 }
                 //RuleList.Items.Clear();
                 RuleList.ItemsSource = userRules;
+                UpdatePreview();
             }
         }
 
