@@ -1280,6 +1280,7 @@ namespace batchRenameApp
                     dispatcherTimer.Stop();
                 }
             }
+        }
         private void FolderList_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (sender is ListViewItem)
