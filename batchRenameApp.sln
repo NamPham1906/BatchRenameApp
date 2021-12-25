@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddCounter", "AddCounter\Ad
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChangeFileNameRule", "ChangeFileName\ChangeFileNameRule.csproj", "{4945183C-9DCD-44B8-BA12-DD09D96A56E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StripRule", "StripRule\StripRule.csproj", "{2BFBFCEE-1427-4E9B-AC46-CBCB89FDFBBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StripRule", "StripRule\StripRule.csproj", "{2BFBFCEE-1427-4E9B-AC46-CBCB89FDFBBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoveAccentRule", "RemoveAccentRule\RemoveAccentRule.csproj", "{DBCB6DF4-2498-4C3A-91B3-0C6411D613E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,10 @@ Global
 		{2BFBFCEE-1427-4E9B-AC46-CBCB89FDFBBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BFBFCEE-1427-4E9B-AC46-CBCB89FDFBBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BFBFCEE-1427-4E9B-AC46-CBCB89FDFBBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBCB6DF4-2498-4C3A-91B3-0C6411D613E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBCB6DF4-2498-4C3A-91B3-0C6411D613E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBCB6DF4-2498-4C3A-91B3-0C6411D613E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBCB6DF4-2498-4C3A-91B3-0C6411D613E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
