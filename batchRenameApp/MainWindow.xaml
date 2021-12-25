@@ -246,9 +246,21 @@
                         <ListView x:Name="FileList" Height="370px" Margin="5px"  AllowDrop="True"  DragOver="DragOverFileList" Drop="DropFileList" >
                             <ListView.Resources>
                                 <ContextMenu x:Key="ItemContextMenu">
-                                    <MenuItem Header="Open this file" Click="openThisFile_Click" />
-                                    <MenuItem Header="Open in file explorer" Click="openInFileExplorer_Click" />
-                                    <MenuItem Header="Delete" Click="deleteFileMenu_Click" />
+                                    <MenuItem Header="Open this file" Click="openThisFile_Click">
+                                        <MenuItem.Icon>
+                                            <Image Source="images/open-file.png"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Open in file explorer" Click="openInFileExplorer_Click" >
+                                        <MenuItem.Icon>
+                                            <Image Source="images/search.png"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Delete" Click="deleteFileMenu_Click" >
+                                        <MenuItem.Icon>
+                                            <Image Source="images/clear-file-folder.png"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
                                 </ContextMenu>
                             </ListView.Resources>
                             <ListView.ItemContainerStyle>
@@ -312,8 +324,17 @@
 
                             <ListView.Resources>
                                 <ContextMenu x:Key="ItemContextMenu">
-                                    <MenuItem Header="Open in file explorer" Click="openInFolderExplorer_Click" />
-                                    <MenuItem Header="Delete" Click="deleteFolderMenu_Click" />
+                                    <MenuItem Header="Open in file explorer" Click="openInFolderExplorer_Click">
+                                        <MenuItem.Icon>
+                                            <Image Source="images/search.png"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+
+                                    <MenuItem Header="Delete" Click="deleteFolderMenu_Click">
+                                        <MenuItem.Icon>
+                                            <Image Source="images/clear-file-folder.png"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
                                 </ContextMenu>
                             </ListView.Resources>
                             <ListView.ItemContainerStyle>
