@@ -46,6 +46,12 @@
                     <TextBlock Text="Start Batching"/>
                 </StackPanel>
             </Button>
+            <Button Cursor="Hand" Click="StartBatchingToFolder_Click" Margin="5px">
+                <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
+                    <Image Source="images/batching-folder.png" Margin="0,0,10,0"/>
+                    <TextBlock Text="Start Batching To Folder"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
         <StackPanel Orientation="Horizontal" >
            

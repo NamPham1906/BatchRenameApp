@@ -1261,5 +1261,25 @@ namespace batchRenameApp
                 return;
             }
         }
+
+        private void StartBatchingToFolder_Click(object sender, RoutedEventArgs e)
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+
+                for (int i = 0; i < filelist.Count(); i++)
+                {
+                    filelist[i].changeNameToFolder(dialog.FileName);
+                }
+
+                for (int i = 0; i < folderlist.Count(); i++)
+                {
+                    folderlist[i].changeNameToFolder(dialog.FileName);
+                }
+            }
+                
+        }
     }
 }
