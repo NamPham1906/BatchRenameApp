@@ -38,13 +38,19 @@ namespace batchRenameApp
         public double WindowHeight { get; set; }
         public double WindowLeft { get; set; }
         public double WindowTop { get; set; }
+        public string PresetName { get; set; }
 
+        public int CurrentFilePage { get; set; }
+        public int CurrentFolderPage { get; set; }
         public List<RuleContainer> Rules { get; set; }
         public List<MyFile> Files { get; set; }
         public List<Folder> Folders { get; set; }
 
         public RenameProject()
         {
+            CurrentFilePage = 1;
+            CurrentFolderPage = 1;
+            PresetName = "";
             ProjectAddress = "";
             WindowWidth = 1315;
             WindowHeight = 580;

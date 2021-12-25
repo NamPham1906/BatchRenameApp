@@ -10,7 +10,7 @@
         Title="Batch Rename"  
         Height="580" Width="1315"
         Icon="images/icon.png"
-        Loaded="Window_Loaded" Closed="Window_Closed">
+        Loaded="Window_Loaded" Closed="Window_Closed" KeyDown="CutContractKeyDown">
     <Window.Resources>
         <local:StatusColorConverter x:Key="StatusColorConverter" />
     </Window.Resources>
@@ -46,6 +46,7 @@
                     <TextBlock Text="Start Batching"/>
                 </StackPanel>
             </Button>
+            <Label Name="Timer_Text"></Label>
         </StackPanel>
         <StackPanel Orientation="Horizontal" >
            
