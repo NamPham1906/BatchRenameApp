@@ -240,6 +240,10 @@
                                     <TextBlock Text="Clear all"/>
                                 </StackPanel>
                             </Button>
+                            <Button  PreviewMouseDown="ResetFileName_MouseDown_Preview"
+                                     PreviewMouseUp="ResetFileName_MouseUp_Preview"
+                                     Content="Turn Off Preview" MouseDown="ResetFileName_MouseDown"
+                                     MouseUp="ResetFileName_MouseUp" Width="120" Margin="580,5,5,5"/>
                         </StackPanel>
                      
                        
@@ -318,6 +322,10 @@
                                     <TextBlock Text="Clear all"/>
                                 </StackPanel>
                             </Button>
+                            <Button  PreviewMouseDown="ResetFolderName_MouseDown_Preview"
+                                     PreviewMouseUp="ResetFolderName_MouseUp_Preview"
+                                     Content="Turn Off Preview" MouseDown="ResetFolderName_MouseDown"
+                                     MouseUp="ResetFolderName_MouseUp" Width="120" Margin="580,5,5,5"/>
                         </StackPanel>
 
                         <ListView x:Name="FolderList" Height="370px" Margin="5px" AllowDrop="True" DragOver="DragOverFolderList" Drop="DropFolderList">
