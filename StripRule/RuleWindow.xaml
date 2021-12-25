@@ -10,22 +10,22 @@
              VerticalAlignment="Stretch"
              Loaded="UserControl_Loaded"
              Background="White">
-    <StackPanel Margin="10">
+    <StackPanel HorizontalAlignment="Stretch" Margin="10,0,10,0" >
         <StackPanel Orientation="Horizontal" Margin="0,3,0,3">
             <CheckBox IsChecked="{Binding StripLetter}" Width="90" VerticalAlignment="Center" HorizontalAlignment="Left" >Alphabet</CheckBox>
-            <Label VerticalAlignment="Center" Content="{Binding Letter}"></Label>
+            <Label VerticalAlignment="Center" Content="{Binding Letter}" Width="164"></Label>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="0,3,0,3">
             <CheckBox IsChecked="{Binding StripNumber}" Width="90" VerticalAlignment="Center" HorizontalAlignment="Left" >Number</CheckBox>
-            <Label VerticalAlignment="Center" Content="{Binding Number}"></Label>
+            <Label  Width="164" VerticalAlignment="Center" Content="{Binding Number}"></Label>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="0,3,0,3">
             <CheckBox IsChecked="{Binding StripSymbol}" Width="90" VerticalAlignment="Center" HorizontalAlignment="Left" >Symbol</CheckBox>
-            <Label VerticalAlignment="Center" Content="{Binding Symbol}"></Label>
+            <Label Width="164" VerticalAlignment="Center" Content="{Binding Symbol}"></Label>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="0,3,0,3">
+        <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal" Margin="0,3,0,3">
             <CheckBox IsChecked="{Binding StripCustom}" Width="90" VerticalAlignment="Center" HorizontalAlignment="Left" >User define</CheckBox>
-            <TextBox Text="{Binding CustomString}" Width="149" Padding="10,0,10,0"/>
+            <TextBox Width="164" Text="{Binding CustomString}"/>
         </StackPanel>
     </StackPanel>
 </UserControl>

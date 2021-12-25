@@ -1,4 +1,4 @@
-using Contract;
+﻿using Contract;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -36,9 +36,9 @@ namespace StripRule
         public Strip()
         {
             Name = "Strip";
-            Letter = "abcdefjhijklmnopqrstuvwxyz";
+            Letter = "abcdefghijklmnopqrstuvwxyz";
             Number = "1234567890";
-            Symbol = "!@#$%^&*()[]~-_=+,?;`{}"; ;
+            Symbol = "!@#$%^&*()[]~-_=+,?;`{}:\\|/.,";
             IsInUse = false;
             StripLetter = false;
             StripNumber = false;
@@ -101,19 +101,35 @@ namespace StripRule
                         }
                         if (StripLetter)
                         {
-                            temp = Regex.Replace(temp, $@"[{Letter}]/gi", "", RegexOptions.None, TimeSpan.FromSeconds(1.5));
+                            string letter = "abcdefghijklmnopqrstuvwxyzàáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ";
+
+                            temp = Regex.Replace(temp, $@"[{letter}]", "", RegexOptions.IgnoreCase);
                         }
                         if (StripNumber)
                         {
-                            temp = Regex.Replace(temp, $@"[{Number}]/gi", "", RegexOptions.None, TimeSpan.FromSeconds(1.5));
+                            temp = Regex.Replace(temp, $@"[{Number}]", "");
                         }
                         if (StripSymbol)
                         {
-                            temp = Regex.Replace(temp, $@"[{Symbol}]/gi", "", RegexOptions.None, TimeSpan.FromSeconds(1.5));
+                            int n = temp.Length;
+                            for (int i = n - 1; i >= 0; i--)
+                            {
+                                if (Symbol.Contains(temp[i]))
+                                {
+                                    temp = temp.Remove(i, 1);
+                                }
+                            }
                         }
                         if (StripCustom)
                         {
-                            temp = Regex.Replace(temp, $@"[{CustomString}]/gi", "", RegexOptions.None, TimeSpan.FromSeconds(1.5));
+                            int n = temp.Length;
+                            for (int i = n - 1; i >= 0; i--)
+                            {
+                                if (CustomString.Contains(temp[i]))
+                                {
+                                    temp = temp.Remove(i, 1);
+                                }
+                            }
                         }
                         result.Add(temp + "." + tokens[tokens.Length - 1]);
                     }
@@ -125,19 +141,35 @@ namespace StripRule
                         string temp = str;
                         if (StripLetter)
                         {
-                            temp = Regex.Replace(temp, $@"[{Letter}]/gi", "", RegexOptions.None, TimeSpan.FromSeconds(1.5));
+                            string letter = "abcdefghijklmnopqrstuvwxyzàáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ";
+
+                            temp = Regex.Replace(temp, $@"[{letter}]", "", RegexOptions.IgnoreCase);
                         }
                         if (StripNumber)
                         {
-                            temp = Regex.Replace(temp, $@"[{Number}]/gi", "", RegexOptions.None, TimeSpan.FromSeconds(1.5));
+                            temp = Regex.Replace(temp, $@"[{Number}]", "");
                         }
                         if (StripSymbol)
                         {
-                            temp = Regex.Replace(temp, $@"[{Symbol}]/gi", "", RegexOptions.None, TimeSpan.FromSeconds(1.5));
+                            int n = temp.Length;
+                            for (int i = n - 1; i >= 0; i--)
+                            {
+                                if (Symbol.Contains(temp[i]))
+                                {
+                                    temp = temp.Remove(i, 1);
+                                }
+                            }
                         }
                         if (StripCustom)
                         {
-                            temp = Regex.Replace(temp, $@"[{CustomString}]/gi", "", RegexOptions.None, TimeSpan.FromSeconds(1.5));
+                            int n = temp.Length;
+                            for (int i = n - 1; i >= 0; i--)
+                            {
+                                if (CustomString.Contains(temp[i]))
+                                {
+                                    temp = temp.Remove(i, 1);
+                                }
+                            }
                         }
                         result.Add(str);
                     }
