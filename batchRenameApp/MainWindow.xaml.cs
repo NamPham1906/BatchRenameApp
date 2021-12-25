@@ -1240,6 +1240,47 @@ namespace batchRenameApp
             }
         }
 
+
+
+        private void Auto_Save_Check_Checked(object sender, RoutedEventArgs e)
+        {
+            IsAutoSave = (bool)Auto_Save_Check.IsChecked;
+            startTimerSecond = 0;
+            if (IsAutoSave)
+            {
+                if (dispatcherTimer != null)
+                {
+                    dispatcherTimer.Start();
+                }
+            }
+            else
+            {
+                if(dispatcherTimer != null)
+                {
+                    dispatcherTimer.Stop();
+                }
+            }
+        }
+
+        private void Auto_Save_Check_Unchecked(object sender, RoutedEventArgs e)
+        {
+            IsAutoSave = (bool)Auto_Save_Check.IsChecked;
+            startTimerSecond = 0;
+            if (IsAutoSave)
+            {
+                if (dispatcherTimer != null)
+                {
+                    dispatcherTimer.Start();
+                }
+            }
+            else
+            {
+                if (dispatcherTimer != null)
+                {
+                    dispatcherTimer.Stop();
+                }
+            }
+        }
         private void FolderList_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (sender is ListViewItem)
@@ -1350,47 +1391,6 @@ namespace batchRenameApp
                 }
             }
                 
-        }
-
-
-        private void Auto_Save_Check_Checked(object sender, RoutedEventArgs e)
-        {
-            IsAutoSave = (bool)Auto_Save_Check.IsChecked;
-            startTimerSecond = 0;
-            if (IsAutoSave)
-            {
-                if (dispatcherTimer != null)
-                {
-                    dispatcherTimer.Start();
-                }
-            }
-            else
-            {
-                if(dispatcherTimer != null)
-                {
-                    dispatcherTimer.Stop();
-                }
-            }
-        }
-
-        private void Auto_Save_Check_Unchecked(object sender, RoutedEventArgs e)
-        {
-            IsAutoSave = (bool)Auto_Save_Check.IsChecked;
-            startTimerSecond = 0;
-            if (IsAutoSave)
-            {
-                if (dispatcherTimer != null)
-                {
-                    dispatcherTimer.Start();
-                }
-            }
-            else
-            {
-                if (dispatcherTimer != null)
-                {
-                    dispatcherTimer.Stop();
-                }
-            }
         }
     }
 }
