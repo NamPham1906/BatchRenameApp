@@ -265,6 +265,7 @@
                                     <TextBlock Text="Clear All Non-existing Path"/>
                                 </StackPanel>
                             </Button>
+
                             <DockPanel Width="508px" Margin="5px">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" >
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0">
