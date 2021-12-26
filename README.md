@@ -1,5 +1,5 @@
 # **Đồ Án Batch Rename**
-![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
+![Alt Text](https://github.com/NamPham1906/BatchRenameApp/blob/khoa/ReadmeImage/app.png?raw=true)
 
 
 ## **Cách chạy chương trình**
