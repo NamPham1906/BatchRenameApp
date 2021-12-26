@@ -250,5 +250,6 @@ namespace batchRenameApp
                 return true;
             }
         }
+
     }
 }

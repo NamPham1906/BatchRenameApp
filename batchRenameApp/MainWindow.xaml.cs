@@ -1469,6 +1469,8 @@ namespace batchRenameApp
                 if (RuleFactory.GetInstance().AddRuleFromDLL(openFileDialog.FileName))
                 {
                     totalRule = RuleFactory.GetInstance().RuleAmount();
+                    allRules = new List<IRule>();
+                    allRulesName = new List<string>();
                     for (int i = 0; i < totalRule; i++)
                     {
                         allRules.Add(RuleFactory.GetInstance().Create(i));

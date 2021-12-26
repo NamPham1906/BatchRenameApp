@@ -96,14 +96,11 @@ namespace batchRenameApp
             }
             if (result)
             {
-                MyFile newfile = new MyFile(filepath);
                 string exePath = Assembly.GetExecutingAssembly().Location;
                 string folder = Path.GetDirectoryName(exePath);
-                if (newfile.changeNameToFolder(folder + "\\DLL"))
-                {
-                    _prototypes.Add(newRule);
-                }
-                else
+                FileInfo newfile = new FileInfo(filepath);
+                FileInfo oldFile = new FileInfo(folder + "\\DLL\\"+newfile.Name);
+                if (oldFile.Exists)
                 {
                     MessageBoxResult msResult = HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
                     {
@@ -117,7 +114,8 @@ namespace batchRenameApp
                     switch (msResult)
                     {
                         case MessageBoxResult.Yes:
-                            File.Copy(filepath, folder + "\\DLL\\" + newfile.filename, true);
+                            File.Delete(folder + "\\DLL\\" + newfile.Name);
+                            File.Copy(filepath, folder + "\\DLL\\" + newfile.Name, true);
                             _prototypes = new List<IRule>();
                             var fis = new DirectoryInfo(folder + "\\DLL").GetFiles("*.dll");
 
@@ -141,6 +139,28 @@ namespace batchRenameApp
                         default:
                             return false;
                     }
+                }
+                else
+                {
+                    File.Copy(filepath, folder + "\\DLL\\" + newfile.Name, true);
+                    _prototypes = new List<IRule>();
+                    var fis = new DirectoryInfo(folder + "\\DLL").GetFiles("*.dll");
+
+                    foreach (var f in fis)
+                    {
+                        var assembly = Assembly.LoadFile(f.FullName);
+                        var types = assembly.GetTypes();
+
+                        foreach (var t in types)
+                        {
+                            if (t.IsClass && typeof(IRule).IsAssignableFrom(t))
+                            {
+                                IRule c = (IRule)Activator.CreateInstance(t);
+                                _prototypes.Add(c);
+                            }
+                        }
+                    }
+                    return true;
                 }
             }
             return result;
