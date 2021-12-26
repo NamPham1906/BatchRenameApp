@@ -25,6 +25,10 @@ namespace RemoveExtraSpaceRule
         public RuleWindow ConfigurationUI { get; set; }
 
         public bool IsInUse { get; set; }
+        public void SetIsUse(bool use)
+        {
+            IsInUse = use;
+        }
         public RemoveExtraSpace()
         {
             Name = "Remove Extra Space";

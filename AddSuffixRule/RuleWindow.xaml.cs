@@ -41,7 +41,7 @@ namespace AddSuffixRule
 
         private void ValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex(@"[\/:*?""<>|]+");
+            Regex regex = new Regex(@"[\\/:*?""<>|]+");
             e.Handled = regex.IsMatch(e.Text);
         }
     }

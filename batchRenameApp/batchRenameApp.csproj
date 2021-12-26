@@ -14,6 +14,7 @@
     <None Remove="images\clear.png" />
     <None Remove="images\clearAll.png" />
     <None Remove="images\clear_all.png" />
+    <None Remove="images\dll-file.png" />
     <None Remove="images\file.png" />
     <None Remove="images\folder.png" />
     <None Remove="images\icon.png" />
@@ -47,6 +48,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\clear_all.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\dll-file.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\file.png">

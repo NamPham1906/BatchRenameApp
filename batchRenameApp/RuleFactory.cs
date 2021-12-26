@@ -5,7 +5,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Contract;
+using HandyControl.Data;
+
 namespace batchRenameApp
 {
     public class RuleFactory
@@ -20,7 +23,9 @@ namespace batchRenameApp
 
             foreach (var f in fis)
             {
-                var assembly = Assembly.LoadFile(f.FullName);
+
+                
+                var assembly = Assembly.Load(File.ReadAllBytes(f.FullName));
                 var types = assembly.GetTypes();
 
                 foreach (var t in types)
@@ -66,6 +71,101 @@ namespace batchRenameApp
         public int RuleAmount()
         {
             return _prototypes.Count();
+        }
+
+        public bool AddRuleFromDLL(string filepath)
+        {
+            IRule newRule = null;
+            FileInfo file = new FileInfo(filepath);
+            bool result = true;
+            try
+            {
+                var assembly = Assembly.LoadFile(file.FullName);
+                var types = assembly.GetTypes();
+
+                foreach (var t in types)
+                {
+                    if (t.IsClass && typeof(IRule).IsAssignableFrom(t))
+                    {
+                        newRule = (IRule)Activator.CreateInstance(t);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                result = false;
+                newRule = null;
+            }
+            if (result)
+            {
+                string exePath = Assembly.GetExecutingAssembly().Location;
+                string folder = Path.GetDirectoryName(exePath);
+                FileInfo newfile = new FileInfo(filepath);
+                FileInfo oldFile = new FileInfo(folder + "\\DLL\\"+newfile.Name);
+                if (oldFile.Exists)
+                {
+                    MessageBoxResult msResult = HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
+                    {
+                        Message = $"This rule dll is already exits. Do you want to replace it?",
+                        Caption = "Add new Rule",
+                        Button = MessageBoxButton.YesNo,
+                        IconBrushKey = ResourceToken.AccentBrush,
+                        IconKey = ResourceToken.AskGeometry,
+                        StyleKey = "MessageBoxCustom"
+                    });
+                    switch (msResult)
+                    {
+                        case MessageBoxResult.Yes:
+                            File.Delete(folder + "\\DLL\\" + newfile.Name);
+                            File.Copy(filepath, folder + "\\DLL\\" + newfile.Name, true);
+                            _prototypes = new List<IRule>();
+                            var fis = new DirectoryInfo(folder + "\\DLL").GetFiles("*.dll");
+
+                            foreach (var f in fis)
+                            {
+                                var assembly = Assembly.Load(File.ReadAllBytes(f.FullName));
+                                var types = assembly.GetTypes();
+
+                                foreach (var t in types)
+                                {
+                                    if (t.IsClass && typeof(IRule).IsAssignableFrom(t))
+                                    {
+                                        IRule c = (IRule)Activator.CreateInstance(t);
+                                        _prototypes.Add(c);
+                                    }
+                                }
+                            }
+                            return true;
+                        case MessageBoxResult.No:
+                            return false;
+                        default:
+                            return false;
+                    }
+                }
+                else
+                {
+                    File.Copy(filepath, folder + "\\DLL\\" + newfile.Name, true);
+                    _prototypes = new List<IRule>();
+                    var fis = new DirectoryInfo(folder + "\\DLL").GetFiles("*.dll");
+
+                    foreach (var f in fis)
+                    {
+                        var assembly = Assembly.Load(File.ReadAllBytes(f.FullName));
+                        var types = assembly.GetTypes();
+
+                        foreach (var t in types)
+                        {
+                            if (t.IsClass && typeof(IRule).IsAssignableFrom(t))
+                            {
+                                IRule c = (IRule)Activator.CreateInstance(t);
+                                _prototypes.Add(c);
+                            }
+                        }
+                    }
+                    return true;
+                }
+            }
+            return result;
         }
     }
 }

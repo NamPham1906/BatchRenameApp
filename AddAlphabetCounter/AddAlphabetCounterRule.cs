@@ -28,6 +28,10 @@ namespace AddAlphabetCounter
         {
             return IsInUse;
         }
+        public void SetIsUse(bool use)
+        {
+            IsInUse = use;
+        }
         public AddAlphabetCounterRule()
         {
             Name = "Add Alphabet Counter";

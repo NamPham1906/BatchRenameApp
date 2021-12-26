@@ -23,7 +23,10 @@ namespace ChangeFileNameRule
         {
             return IsInUse;
         }
-
+        public void SetIsUse(bool use)
+        {
+            IsInUse = use;
+        }
         public ChangeFileName()
         {
             Name = "Change File Name";

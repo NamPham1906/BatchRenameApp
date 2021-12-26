@@ -42,6 +42,10 @@ namespace AddPrefixRule
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public void SetIsUse(bool use)
+        {
+            IsInUse = use;
+        }
         public string ToJson()
         {
             AddPrefixData data = new AddPrefixData();

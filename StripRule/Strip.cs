@@ -178,6 +178,10 @@ namespace StripRule
             return result;
         }
 
+        public void SetIsUse(bool use)
+        {
+            IsInUse = use;
+        }
         public string ToJson()
         {
             StripData data = new StripData();

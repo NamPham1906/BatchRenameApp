@@ -52,8 +52,8 @@ namespace batchRenameApp
             CurrentFolderPage = 1;
             PresetName = "";
             ProjectAddress = "";
-            WindowWidth = 1343;
-            WindowHeight = 580;
+            WindowWidth = 1360;
+            WindowHeight = 630;
             WindowLeft = 100;
             WindowTop = 100;
             Rules = null;
@@ -96,7 +96,9 @@ namespace batchRenameApp
             List<IRule> resultRules = new List<IRule>();
             for (int i = 0; i < Rules.Count(); i++)
             {
-                resultRules.Add(RuleFactory.GetInstance().Create(Rules[i]));
+                IRule newrule = RuleFactory.GetInstance().Create(Rules[i]);
+                if (newrule!=null)
+                resultRules.Add(newrule);
             }
 
             return resultRules;
