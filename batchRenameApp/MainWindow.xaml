@@ -64,7 +64,7 @@
             <StackPanel Orientation="Vertical">
                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,0">
                     <TextBlock VerticalAlignment="Center"  Text="Preset: " Margin="0,0,16,0"/>
-                    <hc:ComboBox Name="PresetComboBox" Width="163" SelectionChanged="PresetComboBox_SelectionChanged" HorizontalAlignment="Stretch" Margin="5px" VerticalContentAlignment="Center"/>
+                    <hc:ComboBox Name="PresetComboBox" Width="163" hc:InfoElement.Placeholder="Add your presets" SelectionChanged="PresetComboBox_SelectionChanged" HorizontalAlignment="Stretch" Margin="5px" VerticalContentAlignment="Center"/>
                     <Button Cursor="Hand" Name="Clear_All_Preset_Btn" Click="Clear_All_Preset_Btn_Click" Margin="5px" Width="110">
                         <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
                             <Image Source="images/clear-file-folder.png" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>
@@ -75,7 +75,7 @@
                 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,5">
                     <TextBlock VerticalAlignment="Center" Text="Add Rule: "/>
-                    <hc:ComboBox Name="RuleComboBox" Width="163" SelectionChanged="RuleComboBox_SelectionChanged" HorizontalAlignment="Stretch" Margin="5px" VerticalContentAlignment="Center"/>
+                    <hc:ComboBox Name="RuleComboBox" Width="163" hc:InfoElement.Placeholder="Add your rules"  SelectionChanged="RuleComboBox_SelectionChanged" HorizontalAlignment="Stretch" Margin="5px" VerticalContentAlignment="Center"/>
                     <Button Cursor="Hand" Name="Clear_All_Rule_Btn" Click="Clear_All_Rule_Btn_Click" Margin="5px" Width="110">
                         <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
                             <Image Source="images/clear-file-folder.png" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>
@@ -252,7 +252,13 @@
                                     <TextBlock Text="Clear All"/>
                                 </StackPanel>
                             </Button>
-                            <DockPanel Width="705px" Margin="5px">
+                            <Button Click="ClearAllNonExistingFilePath_Click" Margin="5px">
+                                <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
+                                    <Image Source="images/clear-file-folder.png" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                    <TextBlock Text="Clear All Non-existing Path"/>
+                                </StackPanel>
+                            </Button>
+                            <DockPanel Width="508px" Margin="5px">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
                                     <Image Source="images/file.png" Height="12px" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,5,0"/>
                                     <TextBlock x:Name="NumberOfFiles" Text="{Binding}"></TextBlock>
@@ -335,7 +341,13 @@
                                     <TextBlock Text="Clear All"/>
                                 </StackPanel>
                             </Button>
-                            <DockPanel Width="705px" Margin="5px">
+                            <Button Click="ClearAllNonExistingFolderPath_Click" Margin="5px">
+                                <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
+                                    <Image Source="images/clear-file-folder.png" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                    <TextBlock Text="Clear All Non-existing Path"/>
+                                </StackPanel>
+                            </Button>
+                            <DockPanel Width="508px" Margin="5px">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
                                     <Image Source="images/folder.png" Height="12px" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,5,0"/>
                                     <TextBlock x:Name="NumberOfFolders" Text="{Binding}"></TextBlock>

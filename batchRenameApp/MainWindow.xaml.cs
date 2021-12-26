@@ -1434,5 +1434,29 @@ namespace batchRenameApp
                 //UpdatePreview();
             }
         }
+
+
+        private void ClearAllNonExistingFilePath_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i=0; i<filelist.Count(); i++)
+            {
+                if(!filelist[i].checkExist()){
+                    filelist.Remove(filelist[i]);
+                }
+            }
+            update_Filepage();
+        }
+
+        private void ClearAllNonExistingFolderPath_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < folderlist.Count(); i++)
+            {
+                if (!folderlist[i].checkExist())
+                {
+                    folderlist.Remove(folderlist[i]);
+                }
+            }
+            update_Folderpage();
+        }
     }
 }

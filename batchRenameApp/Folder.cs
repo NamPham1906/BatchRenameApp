@@ -258,5 +258,18 @@ namespace batchRenameApp
                 }
             }
         }
+
+
+        public bool checkExist()
+        {
+            if (!Directory.Exists(this.folderpath))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }

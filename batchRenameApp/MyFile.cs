@@ -236,5 +236,17 @@ namespace batchRenameApp
             }
             return false;
         }
+
+
+
+        public bool checkExist()
+        {
+            FileInfo file = new FileInfo(this.filepath);
+            if (!file.Exists) {
+                return false;
+            } else{
+                return true;
+            }
+        }
     }
 }
