@@ -14,29 +14,25 @@ namespace batchRenameApp
     public class RuleFactory
     {
         private List<IRule> _prototypes = new List<IRule>();
-        private static RuleFactory instance = null;
+        static private RuleFactory instance = null;
         private RuleFactory()
         {
-            string exePath = Assembly.GetExecutingAssembly().Location;
-            string folder = Path.GetDirectoryName(exePath);
-            var fis = new DirectoryInfo(folder+"\\DLL").GetFiles("*.dll");
-
-            foreach (var f in fis)
-            {
-
-                
-                var assembly = Assembly.Load(File.ReadAllBytes(f.FullName));
-                var types = assembly.GetTypes();
-
-                foreach (var t in types)
+                string exePath = Assembly.GetExecutingAssembly().Location;
+                string folder = Path.GetDirectoryName(exePath);
+                var fis = new DirectoryInfo(folder+"\\DLL").GetFiles("*.dll");
+                foreach (var f in fis)
                 {
-                    if (t.IsClass && typeof(IRule).IsAssignableFrom(t))
+                    var assembly = Assembly.Load(File.ReadAllBytes(f.FullName));
+                    var types = assembly.GetTypes();
+                    foreach (var t in types)
                     {
-                        IRule c = (IRule)Activator.CreateInstance(t);
-                        _prototypes.Add(c);
+                        if (t.IsClass && typeof(IRule).IsAssignableFrom(t))
+                        {
+                            IRule c = (IRule)Activator.CreateInstance(t);
+                            _prototypes.Add(c);
+                        }
                     }
                 }
-            }
         }
 
         static public RuleFactory GetInstance()
