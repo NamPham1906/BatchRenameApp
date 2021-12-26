@@ -117,7 +117,7 @@ namespace batchRenameApp
                     switch (msResult)
                     {
                         case MessageBoxResult.Yes:
-                            File.Copy(filepath, folder + "\\DLL", true);
+                            File.Copy(filepath, folder + "\\DLL\\" + newfile.filename, true);
                             _prototypes = new List<IRule>();
                             var fis = new DirectoryInfo(folder + "\\DLL").GetFiles("*.dll");
 

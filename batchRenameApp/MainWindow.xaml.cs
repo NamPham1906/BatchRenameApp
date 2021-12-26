@@ -1440,6 +1440,7 @@ namespace batchRenameApp
         {
             for (int i=0; i<filelist.Count(); i++)
             {
+        
                 if(!filelist[i].checkExist()){
                     filelist.Remove(filelist[i]);
                 }
@@ -1458,5 +1459,33 @@ namespace batchRenameApp
             }
             update_Folderpage();
         }
+
+        private void Browse_Rule_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                if (RuleFactory.GetInstance().AddRuleFromDLL(openFileDialog.FileName))
+                {
+                    totalRule = RuleFactory.GetInstance().RuleAmount();
+                    for (int i = 0; i < totalRule; i++)
+                    {
+                        allRules.Add(RuleFactory.GetInstance().Create(i));
+                        allRulesName.Add(allRules[i].GetName());
+                    }
+                    RuleComboBox.ItemsSource = allRulesName;
+                }
+                else
+                {
+                    // xuat thong bao
+                }
+               
+               
+            }
+          
+        }
+
+        
     }
 }
