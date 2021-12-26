@@ -98,7 +98,7 @@
                 <ListView 
                 SelectionMode="Multiple"
                 SelectionChanged="RuleList_SelectionChanged" 
-                LayoutUpdated="RuleList_LayoutUpdated" 
+                
                 Height="365"
                 Margin="5,0,5,0"
                 Name="RuleList" 

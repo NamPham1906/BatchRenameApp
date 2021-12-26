@@ -41,7 +41,6 @@ namespace batchRenameApp
         String AppTitle = "Batch Rename";
         RenameProject currentProject = null;
         LastProject lastProject = null;
-        int unnamedPreset = 0;
         List<Preset> presets = new List<Preset>();
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -515,45 +514,45 @@ namespace batchRenameApp
         }
 
 
-        private void RuleList_LayoutUpdated(object sender, EventArgs e)
-        {
-            // List<string> listOfFileName = new List<string>();
-            // List<string> listOfFolderName = new List<string>();
+        //private void RuleList_LayoutUpdated(object sender, EventArgs e)
+        //{
+        //    // List<string> listOfFileName = new List<string>();
+        //    // List<string> listOfFolderName = new List<string>();
 
-            //  for (int i=0; i < filelist.Count(); i++)
-            //  {
-            //       listOfFileName.Add(filelist[i].filename);
-            //       filelist[i].newfilename = filelist[i].filename;
-            //   }
+        //    //  for (int i=0; i < filelist.Count(); i++)
+        //    //  {
+        //    //       listOfFileName.Add(filelist[i].filename);
+        //    //       filelist[i].newfilename = filelist[i].filename;
+        //    //   }
 
-            // for (int i = 0; i < folderlist.Count(); i++)
-            // {
-            //     listOfFolderName.Add(folderlist[i].foldername);
-            //     folderlist[i].newfoldername = folderlist[i].foldername;
-            // }
+        //    // for (int i = 0; i < folderlist.Count(); i++)
+        //    // {
+        //    //     listOfFolderName.Add(folderlist[i].foldername);
+        //    //     folderlist[i].newfoldername = folderlist[i].foldername;
+        //    // }
 
-            //   for (int i = 0; i < userRules.Count(); i++)
-            //  {
-            //      if (userRules[i].IsUse())
-            //       {
-            //          List<string> temp = userRules[i].Rename(listOfFileName, 1);
-            //List<string> temp2 = userRules[i].Rename(listOfFolderName);
-            //           for (int j = 0; j < filelist.Count(); j++)
-            //          {
-            //              filelist[j].newfilename = temp[j];
-            //              listOfFileName[j] = temp[j];
-            //          }
+        //    //   for (int i = 0; i < userRules.Count(); i++)
+        //    //  {
+        //    //      if (userRules[i].IsUse())
+        //    //       {
+        //    //          List<string> temp = userRules[i].Rename(listOfFileName, 1);
+        //    //List<string> temp2 = userRules[i].Rename(listOfFolderName);
+        //    //           for (int j = 0; j < filelist.Count(); j++)
+        //    //          {
+        //    //              filelist[j].newfilename = temp[j];
+        //    //              listOfFileName[j] = temp[j];
+        //    //          }
 
 
-            // for (int j = 0; j < folderlist.Count(); j++)
-            //  {
+        //    // for (int j = 0; j < folderlist.Count(); j++)
+        //    //  {
 
-            //      folderlist[i].newfoldername = temp2[j];
-            //  }
-            //       }
-            //   }
+        //    //      folderlist[i].newfoldername = temp2[j];
+        //    //  }
+        //    //       }
+        //    //   }
 
-        }
+        //}
 
         private void RuleList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -1023,9 +1022,10 @@ namespace batchRenameApp
                     {
                         Message = "Save preset succeeded!",
                         Caption = "Save Preset",
+                        
                         Button = MessageBoxButton.OK,
-                        IconBrushKey = ResourceToken.DarkSuccessBrush,
-                        IconKey = ResourceToken.CheckedGeometry,
+                        IconBrushKey = ResourceToken.SuccessBrush,
+                        IconKey = ResourceToken.SuccessGeometry,
                         StyleKey = "MessageBoxCustom"
                     });
                     PresetComboBox.SelectedIndex = -1;
@@ -1077,14 +1077,58 @@ namespace batchRenameApp
 
         private void ClearAllFile_Click(object sender, RoutedEventArgs e)
         {
-            filelist.Clear();
-            update_Filepage();
+            if(filelist.Count == 0)
+            {
+                return;
+            }    
+            MessageBoxResult result = HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
+            {
+                Message = "Do you want to clear all current files?",
+                Caption = "Clear All Files",
+                Button = MessageBoxButton.YesNo,
+                IconBrushKey = ResourceToken.AccentBrush,
+                IconKey = ResourceToken.AskGeometry,
+                StyleKey = "MessageBoxCustom"
+            });
+
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    filelist.Clear();
+                    update_Filepage();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+            
         }
 
         private void ClearAllFolder_Click(object sender, RoutedEventArgs e)
         {
-            folderlist.Clear();
-            update_Folderpage();
+            if (folderlist.Count == 0)
+            {
+                return;
+            }
+            MessageBoxResult result = HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
+            {
+                Message = "Do you want to clear all current folders?",
+                Caption = "Clear All Folders",
+                Button = MessageBoxButton.YesNo,
+                IconBrushKey = ResourceToken.AccentBrush,
+                IconKey = ResourceToken.AskGeometry,
+                StyleKey = "MessageBoxCustom"
+            });
+
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    folderlist.Clear();
+                    update_Folderpage();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+            
         }
 
 
