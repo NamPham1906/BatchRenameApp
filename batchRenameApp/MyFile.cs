@@ -106,6 +106,8 @@ namespace batchRenameApp
                 if (nonex.ToUpper() == invalid[i]) return false;
             }
 
+
+
             return true;
         }
 
