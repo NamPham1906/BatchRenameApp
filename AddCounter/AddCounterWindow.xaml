@@ -10,12 +10,31 @@
              VerticalAlignment="Stretch"
              Loaded="UserControl_Loaded"
              Background="White">
+    <UserControl.Resources>
+        <local:CheckboxValueConverter x:Key="checkboxValueConverter"/>
+    </UserControl.Resources>
     <StackPanel Margin="10" >
-        <TextBlock FontWeight="Bold" HorizontalAlignment="left">Enter starting number:</TextBlock>
-        <TextBox PreviewTextInput="NumberValidationTextBox1" MaxLength="9" HorizontalAlignment="Stretch"  x:Name="startInput" TextChanged="startInput_TextChange" Text="{Binding Start}"></TextBox>
-        <TextBlock FontWeight="Bold" HorizontalAlignment="left">Enter step:</TextBlock>
-        <TextBox PreviewTextInput="NumberValidationTextBox2" MaxLength="9" HorizontalAlignment="Stretch"  x:Name="stepInput" TextChanged="stepInputt_TextChange" Text="{Binding Step}"></TextBox>
-        <TextBlock FontWeight="Bold" HorizontalAlignment="left">Enter number of digits:</TextBlock>
-        <TextBox PreviewTextInput="NumberValidationTextBox3" MaxLength="9" HorizontalAlignment="Stretch"  x:Name="digitsInput" TextChanged="digitsInput_TextChange" Text="{Binding Digits}"></TextBox>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+            <TextBlock FontWeight="Bold" HorizontalAlignment="left">Starting at:</TextBlock>
+            <TextBox PreviewTextInput="NumberValidationTextBox1" MaxLength="9" Margin="10,0,0,0" Width="200" HorizontalAlignment="Stretch"  x:Name="startInput" TextChanged="startInput_TextChange" Text="{Binding Start}"></TextBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+            <TextBlock FontWeight="Bold" HorizontalAlignment="left">Step:</TextBlock>
+            <TextBox PreviewTextInput="NumberValidationTextBox2" MaxLength="9" Margin="44,0,0,0" Width="200" HorizontalAlignment="Stretch"  x:Name="stepInput" TextChanged="stepInputt_TextChange" Text="{Binding Step}"></TextBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+            <TextBlock FontWeight="Bold" HorizontalAlignment="left">Digits:</TextBlock>
+            <TextBox PreviewTextInput="NumberValidationTextBox3" MaxLength="9" Margin="36,0,0,0" Width="200" HorizontalAlignment="Stretch"  x:Name="digitsInput" TextChanged="digitsInput_TextChange" Text="{Binding Digits}"></TextBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock FontWeight="Bold" HorizontalAlignment="left">Position:</TextBlock>
+
+            <RadioButton HorizontalAlignment="Left"  IsChecked="{Binding Position, Converter={StaticResource checkboxValueConverter}, ConverterParameter=0}" Checked="Prefix_Checked" Name="PrefixRadio" GroupName="position" Margin="22,3,0,3">
+                Prefix
+            </RadioButton>
+            <RadioButton HorizontalAlignment="Left"  IsChecked="{Binding Position, Converter={StaticResource checkboxValueConverter}, ConverterParameter=1}" Checked="Suffix_Checked" Name="SuffixRadio" GroupName="position" Margin="20,3,0,3">
+                Suffix
+            </RadioButton>
+        </StackPanel>
     </StackPanel>
 </UserControl>

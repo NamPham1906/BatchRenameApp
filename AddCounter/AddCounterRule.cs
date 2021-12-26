@@ -13,6 +13,8 @@ namespace AddCounter
         public int Start { get; set; }
         public int Step { get; set; }
         public int Digits { get; set; }
+        public int Position { get; set; } // 0:prefix 1:suffix
+
         public string Name { get; set; }
 
         public bool IsInUse { get; set; }
@@ -22,6 +24,7 @@ namespace AddCounter
         public int Start { get; set; }
         public int Step { get; set; }
         public int Digits { get; set; }
+        public int Position { get; set; }
         public AddCounterWindow ConfigurationUI { get; set; }
         public bool IsInUse { get; set; }
         public string Name { get; set; }
@@ -36,15 +39,18 @@ namespace AddCounter
             Start = 1;
             Step = 1;
             Digits = 1;
+            Position = 1;
             ConfigurationUI = new AddCounterWindow(this);
         }
-        public AddCounterRule(int start, int step, int digits, bool isInUse)
+        public AddCounterRule(int start, int step, int digits, int position, bool isInUse)
         {
             Name = "Add Counter";
             IsInUse = isInUse;
             Start = start;
             Step = step;
             Digits = digits;
+            Position = position;
+            IsInUse = isInUse;
             ConfigurationUI = new AddCounterWindow(this);
 
         }
@@ -71,9 +77,21 @@ namespace AddCounter
                             {
                                 temp += str[j] + ".";
                             }
-                            temp += str[strlen - 2];
-                            string newfilename = $"{temp}{count}.{extension}";
-                            result.Add(newfilename);
+                            if(strlen>1)
+                            {
+                                temp += str[strlen - 2];
+                            }    
+                            
+                            if(Position == 1)
+                            {
+                                string newfilename = $"{temp}{count}.{extension}";
+                                result.Add(newfilename);
+                            }
+                            else
+                            {
+                                string newfilename = $"{count}{temp}.{extension}";
+                                result.Add(newfilename);
+                            }
                             i = i + Step;
                         }
 
@@ -84,8 +102,16 @@ namespace AddCounter
                         foreach (string item in originals)
                         {
                             string count = i.ToString().PadLeft(Digits, '0');
-                            string newfilename = $"{item}{count}";
-                            result.Add(newfilename);
+                            if (Position == 1)
+                            {
+                                string newfilename = $"{item}{count}";
+                                result.Add(newfilename);
+                            }
+                            else
+                            {
+                                string newfilename = $"{count}{item}";
+                                result.Add(newfilename);
+                            }
                             i = i + Step;
                         }
 
@@ -123,7 +149,7 @@ namespace AddCounter
 
         public IRule Clone()
         {
-            return new AddCounterRule(Start, Step, Digits, IsInUse);
+            return new AddCounterRule(Start, Step, Digits, Position, IsInUse);
         }
 
         public UserControl GetUI()

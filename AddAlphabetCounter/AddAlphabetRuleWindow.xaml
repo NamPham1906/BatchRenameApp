@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="AddAlphabetCounter.AddAlphabetRuleWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:local="clr-namespace:AddAlphabetCounter"
+             HorizontalContentAlignment="Left"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch"
+             Background="White"
+             Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <local:CheckboxValueConverter x:Key="checkboxValueConverter"/>
+    </UserControl.Resources>
+    
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Margin="10" Orientation="Vertical">
+                <TextBlock HorizontalAlignment="Left" FontWeight="Bold" Text="Position: "/>
+                <RadioButton HorizontalAlignment="Left"  IsChecked="{Binding Position, Converter={StaticResource checkboxValueConverter}, ConverterParameter=0}" Checked="Prefix_Checked" Name="PrefixRadio" GroupName="position" Margin="0,3,0,3">
+                    Prefix
+                </RadioButton>
+                <RadioButton HorizontalAlignment="Left"  IsChecked="{Binding Position, Converter={StaticResource checkboxValueConverter}, ConverterParameter=1}" Checked="Suffix_Checked" Name="SuffixRadio" GroupName="position" Margin="0,3,0,3">
+                    Suffix
+                </RadioButton>
+            </StackPanel>
+
+            <StackPanel Margin="10" Orientation="Vertical">
+                <TextBlock HorizontalAlignment="Left" FontWeight="Bold" Text="Style: "/>
+                <RadioButton HorizontalAlignment="Left"  IsChecked="{Binding Style, Converter={StaticResource checkboxValueConverter}, ConverterParameter=0}" Checked="Lowercase_Checked" Name="LowercaseRadio" GroupName="style" Margin="0,3,0,3">
+                    Lowercase
+                </RadioButton>
+                <RadioButton HorizontalAlignment="Left"  IsChecked="{Binding Style, Converter={StaticResource checkboxValueConverter}, ConverterParameter=1}" Checked="Uppercase_Checked" Name="UppercaseRadio" GroupName="style" Margin="0,3,0,3">
+                    Uppercase
+                </RadioButton>
+
+            </StackPanel>
+        </StackPanel>
+        <StackPanel>
+            <TextBlock HorizontalAlignment="Left" FontWeight="Bold" Text="Separation:" Margin="10,5,0,0"></TextBlock>
+            <TextBox HorizontalAlignment="Stretch"  x:Name="separationInput" TextChanged="separationInput_TextChange" Text="{Binding Separation}" Margin="10,5,10,0"></TextBox>
+
+        </StackPanel>
+    </StackPanel>
+    
+</UserControl>

@@ -11,10 +11,10 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
 
-
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace batchRenameApp
 {
@@ -25,14 +25,16 @@ namespace batchRenameApp
         int currentfolderpage = 1;
         int itemperpage = 6;
         int totalRule = 0;
+        int autoSaveTime = 1;
+        bool IsAutoSave = true;
         List<IRule> allRules = new List<IRule>();
         List<String> allRulesName = new List<String>();
         BindingList<IRule> userRules = new BindingList<IRule>();
         BindingList<MyFile> filelist = new BindingList<MyFile>();
         BindingList<MyFile> datafilelist = new BindingList<MyFile>();
         BindingList<Folder> folderlist = new BindingList<Folder>();
-
-
+        DispatcherTimer dispatcherTimer = null;
+        int startTimerSecond = 0;
         String LastProjectAddress = @"LastProject\lastprojectaddress.json";
         String DefaultProjectAddress = @"LastProject\Untitled.json";
         String AppTitle = "Batch Rename";
@@ -119,6 +121,8 @@ namespace batchRenameApp
             folderlist = new BindingList<Folder>(currentProject.Folders);
             FileList.ItemsSource = filelist;
             FolderList.ItemsSource = folderlist;
+            FilePagination.PageIndex = currentfilepage;
+            FolderPagination.PageIndex = currentfolderpage;
             update_Filepage();
             update_Folderpage();
             this.Title = AppTitle + " - " + currentProject.GetName();
@@ -270,6 +274,97 @@ namespace batchRenameApp
 
         }
 
+        public void UpdatePreview()
+        {
+            List<string> listOfFileName = new List<string>();
+            List<string> listOfFolderName = new List<string>();
+
+            for (int i = 0; i < filelist.Count(); i++)
+            {
+                listOfFileName.Add(filelist[i].filename);
+                filelist[i].newfilename = filelist[i].filename;
+            }
+
+            for (int i = 0; i < folderlist.Count(); i++)
+            {
+                listOfFolderName.Add(folderlist[i].foldername);
+                folderlist[i].newfoldername = folderlist[i].foldername;
+            }
+
+            for (int i = 0; i < userRules.Count(); i++)
+            {
+                if (userRules[i].IsUse())
+                {
+                    List<string> temp = userRules[i].Rename(listOfFileName, 1);
+
+                    List<string> temp2 = userRules[i].Rename(listOfFolderName, 2);
+                    for (int j = 0; j < filelist.Count(); j++)
+                    {
+                        filelist[j].newfilename = temp[j];
+                        listOfFileName[j] = temp[j];
+                    }
+
+                    for (int j = 0; j < folderlist.Count(); j++)
+                    {
+                        folderlist[j].newfoldername = temp2[j];
+                        listOfFolderName[j] = temp2[j];
+                    }
+                }
+            }
+        }
+
+        List<string> listOfNewFileName = new List<string>();
+        List<string> listOfNewFolderName = new List<string>();
+
+        private void ResetPreview(int action, int type) //action = 0:reset off   action = 1:reset on
+        {
+            
+            //file
+            if (action == 1 && type == 1)
+            {
+                for (int i = 0; i < filelist.Count(); i++)
+                {
+                    listOfNewFileName.Add(filelist[i].newfilename);
+                }
+                for (int i = 0; i < filelist.Count(); i++)
+                {
+                    filelist[i].newfilename = filelist[i].filename;
+                }
+            }
+
+            if (action == 0 && type == 1)
+            {
+                for (int i = 0; i < filelist.Count(); i++)
+                {
+                    filelist[i].newfilename = listOfNewFileName[i];
+                }
+                listOfNewFileName.Clear();
+            }
+
+            //folder
+            if (action == 1 && type == 2)
+            {
+                for (int i = 0; i < folderlist.Count(); i++)
+                {
+                    listOfNewFolderName.Add(folderlist[i].newfoldername);
+                }
+                for (int i = 0; i < folderlist.Count(); i++)
+                {
+                    folderlist[i].newfoldername = folderlist[i].foldername;
+                }
+            }
+
+            if (action == 0 && type == 2)
+            {
+                for (int i = 0; i < folderlist.Count(); i++)
+                {
+                    folderlist[i].newfoldername = listOfNewFolderName[i];
+                }
+                listOfNewFolderName.Clear();
+            }
+
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CreatePresetFolder();
@@ -347,8 +442,30 @@ namespace batchRenameApp
                 currentProject = new RenameProject();
             }
             InitProject();
+            dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            if (IsAutoSave)
+            {
+                dispatcherTimer.Start();
+            }
         }
-
+        
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            if(startTimerSecond >= autoSaveTime*60)
+            {
+                startTimerSecond = 0;
+                StoreToProject();
+                if (currentProject.ProjectAddress == null || currentProject.ProjectAddress.Length <= 0)
+                {
+                    currentProject.ProjectAddress = DefaultProjectAddress;
+                }
+                currentProject.StoreData(currentProject.ProjectAddress);
+            }
+            startTimerSecond++;
+            CommandManager.InvalidateRequerySuggested();
+        }
 
         public MainWindow()
         {
@@ -487,6 +604,7 @@ namespace batchRenameApp
             Button b = sender as Button;
             IRule rule = b.CommandParameter as IRule;
             userRules.Remove(rule);
+            UpdatePreview();
         }
 
         private void Use_Rule_Checkbox_Checked(object sender, RoutedEventArgs e)
@@ -495,42 +613,42 @@ namespace batchRenameApp
             IRule rule = b.CommandParameter as IRule;
             int index = userRules.IndexOf(rule);
             //code here
+            UpdatePreview();
+            //List<string> listOfFileName = new List<string>();
+            //List<string> listOfFolderName = new List<string>();
 
-            List<string> listOfFileName = new List<string>();
-            List<string> listOfFolderName = new List<string>();
+            //for (int i = 0; i < filelist.Count(); i++)
+            //{
+            //    listOfFileName.Add(filelist[i].filename);
+            //    filelist[i].newfilename = filelist[i].filename;
+            //}
 
-            for (int i = 0; i < filelist.Count(); i++)
-            {
-                listOfFileName.Add(filelist[i].filename);
-                filelist[i].newfilename = filelist[i].filename;
-            }
+            //for (int i = 0; i < folderlist.Count(); i++)
+            //{
+            //    listOfFolderName.Add(folderlist[i].foldername);
+            //    folderlist[i].newfoldername = folderlist[i].foldername;
+            //}
 
-            for (int i = 0; i < folderlist.Count(); i++)
-            {
-                listOfFolderName.Add(folderlist[i].foldername);
-                folderlist[i].newfoldername = folderlist[i].foldername;
-            }
+            //for (int i = 0; i < userRules.Count(); i++)
+            //{
+            //    if (userRules[i].IsUse())
+            //    {
+            //        List<string> temp = userRules[i].Rename(listOfFileName, 1);
 
-            for (int i = 0; i < userRules.Count(); i++)
-            {
-                if (userRules[i].IsUse())
-                {
-                    List<string> temp = userRules[i].Rename(listOfFileName, 1);
+            //        List<string> temp2 = userRules[i].Rename(listOfFolderName, 2);
+            //        for (int j = 0; j < filelist.Count(); j++)
+            //        {
+            //            filelist[j].newfilename = temp[j];
+            //            listOfFileName[j] = temp[j];
+            //        }
 
-                    List<string> temp2 = userRules[i].Rename(listOfFolderName, 2);
-                    for (int j = 0; j < filelist.Count(); j++)
-                    {
-                        filelist[j].newfilename = temp[j];
-                        listOfFileName[j] = temp[j];
-                    }
-
-                    for (int j = 0; j < folderlist.Count(); j++)
-                    {
-                        folderlist[j].newfoldername = temp2[j];
-                        listOfFolderName[j] = temp2[j];
-                    }
-                }
-            }
+            //        for (int j = 0; j < folderlist.Count(); j++)
+            //        {
+            //            folderlist[j].newfoldername = temp2[j];
+            //            listOfFolderName[j] = temp2[j];
+            //        }
+            //    }
+            //}
         }
 
         private void Use_Rule_Checkbox_Unchecked(object sender, RoutedEventArgs e)
@@ -539,42 +657,42 @@ namespace batchRenameApp
             IRule rule = b.CommandParameter as IRule;
             int index = userRules.IndexOf(rule);
             //code here
+            UpdatePreview();
+            //List<string> listOfFileName = new List<string>();
+            //List<string> listOfFolderName = new List<string>();
 
-            List<string> listOfFileName = new List<string>();
-            List<string> listOfFolderName = new List<string>();
+            //for (int i = 0; i < filelist.Count(); i++)
+            //{
+            //    listOfFileName.Add(filelist[i].filename);
+            //    filelist[i].newfilename = filelist[i].filename;
+            //}
 
-            for (int i = 0; i < filelist.Count(); i++)
-            {
-                listOfFileName.Add(filelist[i].filename);
-                filelist[i].newfilename = filelist[i].filename;
-            }
+            //for (int i = 0; i < folderlist.Count(); i++)
+            //{
+            //    listOfFolderName.Add(folderlist[i].foldername);
+            //    folderlist[i].newfoldername = folderlist[i].foldername;
+            //}
 
-            for (int i = 0; i < folderlist.Count(); i++)
-            {
-                listOfFolderName.Add(folderlist[i].foldername);
-                folderlist[i].newfoldername = folderlist[i].foldername;
-            }
+            //for (int i = 0; i < userRules.Count(); i++)
+            //{
+            //    if (userRules[i].IsUse())
+            //    {
+            //        List<string> temp = userRules[i].Rename(listOfFileName, 1);
 
-            for (int i = 0; i < userRules.Count(); i++)
-            {
-                if (userRules[i].IsUse())
-                {
-                    List<string> temp = userRules[i].Rename(listOfFileName, 1);
+            //        List<string> temp2 = userRules[i].Rename(listOfFolderName, 2);
+            //        for (int j = 0; j < filelist.Count(); j++)
+            //        {
+            //            filelist[j].newfilename = temp[j];
+            //            listOfFileName[j] = temp[j];
+            //        }
 
-                    List<string> temp2 = userRules[i].Rename(listOfFolderName, 2);
-                    for (int j = 0; j < filelist.Count(); j++)
-                    {
-                        filelist[j].newfilename = temp[j];
-                        listOfFileName[j] = temp[j];
-                    }
-
-                    for (int j = 0; j < folderlist.Count(); j++)
-                    {
-                        folderlist[j].newfoldername = temp2[j];
-                        listOfFolderName[j] = temp2[j];
-                    }
-                }
-            }
+            //        for (int j = 0; j < folderlist.Count(); j++)
+            //        {
+            //            folderlist[j].newfoldername = temp2[j];
+            //            listOfFolderName[j] = temp2[j];
+            //        }
+            //    }
+            //}
         }
 
         private void RuleComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -611,6 +729,7 @@ namespace batchRenameApp
                         userRules.RemoveAt(remIdx);
                     }
                 }
+                UpdatePreview();
             }
         }
 
@@ -845,6 +964,7 @@ namespace batchRenameApp
         {
             PresetComboBox.SelectedIndex = -1;
             userRules.Clear();
+            UpdatePreview();
         }
 
         private void PresetComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -861,6 +981,7 @@ namespace batchRenameApp
                 }
                 //RuleList.Items.Clear();
                 RuleList.ItemsSource = userRules;
+                UpdatePreview();
             }
         }
 
@@ -1170,6 +1291,47 @@ namespace batchRenameApp
             }
         }
 
+
+
+        private void Auto_Save_Check_Checked(object sender, RoutedEventArgs e)
+        {
+            IsAutoSave = (bool)Auto_Save_Check.IsChecked;
+            startTimerSecond = 0;
+            if (IsAutoSave)
+            {
+                if (dispatcherTimer != null)
+                {
+                    dispatcherTimer.Start();
+                }
+            }
+            else
+            {
+                if(dispatcherTimer != null)
+                {
+                    dispatcherTimer.Stop();
+                }
+            }
+        }
+
+        private void Auto_Save_Check_Unchecked(object sender, RoutedEventArgs e)
+        {
+            IsAutoSave = (bool)Auto_Save_Check.IsChecked;
+            startTimerSecond = 0;
+            if (IsAutoSave)
+            {
+                if (dispatcherTimer != null)
+                {
+                    dispatcherTimer.Start();
+                }
+            }
+            else
+            {
+                if (dispatcherTimer != null)
+                {
+                    dispatcherTimer.Stop();
+                }
+            }
+        }
         private void FolderList_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (sender is ListViewItem)
@@ -1281,5 +1443,53 @@ namespace batchRenameApp
             }
                 
         }
+        private void ResetFileName_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            //MessageBox.Show("ResetFileName_MouseLeftButtonDown");
+            ResetPreview(1, 1);
+
+        }
+
+        private void ResetFileName_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            ResetPreview(0, 1);
+
+        }
+
+        private void ResetFileName_MouseDown_Preview(object sender, MouseButtonEventArgs e)
+        {
+
+            ResetFileName_MouseDown(sender, e);
+        }
+
+        private void ResetFileName_MouseUp_Preview(object sender, MouseButtonEventArgs e)
+        {
+            ResetFileName_MouseUp(sender, e);
+        }
+
+        private void ResetFolderName_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ResetPreview(1, 2);
+
+        }
+
+        private void ResetFolderName_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            ResetPreview(0, 2);
+
+        }
+
+        private void ResetFolderName_MouseDown_Preview(object sender, MouseButtonEventArgs e)
+        {
+            ResetFolderName_MouseDown(sender, e);
+        }
+
+
+        private void ResetFolderName_MouseUp_Preview(object sender, MouseButtonEventArgs e)
+        {
+            ResetFolderName_MouseUp(sender, e);
+        }
+
+        
     }
 }
