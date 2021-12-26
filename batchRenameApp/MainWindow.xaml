@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:batchRenameApp"
         mc:Ignorable="d"
         Title="Batch Rename"  
-        Height="580" Width="1343"
+        MinHeight="580" MinWidth="1343" ResizeMode="CanResizeWithGrip"
         Icon="images/icon.png"
         Loaded="Window_Loaded" Closed="Window_Closed" KeyDown="CutContractKeyDown">
     <Window.Resources>
