@@ -38,6 +38,7 @@ namespace batchRenameApp
             this.newfoldername = this.foldername;
             //volumedir = volumedir.Substring(0, volumedir.LastIndexOf(@"\") + 1);
             this.folderpath = folderdir;
+            status = "";
         }
 
         public Folder()
