@@ -14,7 +14,37 @@
     <None Remove="images\clear.png" />
     <None Remove="images\clearAll.png" />
     <None Remove="images\clear_all.png" />
+    <None Remove="images\csv-file.png" />
     <None Remove="images\dll-file.png" />
+    <None Remove="images\doc-file.png" />
+    <None Remove="images\error.png" />
+    <None Remove="images\extension-icon\ai-file.png" />
+    <None Remove="images\extension-icon\bat-file.png" />
+    <None Remove="images\extension-icon\bin-file.png" />
+    <None Remove="images\extension-icon\chm-file.png" />
+    <None Remove="images\extension-icon\css-file.png" />
+    <None Remove="images\extension-icon\cur-file.png" />
+    <None Remove="images\extension-icon\dat-file.png" />
+    <None Remove="images\extension-icon\dll-file.png" />
+    <None Remove="images\extension-icon\docx-file.png" />
+    <None Remove="images\extension-icon\exe-file.png" />
+    <None Remove="images\extension-icon\file.png" />
+    <None Remove="images\extension-icon\gho-file.png" />
+    <None Remove="images\extension-icon\gif-file.png" />
+    <None Remove="images\extension-icon\ink-file.png" />
+    <None Remove="images\extension-icon\jar-file.png" />
+    <None Remove="images\extension-icon\java-file.png" />
+    <None Remove="images\extension-icon\jpeg-file.png" />
+    <None Remove="images\extension-icon\jpg-file.png" />
+    <None Remove="images\extension-icon\mov-file.png" />
+    <None Remove="images\extension-icon\mp3-file.png" />
+    <None Remove="images\extension-icon\mp4-file.png" />
+    <None Remove="images\extension-icon\pdf-file.png" />
+    <None Remove="images\extension-icon\png-file.png" />
+    <None Remove="images\extension-icon\ppt-file.png" />
+    <None Remove="images\extension-icon\rar-file.png" />
+    <None Remove="images\extension-icon\wmv-file.png" />
+    <None Remove="images\extension-icon\zip-file.png" />
     <None Remove="images\file.png" />
     <None Remove="images\folder.png" />
     <None Remove="images\icon.png" />
@@ -26,6 +56,9 @@
     <None Remove="images\save.png" />
     <None Remove="images\search.png" />
     <None Remove="images\start-batching.png" />
+    <None Remove="images\success.png" />
+    <None Remove="images\txt-file.png" />
+    <None Remove="images\xls-file.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,7 +83,97 @@
     <Content Include="images\clear_all.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="images\extension-icon\ai-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\bat-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\bin-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\chm-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\css-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\csv-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="images\dll-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\cur-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\dat-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\doc-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\error.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\dll-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\docx-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\exe-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\gho-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\gif-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\ink-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\jar-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\java-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\jpeg-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\jpg-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\mov-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\mp3-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\mp4-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\pdf-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\png-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\ppt-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\rar-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\wmv-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\zip-file.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\file.png">
@@ -84,6 +207,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\start-batching.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\success.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\txt-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\xls-file.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
