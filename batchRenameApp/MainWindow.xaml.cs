@@ -72,6 +72,15 @@ namespace batchRenameApp
                     Data = userRules[i].ToJson()
                 });
             }
+            int selectedPreset = PresetComboBox.SelectedIndex;
+            if(selectedPreset >= 0)
+            {
+                currentProject.PresetName = presets[selectedPreset].PresetName;
+            }
+            else
+            {
+                currentProject.PresetName = "";
+            }
             currentProject.WindowHeight = height;
             currentProject.WindowWidth = width;
             currentProject.WindowLeft = left;
