@@ -1463,12 +1463,14 @@ namespace batchRenameApp
         private void Browse_Rule_Btn_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-
+            openFileDialog.Filter= "DLL files only (*.dll)|*.dll";
             if (openFileDialog.ShowDialog() == true)
             {
                 if (RuleFactory.GetInstance().AddRuleFromDLL(openFileDialog.FileName))
                 {
                     totalRule = RuleFactory.GetInstance().RuleAmount();
+                    allRules = new List<IRule>();
+                    allRulesName = new List<string>();
                     for (int i = 0; i < totalRule; i++)
                     {
                         allRules.Add(RuleFactory.GetInstance().Create(i));
