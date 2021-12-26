@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -55,6 +56,12 @@ namespace AddAlphabetCounter
         private void separationInput_TextChange(object sender, TextChangedEventArgs e)
         {
             this.rule.Separation = separationInput.Text;
+        }
+
+        private void ValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@"[\/:*?""<>|\\]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

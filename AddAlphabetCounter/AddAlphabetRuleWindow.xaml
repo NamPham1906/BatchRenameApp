@@ -39,7 +39,8 @@
         </StackPanel>
         <StackPanel>
             <TextBlock HorizontalAlignment="Left" FontWeight="Bold" Text="Separation:" Margin="10,5,0,0"></TextBlock>
-            <TextBox HorizontalAlignment="Stretch"  x:Name="separationInput" TextChanged="separationInput_TextChange" Text="{Binding Separation}" Margin="10,5,10,0"></TextBox>
+            <TextBox HorizontalAlignment="Stretch"  x:Name="separationInput" TextChanged="separationInput_TextChange" Text="{Binding Separation}" Margin="10,5,10,0"
+                     PreviewTextInput="ValidationTextBox"></TextBox>
 
         </StackPanel>
     </StackPanel>

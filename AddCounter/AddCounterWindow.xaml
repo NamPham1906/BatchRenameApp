@@ -26,7 +26,8 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal"  Margin="0,0,0,5" >
             <TextBlock Margin="0,5,0,0" FontWeight="Bold" HorizontalAlignment="left">Separation:</TextBlock>
-            <TextBox  Margin="5,0,0,0" Width="200" HorizontalAlignment="Stretch"  x:Name="separationInput" TextChanged="separationInput_TextChange" Text="{Binding Separation}"></TextBox>
+            <TextBox  Margin="5,0,0,0" Width="200" HorizontalAlignment="Stretch"  x:Name="separationInput" TextChanged="separationInput_TextChange" Text="{Binding Separation}"
+                      PreviewTextInput="ValidationTextBox"></TextBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <TextBlock FontWeight="Bold" HorizontalAlignment="left">Position:</TextBlock>
