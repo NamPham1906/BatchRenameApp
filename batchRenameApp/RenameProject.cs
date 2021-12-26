@@ -96,7 +96,9 @@ namespace batchRenameApp
             List<IRule> resultRules = new List<IRule>();
             for (int i = 0; i < Rules.Count(); i++)
             {
-                resultRules.Add(RuleFactory.GetInstance().Create(Rules[i]));
+                IRule newrule = RuleFactory.GetInstance().Create(Rules[i]);
+                if (newrule!=null)
+                resultRules.Add(newrule);
             }
 
             return resultRules;
