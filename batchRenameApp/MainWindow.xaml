@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:batchRenameApp"
         mc:Ignorable="d"
         Title="Batch Rename"  
-        MinHeight="590" MinWidth="1360" ResizeMode="CanResizeWithGrip"
+        MinHeight="590" MinWidth="1360" ResizeMode="CanResizeWithGrip" SizeChanged="Window_SizeChanged"
         Icon="images/icon.png"
         Loaded="Window_Loaded" Closed="Window_Closed" KeyDown="CutContractKeyDown">
     <Window.Resources>
@@ -86,18 +86,19 @@
                     </Button>
                     
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,5"
+                <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,5"
                             DockPanel.Dock="Top">
-                    <Button Cursor="Hand" Name="Clear_All_Rule_Btn" Click="Clear_All_Rule_Btn_Click" Margin="5px">
+                    <Button Cursor="Hand" Name="Clear_All_Rule_Btn" Click="Clear_All_Rule_Btn_Click" Margin="5px" DockPanel.Dock="Left">
                         <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
                             <Image Source="images/clear-file-folder.png" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>
                             <TextBlock Text="Clear All Rules"/>
                         </StackPanel>
                     </Button>
-                    <CheckBox Cursor="Hand" Name="All_Rule" Unchecked="All_Rule_Unchecked" Margin="5,0,0,0" Checked="All_Rule_Checked" HorizontalAlignment="Stretch" Height="22"  />
-                    <!--<ToggleButton Cursor="Hand" Name="All_Rule" Unchecked="All_Rule_Unchecked" Margin="5,0,0,0" Checked="All_Rule_Checked" Style="{StaticResource ToggleButtonSwitch}" HorizontalAlignment="Stretch" Height="22"/>-->
-                    <TextBlock VerticalAlignment="Center" Width="62" HorizontalAlignment="Left" Margin="7px">All Rules</TextBlock>
-                </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right" Margin="5 0 0 0">
+                        <CheckBox Cursor="Hand" Name="All_Rule" Unchecked="All_Rule_Unchecked" Margin="5,0,0,0" Checked="All_Rule_Checked" HorizontalAlignment="Stretch" Height="22"  />
+                        <TextBlock VerticalAlignment="Center" Width="60" HorizontalAlignment="Right" Margin="7px">All Rules</TextBlock>
+                    </StackPanel>
+                </DockPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,0"
                             DockPanel.Dock="Bottom">
                     <TextBlock VerticalAlignment="Center"  Text="Preset Name: " Margin="0,0,5,0"/>

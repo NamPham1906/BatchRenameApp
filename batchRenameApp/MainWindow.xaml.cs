@@ -1089,7 +1089,7 @@ namespace batchRenameApp
 
 
         private void update_Filepage(){
-            FilePagination.MaxPageCount = (int)Math.Ceiling(filelist.Count()*1.0/6);
+            FilePagination.MaxPageCount = (int)Math.Ceiling(filelist.Count()*1.0/itemperpage);
             IEnumerable<MyFile> datafilelist = filelist.Skip((currentfilepage - 1) * itemperpage).Take(itemperpage);
             FileList.ItemsSource = datafilelist;
             NumberOfFiles.DataContext = filelist.Count();
@@ -1097,7 +1097,7 @@ namespace batchRenameApp
 
 
         private void update_Folderpage(){
-            FolderPagination.MaxPageCount = (int)Math.Ceiling(folderlist.Count() * 1.0 / 6);
+            FolderPagination.MaxPageCount = (int)Math.Ceiling(folderlist.Count() * 1.0 / itemperpage);
             IEnumerable<Folder> datafolderlist = folderlist.Skip((currentfolderpage - 1) * itemperpage).Take(itemperpage);
             FolderList.ItemsSource = datafolderlist;
             NumberOfFolders.DataContext = folderlist.Count();
@@ -1502,6 +1502,12 @@ namespace batchRenameApp
           
         }
 
-        
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var height = FileList.ActualHeight - 50;
+            itemperpage = (int)height / 49;
+            update_Folderpage();
+            update_Filepage();
+        }
     }
 }
