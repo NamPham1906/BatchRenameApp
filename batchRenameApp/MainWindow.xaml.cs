@@ -938,7 +938,7 @@ namespace batchRenameApp
                 userRules = new BindingList<IRule>();
                 foreach (var rule in presets[index].PresetRules)
                 {
-                    userRules.Add(rule.Clone());
+                    if (rule!=null) userRules.Add(rule.Clone());
                 }
                 //RuleList.Items.Clear();
                 RuleList.ItemsSource = userRules;
@@ -1438,7 +1438,9 @@ namespace batchRenameApp
 
         private void ClearAllNonExistingFilePath_Click(object sender, RoutedEventArgs e)
         {
-            for (int i=0; i<filelist.Count(); i++)
+            int n = filelist.Count() - 1;
+
+            for (int i= n; i>=0; i--)
             {
         
                 if(!filelist[i].checkExist()){
@@ -1450,8 +1452,11 @@ namespace batchRenameApp
 
         private void ClearAllNonExistingFolderPath_Click(object sender, RoutedEventArgs e)
         {
-            for (int i = 0; i < folderlist.Count(); i++)
+            int n = folderlist.Count() - 1;
+
+            for (int i = n; i >= 0; i--)
             {
+
                 if (!folderlist[i].checkExist())
                 {
                     folderlist.Remove(folderlist[i]);

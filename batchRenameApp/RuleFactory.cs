@@ -23,7 +23,9 @@ namespace batchRenameApp
 
             foreach (var f in fis)
             {
-                var assembly = Assembly.LoadFile(f.FullName);
+
+                
+                var assembly = Assembly.Load(File.ReadAllBytes(f.FullName));
                 var types = assembly.GetTypes();
 
                 foreach (var t in types)
@@ -34,6 +36,7 @@ namespace batchRenameApp
                         _prototypes.Add(c);
                     }
                 }
+              
             }
         }
 
@@ -121,7 +124,7 @@ namespace batchRenameApp
 
                             foreach (var f in fis)
                             {
-                                var assembly = Assembly.LoadFile(f.FullName);
+                                var assembly = Assembly.Load(File.ReadAllBytes(f.FullName));
                                 var types = assembly.GetTypes();
 
                                 foreach (var t in types)
@@ -148,7 +151,7 @@ namespace batchRenameApp
 
                     foreach (var f in fis)
                     {
-                        var assembly = Assembly.LoadFile(f.FullName);
+                        var assembly = Assembly.Load(File.ReadAllBytes(f.FullName));
                         var types = assembly.GetTypes();
 
                         foreach (var t in types)
