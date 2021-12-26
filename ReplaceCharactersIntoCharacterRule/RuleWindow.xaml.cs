@@ -46,14 +46,14 @@ namespace ReplaceCharactersRule
 
         private void ValidationTextBox1(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex(@"[\/:*?""<>|]+");
+            Regex regex = new Regex(@"[\\/:*?""<>|]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
         private void ValidationTextBox2(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex(@"[\/:*?""<>|]+");
+            Regex regex = new Regex(@"[\\/:*?""<>|]+");
             e.Handled = regex.IsMatch(e.Text);
         }
-    }
+    }   
 }
