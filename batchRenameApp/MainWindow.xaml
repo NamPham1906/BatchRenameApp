@@ -6,7 +6,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:batchRenameApp"
         mc:Ignorable="d"
-
         Title="Batch Rename"  
         Height="590" Width="1360"
         Icon="images/icon.png"
@@ -51,13 +50,14 @@
                     <TextBlock Text="Start Batching"/>
                 </StackPanel>
             </Button>
+
             <Button Cursor="Hand" Click="StartBatchingToFolder_Click" Margin="5px">
                 <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
                     <Image Source="images/batching-folder.png" Margin="0,0,10,0"/>
                     <TextBlock Text="Start Batching To Folder"/>
                 </StackPanel>
             </Button>
-            
+
         </StackPanel>
         <StackPanel Orientation="Horizontal" >
            
@@ -84,7 +84,8 @@
                     </Button>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,5">
-                     <ToggleButton Cursor="Hand" Name="All_Rule" Unchecked="All_Rule_Unchecked" Margin="5,0,0,0" Checked="All_Rule_Checked" Style="{StaticResource ToggleButtonSwitch}" HorizontalAlignment="Stretch" Height="22"/>
+                    <CheckBox Cursor="Hand" Name="All_Rule" Unchecked="All_Rule_Unchecked" Margin="5,0,0,0" Checked="All_Rule_Checked" HorizontalAlignment="Stretch" Height="22"  />
+                    <!--<ToggleButton Cursor="Hand" Name="All_Rule" Unchecked="All_Rule_Unchecked" Margin="5,0,0,0" Checked="All_Rule_Checked" Style="{StaticResource ToggleButtonSwitch}" HorizontalAlignment="Stretch" Height="22"/>-->
                      <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="7px">Use All Rules</TextBlock>
                 </StackPanel>
                 <ListView 

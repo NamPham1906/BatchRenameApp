@@ -605,7 +605,7 @@ namespace batchRenameApp
             //    }
             //}
         }
-
+        bool isSingleUncheck = false;
         private void Use_Rule_Checkbox_Unchecked(object sender, RoutedEventArgs e)
         {
             CheckBox b = sender as CheckBox;
@@ -613,6 +613,12 @@ namespace batchRenameApp
             int index = userRules.IndexOf(rule);
             //code here
             UpdatePreview();
+            if (!isAllRuleUnCheck)
+            {
+                isSingleUncheck = true;
+                All_Rule.IsChecked = false;
+                isSingleUncheck = false;
+            }
             //List<string> listOfFileName = new List<string>();
             //List<string> listOfFolderName = new List<string>();
 
@@ -719,7 +725,7 @@ namespace batchRenameApp
         {
             if (!currentProject.isDefaul())
             {
-                if (currentProject.ProjectAddress == null || currentProject.ProjectAddress.Length <= 0)
+                if (currentProject.ProjectAddress == null || currentProject.ProjectAddress.Length <= 0 ||  currentProject.ProjectAddress == DefaultProjectAddress)
                 {
                     MessageBoxResult result = HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
                     {
@@ -826,7 +832,7 @@ namespace batchRenameApp
 
         private void Save_Project_Btn_Click(object sender, RoutedEventArgs e)
         {
-            if (currentProject.ProjectAddress != null && currentProject.ProjectAddress.Length > 0)
+            if (currentProject.ProjectAddress != null && currentProject.ProjectAddress.Length > 0 && currentProject.ProjectAddress != DefaultProjectAddress)
             {
                 StoreToProject();
             }
@@ -855,7 +861,7 @@ namespace batchRenameApp
             {
                 return;
             }
-            if (currentProject.ProjectAddress == null || currentProject.ProjectAddress.Length <= 0)
+            if (currentProject.ProjectAddress == null || currentProject.ProjectAddress.Length <= 0 || currentProject.ProjectAddress == DefaultProjectAddress)
             {
                 MessageBoxResult result = HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
                 {
@@ -1224,7 +1230,7 @@ namespace batchRenameApp
         {
             if (e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control)
             {
-                if (currentProject.ProjectAddress != null && currentProject.ProjectAddress.Length > 0)
+                if (currentProject.ProjectAddress != null && currentProject.ProjectAddress.Length > 0 && currentProject.ProjectAddress != DefaultProjectAddress)
                 {
                     StoreToProject();
                 }
@@ -1400,14 +1406,24 @@ namespace batchRenameApp
             }
                 
         }
-       
+
+        bool isAllRuleUnCheck = false;
         private void All_Rule_Unchecked(object sender, RoutedEventArgs e)
         {
-            foreach(var rule in userRules)
+            if (isSingleUncheck)
             {
-                rule.SetIsUse(false);
-                UpdatePreview();
-            }    
+                isSingleUncheck = false;
+            }
+            else
+            {
+                isAllRuleUnCheck = true;
+                foreach (var rule in userRules)
+                {
+                    rule.SetIsUse(false);
+                    //UpdatePreview();
+                }
+                isAllRuleUnCheck = false;
+            }
         }
 
         private void All_Rule_Checked(object sender, RoutedEventArgs e)
@@ -1415,7 +1431,7 @@ namespace batchRenameApp
             foreach (var rule in userRules)
             {
                 rule.SetIsUse(true);
-                UpdatePreview();
+                //UpdatePreview();
             }
         }
     }
