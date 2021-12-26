@@ -83,5 +83,10 @@ namespace AddCounter
         {
             this.rule.Position = 1;
         }
+
+        private void separationInput_TextChange(object sender, TextChangedEventArgs e)
+        {
+            this.rule.Separation = separationInput.Text;
+        }
     }
 }
