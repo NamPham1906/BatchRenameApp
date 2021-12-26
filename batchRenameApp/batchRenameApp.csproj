@@ -31,6 +31,7 @@
     <None Remove="images\extension-icon\file.png" />
     <None Remove="images\extension-icon\gho-file.png" />
     <None Remove="images\extension-icon\gif-file.png" />
+    <None Remove="images\extension-icon\ico-file.png" />
     <None Remove="images\extension-icon\ink-file.png" />
     <None Remove="images\extension-icon\jar-file.png" />
     <None Remove="images\extension-icon\java-file.png" />
@@ -39,11 +40,26 @@
     <None Remove="images\extension-icon\mov-file.png" />
     <None Remove="images\extension-icon\mp3-file.png" />
     <None Remove="images\extension-icon\mp4-file.png" />
+    <None Remove="images\extension-icon\mpg-file.png" />
+    <None Remove="images\extension-icon\obj-file.png" />
+    <None Remove="images\extension-icon\odt-file.png" />
     <None Remove="images\extension-icon\pdf-file.png" />
+    <None Remove="images\extension-icon\php-file.png" />
     <None Remove="images\extension-icon\png-file.png" />
     <None Remove="images\extension-icon\ppt-file.png" />
+    <None Remove="images\extension-icon\prg-file.png" />
+    <None Remove="images\extension-icon\ps-file.png" />
+    <None Remove="images\extension-icon\ra-file.png" />
     <None Remove="images\extension-icon\rar-file.png" />
+    <None Remove="images\extension-icon\raw-file.png" />
+    <None Remove="images\extension-icon\rss-file.png" />
+    <None Remove="images\extension-icon\scr-file.png" />
+    <None Remove="images\extension-icon\sql-file.png" />
+    <None Remove="images\extension-icon\tif-file.png" />
+    <None Remove="images\extension-icon\wav-file.png" />
     <None Remove="images\extension-icon\wmv-file.png" />
+    <None Remove="images\extension-icon\xml-file.png" />
+    <None Remove="images\extension-icon\xvid-file.png" />
     <None Remove="images\extension-icon\zip-file.png" />
     <None Remove="images\file.png" />
     <None Remove="images\folder.png" />
@@ -134,6 +150,9 @@
     <Content Include="images\extension-icon\gif-file.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="images\extension-icon\ico-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="images\extension-icon\ink-file.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -158,7 +177,19 @@
     <Content Include="images\extension-icon\mp4-file.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="images\extension-icon\mpg-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\obj-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\odt-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="images\extension-icon\pdf-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\php-file.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\extension-icon\png-file.png">
@@ -167,10 +198,37 @@
     <Content Include="images\extension-icon\ppt-file.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="images\extension-icon\prg-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\ps-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\ra-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="images\extension-icon\rar-file.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="images\extension-icon\raw-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\scr-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\sql-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\tif-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="images\extension-icon\wmv-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\xml-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\extension-icon\xvid-file.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\extension-icon\zip-file.png">
@@ -229,6 +287,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Contract\Contract.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="images\extension-icon\rss-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="images\extension-icon\wav-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

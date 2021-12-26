@@ -177,6 +177,66 @@ namespace batchRenameApp
                 case ".MOV":
                     image = "images/extension-icon/mov-file.png";
                     break;
+                case ".mpg":
+                case ".MPG":
+                    image = "images/extension-icon/mpg-file.png";
+                    break;
+                case ".odt":
+                case ".ODT":
+                    image = "images/extension-icon/odt-file.png";
+                    break;
+                case ".prg":
+                case ".PRG":
+                    image = "images/extension-icon/prg-file.png";
+                    break;
+                case ".ra":
+                case ".RA":
+                    image = "images/extension-icon/ra-file.png";
+                    break;
+                case ".raw":
+                case ".RAW":
+                    image = "images/extension-icon/raw-file.png";
+                    break;
+                case ".rss":
+                case ".RSS":
+                    image = "images/extension-icon/rss-file.png";
+                    break;
+                case ".scr":
+                case ".SCR":
+                    image = "images/extension-icon/scr-file.png";
+                    break;
+                case ".sql":
+                case ".SQL":
+                    image = "images/extension-icon/sql-file.png";
+                    break;
+                case ".wav":
+                case ".WAV":
+                    image = "images/extension-icon/wav-file.png";
+                    break;
+                case ".xvid":
+                case ".XVID":
+                    image = "images/extension-icon/xvid-file.png";
+                    break;
+                case ".ico":
+                case ".ICO":
+                    image = "images/extension-icon/ico-file.png";
+                    break;
+                case ".obj":
+                case ".OBJ":
+                    image = "images/extension-icon/obj-file.png";
+                    break;
+                case ".php":
+                case ".PHP":
+                    image = "images/extension-icon/php-file.png";
+                    break;
+                case ".ps":
+                case ".PS":
+                    image = "images/extension-icon/ps-file.png";
+                    break;
+                case ".xml":
+                case ".XML":
+                    image = "images/extension-icon/xml-file.png";
+                    break;
                 default:
                     image = "images/extension-icon/file.png";
                     break;
