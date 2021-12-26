@@ -78,18 +78,19 @@
                     <hc:ComboBox Name="RuleComboBox" Width="163" hc:InfoElement.Placeholder="Add your rules"  SelectionChanged="RuleComboBox_SelectionChanged" HorizontalAlignment="Stretch" Margin="5px" VerticalContentAlignment="Center"/>
                     <Button Cursor="Hand" Name="Browse_Rule_Btn" Click="Browse_Rule_Btn_Click" Margin="5px" Width="110">
                         <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
-                            <Image Source="images/clear-file-folder.png" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <TextBlock Text="Browse Rule"/>
+                            <Image Source="images/dll-file.png" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <TextBlock Text="Browse"/>
                         </StackPanel>
                     </Button>
+                    
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,5">
                     <Button Cursor="Hand" Name="Clear_All_Rule_Btn" Click="Clear_All_Rule_Btn_Click" Margin="5px" Width="110">
                         <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
                             <Image Source="images/clear-file-folder.png" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <TextBlock Text="Clear Rules"/>
+                            <TextBlock Text="Clear All Rules"/>
                         </StackPanel>
                     </Button>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,5">
                     <CheckBox Cursor="Hand" Name="All_Rule" Unchecked="All_Rule_Unchecked" Margin="5,0,0,0" Checked="All_Rule_Checked" HorizontalAlignment="Stretch" Height="22"  />
                     <!--<ToggleButton Cursor="Hand" Name="All_Rule" Unchecked="All_Rule_Unchecked" Margin="5,0,0,0" Checked="All_Rule_Checked" Style="{StaticResource ToggleButtonSwitch}" HorizontalAlignment="Stretch" Height="22"/>-->
                     <TextBlock VerticalAlignment="Center" Width="62" HorizontalAlignment="Left" Margin="7px">All Rules</TextBlock>
