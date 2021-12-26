@@ -259,6 +259,19 @@ namespace batchRenameApp
             }
         }
 
+        private void CreateDLLFolder()
+        {
+            string exePath = Assembly.GetExecutingAssembly().Location;
+            string folderPath = Path.GetDirectoryName(exePath);
+            folderPath += @"\DLL";
+            DirectoryInfo folder = new DirectoryInfo(folderPath);
+            if (!folder.Exists)
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+        }
+
         private void CreatePresetFolder()
         {
             string exePath = Assembly.GetExecutingAssembly().Location;
@@ -326,6 +339,7 @@ namespace batchRenameApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            CreateDLLFolder();
             CreatePresetFolder();
             CreateLastProjectFolder();
             FilePagination.MaxPageCount = (int)Math.Ceiling(filelist.Count() * 1.0 / 6);
@@ -1024,8 +1038,8 @@ namespace batchRenameApp
                         Message = "Save preset succeeded!",
                         Caption = "Save Preset",
                         Button = MessageBoxButton.OK,
-                        IconBrushKey = ResourceToken.DarkSuccessBrush,
-                        IconKey = ResourceToken.CheckedGeometry,
+                        IconBrushKey = ResourceToken.SuccessBrush,
+                        IconKey = ResourceToken.SuccessGeometry,
                         StyleKey = "MessageBoxCustom"
                     });
                     PresetComboBox.SelectedIndex = -1;
@@ -1521,10 +1535,29 @@ namespace batchRenameApp
                         allRulesName.Add(allRules[i].GetName());
                     }
                     RuleComboBox.ItemsSource = allRulesName;
+
+                    MessageBoxResult result = HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
+                    {
+                        Message = "The chosen rule was added successfully.",
+                        Caption = "Add new rule success",
+                        Button = MessageBoxButton.OK,
+                        IconBrushKey = ResourceToken.SuccessBrush,
+                        IconKey = ResourceToken.SuccessGeometry,
+                        StyleKey = "MessageBoxCustom"
+                    });
                 }
                 else
                 {
                     // xuat thong bao
+                    MessageBoxResult result = HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
+                    {
+                        Message = "The chosen rule can not be added correctly. Please try again.",
+                        Caption = "Fail to add the new rule",
+                        Button = MessageBoxButton.OK,
+                        IconBrushKey = ResourceToken.DangerBrush,
+                        IconKey = ResourceToken.ErrorGeometry,
+                        StyleKey = "MessageBoxCustom"
+                    });
                 }
                
                

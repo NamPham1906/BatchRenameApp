@@ -108,7 +108,6 @@
                 <ListView 
                 SelectionMode="Multiple"
                 SelectionChanged="RuleList_SelectionChanged" 
-                LayoutUpdated="RuleList_LayoutUpdated"
                 Margin="5,0,5,0"
                 Name="RuleList"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
