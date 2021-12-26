@@ -2,12 +2,11 @@
 ![Alt Text](https://github.com/NamPham1906/BatchRenameApp/blob/khoa/ReadmeImage/app.png?raw=true)
 
 
-##### Table of Contents  
-[Headers](#headers)  
-[Emphasis](#emphasis)  
-...snip...    
-<a name="headers"/>
-## Headers
+## **Nội dung**  
+[**Điểm số mong muốn**](#score)  
+
+
+
 ## **Cách chạy chương trình**
 1. Chuẩn bị file DLL của các Luật
 - 
@@ -72,7 +71,7 @@ Khi có vấn đề về project, thầy có thể liên lạc với nhóm em th
 3. Có các chức năng như new, save, save as, open để tạo mới, lưu, tạo bản sao và mở các project.
 4. Danh sách các file/folder đều được phân trang
 5. Giao diện ứng dụng được thiết kế responsive
-## **Điểm số mong muốn**
+## **Điểm số mong muốn** <a name="score"></a>
 * * *
 Điểm số mong muốn của từng thành viên:
 - Nguyễn Hồ Diệu Hương: **10**
