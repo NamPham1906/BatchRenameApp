@@ -34,6 +34,7 @@ namespace batchRenameApp
                         _prototypes.Add(c);
                     }
                 }
+                
             }
         }
 
