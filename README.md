@@ -2,6 +2,12 @@
 ![Alt Text](https://github.com/NamPham1906/BatchRenameApp/blob/khoa/ReadmeImage/app.png?raw=true)
 
 
+##### Table of Contents  
+[Headers](#headers)  
+[Emphasis](#emphasis)  
+...snip...    
+<a name="headers"/>
+## Headers
 ## **Cách chạy chương trình**
 1. Chuẩn bị file DLL của các Luật
 - 
