@@ -41,7 +41,6 @@ namespace batchRenameApp
         String AppTitle = "Batch Rename";
         RenameProject currentProject = null;
         LastProject lastProject = null;
-        int unnamedPreset = 0;
         List<Preset> presets = new List<Preset>();
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -529,45 +528,45 @@ namespace batchRenameApp
         }
 
 
-        private void RuleList_LayoutUpdated(object sender, EventArgs e)
-        {
-            // List<string> listOfFileName = new List<string>();
-            // List<string> listOfFolderName = new List<string>();
+        //private void RuleList_LayoutUpdated(object sender, EventArgs e)
+        //{
+        //    // List<string> listOfFileName = new List<string>();
+        //    // List<string> listOfFolderName = new List<string>();
 
-            //  for (int i=0; i < filelist.Count(); i++)
-            //  {
-            //       listOfFileName.Add(filelist[i].filename);
-            //       filelist[i].newfilename = filelist[i].filename;
-            //   }
+        //    //  for (int i=0; i < filelist.Count(); i++)
+        //    //  {
+        //    //       listOfFileName.Add(filelist[i].filename);
+        //    //       filelist[i].newfilename = filelist[i].filename;
+        //    //   }
 
-            // for (int i = 0; i < folderlist.Count(); i++)
-            // {
-            //     listOfFolderName.Add(folderlist[i].foldername);
-            //     folderlist[i].newfoldername = folderlist[i].foldername;
-            // }
+        //    // for (int i = 0; i < folderlist.Count(); i++)
+        //    // {
+        //    //     listOfFolderName.Add(folderlist[i].foldername);
+        //    //     folderlist[i].newfoldername = folderlist[i].foldername;
+        //    // }
 
-            //   for (int i = 0; i < userRules.Count(); i++)
-            //  {
-            //      if (userRules[i].IsUse())
-            //       {
-            //          List<string> temp = userRules[i].Rename(listOfFileName, 1);
-            //List<string> temp2 = userRules[i].Rename(listOfFolderName);
-            //           for (int j = 0; j < filelist.Count(); j++)
-            //          {
-            //              filelist[j].newfilename = temp[j];
-            //              listOfFileName[j] = temp[j];
-            //          }
+        //    //   for (int i = 0; i < userRules.Count(); i++)
+        //    //  {
+        //    //      if (userRules[i].IsUse())
+        //    //       {
+        //    //          List<string> temp = userRules[i].Rename(listOfFileName, 1);
+        //    //List<string> temp2 = userRules[i].Rename(listOfFolderName);
+        //    //           for (int j = 0; j < filelist.Count(); j++)
+        //    //          {
+        //    //              filelist[j].newfilename = temp[j];
+        //    //              listOfFileName[j] = temp[j];
+        //    //          }
 
 
-            // for (int j = 0; j < folderlist.Count(); j++)
-            //  {
+        //    // for (int j = 0; j < folderlist.Count(); j++)
+        //    //  {
 
-            //      folderlist[i].newfoldername = temp2[j];
-            //  }
-            //       }
-            //   }
+        //    //      folderlist[i].newfoldername = temp2[j];
+        //    //  }
+        //    //       }
+        //    //   }
 
-        }
+        //}
 
         private void RuleList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -1037,6 +1036,7 @@ namespace batchRenameApp
                     {
                         Message = "Save preset succeeded!",
                         Caption = "Save Preset",
+                        
                         Button = MessageBoxButton.OK,
                         IconBrushKey = ResourceToken.SuccessBrush,
                         IconKey = ResourceToken.SuccessGeometry,
@@ -1091,14 +1091,58 @@ namespace batchRenameApp
 
         private void ClearAllFile_Click(object sender, RoutedEventArgs e)
         {
-            filelist.Clear();
-            update_Filepage();
+            if(filelist.Count == 0)
+            {
+                return;
+            }    
+            MessageBoxResult result = HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
+            {
+                Message = "Do you want to clear all current files?",
+                Caption = "Clear All Files",
+                Button = MessageBoxButton.YesNo,
+                IconBrushKey = ResourceToken.AccentBrush,
+                IconKey = ResourceToken.AskGeometry,
+                StyleKey = "MessageBoxCustom"
+            });
+
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    filelist.Clear();
+                    update_Filepage();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+            
         }
 
         private void ClearAllFolder_Click(object sender, RoutedEventArgs e)
         {
-            folderlist.Clear();
-            update_Folderpage();
+            if (folderlist.Count == 0)
+            {
+                return;
+            }
+            MessageBoxResult result = HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
+            {
+                Message = "Do you want to clear all current folders?",
+                Caption = "Clear All Folders",
+                Button = MessageBoxButton.YesNo,
+                IconBrushKey = ResourceToken.AccentBrush,
+                IconKey = ResourceToken.AskGeometry,
+                StyleKey = "MessageBoxCustom"
+            });
+
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    folderlist.Clear();
+                    update_Folderpage();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+            
         }
 
 
@@ -1304,6 +1348,160 @@ namespace batchRenameApp
                 }
                 currentProject.StoreData(currentProject.ProjectAddress);
                 this.Title = AppTitle + " - " + currentProject.GetName();
+            } 
+            else if (e.Key == Key.N && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                if (currentProject.isDefaul())
+                {
+                    return;
+                }
+                if (currentProject.ProjectAddress == null || currentProject.ProjectAddress.Length <= 0 || currentProject.ProjectAddress == DefaultProjectAddress)
+                {
+                    MessageBoxResult result = HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
+                    {
+                        Message = "Do you want to save the currrent project",
+                        Caption = "Save Project",
+                        Button = MessageBoxButton.YesNo,
+                        IconBrushKey = ResourceToken.AccentBrush,
+                        IconKey = ResourceToken.AskGeometry,
+                        StyleKey = "MessageBoxCustom"
+                    });
+
+                    switch (result)
+                    {
+                        case MessageBoxResult.Yes:
+                            StoreToProject();
+                            currentProject.ProjectAddress = DefaultProjectAddress;
+                            SaveFileDialog saveFileDialog = new SaveFileDialog();
+                            saveFileDialog.FileName = currentProject.GetName();
+                            saveFileDialog.DefaultExt = ".json";
+                            saveFileDialog.Filter = "JSON files(*.json)|*.json";
+                            if (saveFileDialog.ShowDialog() == true)
+                            {
+                                string path = saveFileDialog.FileName;
+                                currentProject.ProjectAddress = path;
+                            }
+                            currentProject.StoreData(currentProject.ProjectAddress);
+                            break;
+                        case MessageBoxResult.No:
+                            break;
+                    }
+                }
+                else
+                {
+                    StoreToProject();
+                    currentProject.StoreData(currentProject.ProjectAddress);
+                }
+                currentProject = new RenameProject();
+                InitProject();
+            }
+            else if (e.Key == Key.O && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                if (!currentProject.isDefaul())
+                {
+                    if (currentProject.ProjectAddress == null || currentProject.ProjectAddress.Length <= 0 || currentProject.ProjectAddress == DefaultProjectAddress)
+                    {
+                        MessageBoxResult result = HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
+                        {
+                            Message = "Do you want to save the currrent project",
+                            Caption = "Save Project",
+                            Button = MessageBoxButton.YesNo,
+                            IconBrushKey = ResourceToken.AccentBrush,
+                            IconKey = ResourceToken.AskGeometry,
+                            StyleKey = "MessageBoxCustom"
+                        });
+
+                        switch (result)
+                        {
+                            case MessageBoxResult.Yes:
+                                StoreToProject();
+                                currentProject.ProjectAddress = DefaultProjectAddress;
+                                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                                saveFileDialog.FileName = currentProject.GetName();
+                                saveFileDialog.DefaultExt = ".json";
+                                saveFileDialog.Filter = "JSON files(*.json)|*.json";
+                                if (saveFileDialog.ShowDialog() == true)
+                                {
+                                    string path = saveFileDialog.FileName;
+                                    currentProject.ProjectAddress = path;
+                                }
+                                currentProject.StoreData(currentProject.ProjectAddress);
+                                break;
+                            case MessageBoxResult.No:
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        StoreToProject();
+                        currentProject.StoreData(currentProject.ProjectAddress);
+                    }
+                }
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "JSON files only (*.json)|*.json";
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    string path = openFileDialog.FileName;
+                    bool isParseAble = true;
+                    RenameProject project = null;
+                    try
+                    {
+                        project = RenameProject.Parser(path);
+                    }
+                    catch (Exception)
+                    {
+                        isParseAble = false;
+                    }
+                    if (isParseAble)
+                    {
+                        if (project != null)
+                        {
+                            if (project.Rules != null && project.Folders != null && project.Files != null)
+                            {
+                                project.ProjectAddress = path;
+
+                                currentProject = project;
+                                InitProject();
+                            }
+                            else
+                            {
+                                HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
+                                {
+                                    Message = "Invalid file content",
+                                    Caption = "Open File Error",
+                                    Button = MessageBoxButton.OK,
+                                    IconBrushKey = ResourceToken.AccentBrush,
+                                    IconKey = ResourceToken.ErrorGeometry,
+                                    StyleKey = "MessageBoxCustom"
+                                });
+                            }
+                        }
+                        else
+                        {
+                            HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
+                            {
+                                Message = "File Not Found",
+                                Caption = "Open File Error",
+                                Button = MessageBoxButton.OK,
+                                IconBrushKey = ResourceToken.AccentBrush,
+                                IconKey = ResourceToken.ErrorGeometry,
+                                StyleKey = "MessageBoxCustom"
+                            });
+                        }
+                    }
+                    else
+                    {
+                        HandyControl.Controls.MessageBox.Show(new MessageBoxInfo
+                        {
+                            Message = "Invalid file content",
+                            Caption = "Open File Error",
+                            Button = MessageBoxButton.OK,
+                            IconBrushKey = ResourceToken.AccentBrush,
+                            IconKey = ResourceToken.ErrorGeometry,
+                            StyleKey = "MessageBoxCustom"
+                        });
+                    }
+                }
             }
         }
 
@@ -1572,5 +1770,6 @@ namespace batchRenameApp
             update_Folderpage();
             update_Filepage();
         }
+
     }
 }
