@@ -266,10 +266,22 @@
                                 </StackPanel>
                             </Button>
                             <DockPanel Width="508px" Margin="5px">
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                                    <Image Source="images/file.png" Height="12px" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,5,0"/>
-                                    <TextBlock x:Name="NumberOfFiles" Text="{Binding}"></TextBlock>
-                                    <TextBlock Text=" Files "></TextBlock>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" >
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0">
+                                        <Image Source="images/success.png" Height="12px" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,5,0"/>
+                                        <TextBlock x:Name="NumberOfBatchingFiles" Text="{Binding}"  Foreground="LimeGreen"></TextBlock>
+                                        <TextBlock Text=" Files Batching Successfully " Foreground="LimeGreen"></TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0">
+                                        <Image Source="images/error.png" Height="12px" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,5,0"/>
+                                        <TextBlock x:Name="NumberOfErrorFiles" Text="{Binding}" Foreground="IndianRed" ></TextBlock>
+                                        <TextBlock Text=" Error Files" Foreground="IndianRed"></TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                        <Image Source="images/file.png" Height="12px" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,5,0"/>
+                                        <TextBlock x:Name="NumberOfFiles" Text="{Binding}"  Foreground="CornflowerBlue"></TextBlock>
+                                        <TextBlock Text=" Total Files "  Foreground="CornflowerBlue"></TextBlock>
+                                    </StackPanel>
                                 </StackPanel>
                             </DockPanel>
                         </StackPanel>
@@ -355,13 +367,24 @@
                                 </StackPanel>
                             </Button>
                             <DockPanel Width="508px" Margin="5px">
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                                    <Image Source="images/folder.png" Height="12px" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,5,0"/>
-                                    <TextBlock x:Name="NumberOfFolders" Text="{Binding}"></TextBlock>
-                                    <TextBlock Text=" Folders "></TextBlock>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" >
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0">
+                                        <Image Source="images/success.png" Height="12px" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,5,0"/>
+                                        <TextBlock x:Name="NumberOfBatchingFolders" Text="{Binding}"  Foreground="LimeGreen"></TextBlock>
+                                        <TextBlock Text=" Folders Batching Successfully " Foreground="LimeGreen"></TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0">
+                                        <Image Source="images/error.png" Height="12px" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,5,0"/>
+                                        <TextBlock x:Name="NumberOfErrorFolders" Text="{Binding}" Foreground="IndianRed" ></TextBlock>
+                                        <TextBlock Text=" Error Folders" Foreground="IndianRed"></TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                        <Image Source="images/folder.png" Height="12px" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,5,0"/>
+                                        <TextBlock x:Name="NumberOfFolders" Text="{Binding}"  Foreground="CornflowerBlue"></TextBlock>
+                                        <TextBlock Text=" Total Folders "  Foreground="CornflowerBlue"></TextBlock>
+                                    </StackPanel>
                                 </StackPanel>
                             </DockPanel>
-                            
                         </StackPanel>
 
                         <ListView x:Name="FolderList" Height="400px" Margin="5px" AllowDrop="True" DragOver="DragOverFolderList" Drop="DropFolderList">
@@ -395,7 +418,7 @@
                                     <GridViewColumn>
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Image Source="{Binding folderimage}" Height="30px"/>
+                                                <Image Source="{Binding folderimage}" RenderOptions.BitmapScalingMode="HighQuality" Height="30px"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>

@@ -177,7 +177,6 @@ namespace batchRenameApp
                     foreach (var item in InsideFilesList)
                     {
                         MyFile newfile = new MyFile(item);
-                        newfile.fileimage = "images/file.png";
                         filelist.Add(newfile);
                         FileList.ItemsSource = filelist;
                     }
@@ -186,7 +185,6 @@ namespace batchRenameApp
                 else
                 {
                     MyFile newfile = new MyFile(filedir);
-                    newfile.fileimage = "images/file.png";
                     filelist.Add(newfile);
                     FileList.ItemsSource = filelist;
                 }
@@ -498,11 +496,13 @@ namespace batchRenameApp
             {
                 filelist[i].changeName();
             }
+            update_Filepage();
 
             for (int i = 0; i < folderlist.Count(); i++)
             {
                 folderlist[i].changeName();
             }
+            update_Folderpage();
         }
 
 
@@ -1083,7 +1083,21 @@ namespace batchRenameApp
             FilePagination.MaxPageCount = (int)Math.Ceiling(filelist.Count()*1.0/6);
             IEnumerable<MyFile> datafilelist = filelist.Skip((currentfilepage - 1) * itemperpage).Take(itemperpage);
             FileList.ItemsSource = datafilelist;
+           
+            int batchingSuccess = 0;
+            int batchingError = 0;
+            for (int i = 0; i< filelist.Count(); i++)
+            {
+                if (filelist[i].status.Contains("Error")){
+                    batchingError++;
+                }
+                else if (filelist[i].status.Contains("Batching successfully")){
+                    batchingSuccess++;
+                }
+            }
             NumberOfFiles.DataContext = filelist.Count();
+            NumberOfBatchingFiles.DataContext = batchingSuccess;
+            NumberOfErrorFiles.DataContext = batchingError;
         }
 
 
@@ -1091,7 +1105,23 @@ namespace batchRenameApp
             FolderPagination.MaxPageCount = (int)Math.Ceiling(folderlist.Count() * 1.0 / 6);
             IEnumerable<Folder> datafolderlist = folderlist.Skip((currentfolderpage - 1) * itemperpage).Take(itemperpage);
             FolderList.ItemsSource = datafolderlist;
+
+            int batchingSuccess = 0;
+            int batchingError = 0;
+            for (int i = 0; i < folderlist.Count(); i++)
+            {
+                if (folderlist[i].status.Contains("Error"))
+                {
+                    batchingError++;
+                }
+                else if (folderlist[i].status.Contains("Batching successfully"))
+                {
+                    batchingSuccess++;
+                }
+            }
             NumberOfFolders.DataContext = folderlist.Count();
+            NumberOfBatchingFolders.DataContext = batchingSuccess;
+            NumberOfErrorFolders.DataContext = batchingError;
         }
 
         
