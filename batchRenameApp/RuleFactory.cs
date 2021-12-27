@@ -76,16 +76,18 @@ namespace batchRenameApp
             bool result = true;
             try
             {
-                var assembly = Assembly.LoadFile(file.FullName);
+                var assembly = Assembly.Load(File.ReadAllBytes(file.FullName));
                 var types = assembly.GetTypes();
 
                 foreach (var t in types)
                 {
                     if (t.IsClass && typeof(IRule).IsAssignableFrom(t))
-                    {
-                        newRule = (IRule)Activator.CreateInstance(t);
+                   {
+                       newRule = (IRule)Activator.CreateInstance(t);
                     }
                 }
+
+        
             }
             catch (Exception)
             {
@@ -114,23 +116,36 @@ namespace batchRenameApp
                         case MessageBoxResult.Yes:
                             File.Delete(folder + "\\DLL\\" + newfile.Name);
                             File.Copy(filepath, folder + "\\DLL\\" + newfile.Name, true);
-                            _prototypes = new List<IRule>();
                             var fis = new DirectoryInfo(folder + "\\DLL").GetFiles("*.dll");
 
                             foreach (var f in fis)
                             {
-                                var assembly = Assembly.Load(File.ReadAllBytes(f.FullName));
-                                var types = assembly.GetTypes();
-
-                                foreach (var t in types)
+                                if (f.FullName == folder + "\\DLL\\" + newfile.Name)
                                 {
-                                    if (t.IsClass && typeof(IRule).IsAssignableFrom(t))
+                                    var assembly = Assembly.Load(File.ReadAllBytes(f.FullName));
+                                    var types = assembly.GetTypes();
+
+                                    foreach (var t in types)
                                     {
-                                        IRule c = (IRule)Activator.CreateInstance(t);
-                                        _prototypes.Add(c);
+                                        if (t.IsClass && typeof(IRule).IsAssignableFrom(t))
+                                        {
+                                            IRule c = (IRule)Activator.CreateInstance(t);
+                                            foreach (IRule temp in _prototypes.ToList())
+                                            {
+                                                if (temp.GetName().Equals(c.GetName()))
+                                                {
+                                                    _prototypes.Remove(temp);
+                                                    
+                                                }
+                                            }
+
+                                            _prototypes.Add(c);
+                                            
+                                        }
                                     }
                                 }
                             }
+
                             return true;
                         case MessageBoxResult.No:
                             return false;
@@ -141,20 +156,22 @@ namespace batchRenameApp
                 else
                 {
                     File.Copy(filepath, folder + "\\DLL\\" + newfile.Name, true);
-                    _prototypes = new List<IRule>();
                     var fis = new DirectoryInfo(folder + "\\DLL").GetFiles("*.dll");
 
                     foreach (var f in fis)
                     {
-                        var assembly = Assembly.Load(File.ReadAllBytes(f.FullName));
-                        var types = assembly.GetTypes();
-
-                        foreach (var t in types)
+                        if (f.FullName == folder + "\\DLL\\" + newfile.Name)
                         {
-                            if (t.IsClass && typeof(IRule).IsAssignableFrom(t))
+                            var assembly = Assembly.Load(File.ReadAllBytes(f.FullName));
+                            var types = assembly.GetTypes();
+
+                            foreach (var t in types)
                             {
-                                IRule c = (IRule)Activator.CreateInstance(t);
-                                _prototypes.Add(c);
+                                if (t.IsClass && typeof(IRule).IsAssignableFrom(t))
+                                {
+                                    IRule c = (IRule)Activator.CreateInstance(t);
+                                    _prototypes.Add(c);
+                                }
                             }
                         }
                     }

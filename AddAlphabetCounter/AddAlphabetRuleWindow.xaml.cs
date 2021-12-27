@@ -29,8 +29,10 @@ namespace AddAlphabetCounter
         {
             this.rule = rule;
             
-            this.LoadViewFromUri("/AddAlphabetCounter;component/addalphabetrulewindow.xaml");
-            //InitializeComponent();
+            //this.LoadViewFromUri("/AddAlphabetCounter;component/addalphabetrulewindow.xaml");
+            //System.Windows.Application.LoadComponent(this, resourceLocater);
+
+            InitializeComponent();
         }
 
 
@@ -71,7 +73,6 @@ namespace AddAlphabetCounter
             e.Handled = regex.IsMatch(e.Text);
         }
     }
-
 
     public static class extension
     {
