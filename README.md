@@ -100,7 +100,7 @@ Khi có vấn đề về project, thầy có thể liên lạc với nhóm em th
     1. **Strip**: Dùng để lược bỏ kí tự mong muốn ra khỏi tên 
 
     2. **Remove Accent**: Chuyển tiếng Việt có dấu thành không dấu
-    3. **Add Alphabet Counter**: thêm Counter bằng chữ cái(a, b, c, ..., z, aa, ab, ..., zz...) vào tên file. Có thể lựa chọn thêm vị trí ở đầu hoặc cuối tên file, thêm chuỗi phân cách giữa counter và tên file.
+    3. **Add Alphabet Counter**: thêm Counter bằng chữ cái(a, b, c, ..., z, aa, ab, ..., zz...) vào tên file. Có thể lựa chọn thêm vị trí ở đầu hoặc cuối tên file, thêm kí tự dạng viết hoa hoặc viết thường, thêm chuỗi phân cách giữa counter và tên file.
     4. **Convert to uppercase**: Viết hoa tất cả các chữ cái trong tên, đồng thời loại bỏ mọi khoảng trắng
     5. **Convert to camelCase**: Chuyển tên file/folder theo dạng camelCase
     6. **Change File Name**: Đổi hoàn toàn tên file/folder
