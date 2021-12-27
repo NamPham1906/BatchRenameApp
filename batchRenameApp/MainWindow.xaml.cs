@@ -109,32 +109,48 @@ namespace batchRenameApp
             {
                 currentProject.Folders = new List<Folder>();
             }
-            if(currentProject.PresetName.Length > 0)
+            if (currentProject.PresetName.Length > 0)
             {
                 int n = presets.Count();
-                for(int i = 0; i < n; i++)
+                bool isFound = false;
+                for (int i = 0; i < n; i++)
                 {
-                    if(presets[i].PresetName == currentProject.PresetName)
+                    if (presets[i].PresetName == currentProject.PresetName)
                     {
                         PresetComboBox.SelectedIndex = i;
+                        isFound = true;
                         break;
                     }
+                }
+                if (!isFound)
+                {
+                    Preset ps = new Preset()
+                    {
+                        PresetName = currentProject.PresetName,
+                        PresetRules = currentProject.GetRules()
+                    };
+                    presets.Add(ps);
+                    PresetComboBox.Items.Add(ps.PresetName);
+                    PresetComboBox.SelectedIndex = PresetComboBox.Items.Count - 1;
+
                 }
             }
             else
             {
                 PresetComboBox.SelectedIndex = -1;
             }
-            
+
             userRules = new BindingList<IRule>(currentProject.GetRules());
             filelist = new BindingList<MyFile>(currentProject.Files);
             folderlist = new BindingList<Folder>(currentProject.Folders);
             FileList.ItemsSource = filelist;
             FolderList.ItemsSource = folderlist;
+            RuleList.ItemsSource = userRules;
             FilePagination.PageIndex = currentfilepage;
             FolderPagination.PageIndex = currentfolderpage;
+            presetNameInput.Text = currentProject.PresetName;
             NumberOfFiles.DataContext = filelist.Count();
-            
+
             update_Filepage();
             update_Folderpage();
             this.Title = AppTitle + " - " + currentProject.GetName();
@@ -745,7 +761,7 @@ namespace batchRenameApp
 
         private void Open_Project_Btn_Click(object sender, RoutedEventArgs e)
         {
-            if (!currentProject.isDefaul())
+            if (!currentProject.isDefault())
             {
                 if (currentProject.ProjectAddress == null || currentProject.ProjectAddress.Length <= 0 ||  currentProject.ProjectAddress == DefaultProjectAddress)
                 {
@@ -879,7 +895,7 @@ namespace batchRenameApp
 
         private void New_Project_Btn_Click(object sender, RoutedEventArgs e)
         {
-            if (currentProject.isDefaul())
+            if (currentProject.isDefault())
             {
                 return;
             }
@@ -963,6 +979,7 @@ namespace batchRenameApp
                     if (rule!=null) userRules.Add(rule.Clone());
                 }
                 //RuleList.Items.Clear();
+                StoreToProject();
                 RuleList.ItemsSource = userRules;
                 UpdatePreview();
             }
@@ -1016,7 +1033,7 @@ namespace batchRenameApp
                                 ps.PresetRules = rulesInPreset;
                                 presets.Add(ps);
                                 PresetComboBox.Items.Add(presetNameInput);
-                                PresetComboBox.SelectedIndex = -1;
+                                PresetComboBox.SelectedIndex = PresetComboBox.Items.Count - 1;
                                 break;
                             case MessageBoxResult.No: //cancle save
                                 break;
@@ -1042,8 +1059,7 @@ namespace batchRenameApp
                         IconKey = ResourceToken.SuccessGeometry,
                         StyleKey = "MessageBoxCustom"
                     });
-                    PresetComboBox.SelectedIndex = -1;
-
+                    PresetComboBox.SelectedIndex = PresetComboBox.Items.Count - 1;
                 }
             }
         }
@@ -1351,7 +1367,7 @@ namespace batchRenameApp
             } 
             else if (e.Key == Key.N && Keyboard.Modifiers == ModifierKeys.Control)
             {
-                if (currentProject.isDefaul())
+                if (currentProject.isDefault())
                 {
                     return;
                 }
@@ -1397,7 +1413,7 @@ namespace batchRenameApp
             }
             else if (e.Key == Key.O && Keyboard.Modifiers == ModifierKeys.Control)
             {
-                if (!currentProject.isDefaul())
+                if (!currentProject.isDefault())
                 {
                     if (currentProject.ProjectAddress == null || currentProject.ProjectAddress.Length <= 0 || currentProject.ProjectAddress == DefaultProjectAddress)
                     {

@@ -122,9 +122,10 @@ namespace RemoveAccentRule
 
         public string ToJson()
         {
-            RemoveAccent data = new RemoveAccent();
+            RemoveAccentData data = new RemoveAccentData();
             data.Name = this.Name;
             data.IsInUse = this.IsInUse;
+           
             string json = JsonSerializer.Serialize(data);
             return json;
         }

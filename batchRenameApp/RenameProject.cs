@@ -97,27 +97,28 @@ namespace batchRenameApp
             for (int i = 0; i < Rules.Count(); i++)
             {
                 IRule newrule = RuleFactory.GetInstance().Create(Rules[i]);
-                if (newrule!=null)
-                resultRules.Add(newrule);
+                if (newrule != null)
+                    resultRules.Add(newrule);
             }
 
             return resultRules;
         }
 
-        public bool isDefaul()
+        public bool isDefault()
         {
-            if(
+            if (
                 (ProjectAddress == null || ProjectAddress.Length <= 0) &&
                 Rules.Count() <= 0 &&
                 Files.Count() <= 0 &&
-                Folders.Count() <= 0
+                Folders.Count() <= 0 &&
+                PresetName.Length <= 0
             )
             {
                 return true;
             }
 
             return false;
-            
+
         }
     }
 }
