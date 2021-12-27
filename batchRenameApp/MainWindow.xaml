@@ -103,7 +103,13 @@
                             DockPanel.Dock="Bottom">
                     <TextBlock VerticalAlignment="Center"  Text="Preset Name: " Margin="0,0,5,0"/>
                     <TextBox x:Name="presetNameInput" Width="142" Height="30" Margin="0,0,5,0"></TextBox>
-                    <Button Content="Save Preset" Click="SaveRule_Click" Width="90" Margin="5px"/>
+
+                    <Button Click="SaveRule_Click" Width="120" Margin="5px">
+                        <StackPanel Orientation ="Horizontal" VerticalAlignment="Center">
+                            <Image Source="images/save.png" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <TextBlock Text="Save Preset"/>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
                 <ListView 
                 SelectionMode="Multiple"
