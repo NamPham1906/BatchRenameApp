@@ -26,6 +26,7 @@ namespace ChangeExtension
         {
             this.rule = rule;
             InitializeComponent();
+            //'/ChangeExtension;component/changeextensionwindow.xaml'.'
         }
   
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

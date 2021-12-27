@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Packaging;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -9,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -25,8 +28,12 @@ namespace AddAlphabetCounter
         public AddAlphabetRuleWindow(AddAlphabetCounterRule rule)
         {
             this.rule = rule;
-            InitializeComponent();
+            
+            this.LoadViewFromUri("/AddAlphabetCounter;component/addalphabetrulewindow.xaml");
+            //InitializeComponent();
         }
+
+
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -62,6 +69,30 @@ namespace AddAlphabetCounter
         {
             Regex regex = new Regex(@"[\/:*?""<>|\\]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+    }
+
+
+    public static class extension
+    {
+        public static void LoadViewFromUri(this UserControl userControl, string baseUri)
+        {
+            try
+            {
+                var resourceLocater = new Uri(baseUri, UriKind.Relative);
+                var exprCa = (PackagePart)typeof(Application).GetMethod("GetResourceOrContentPart", BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, new object[] { resourceLocater });
+                var stream = exprCa.GetStream();
+                var uri = new Uri((Uri)typeof(BaseUriHelper).GetProperty("PackAppBaseUri", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null, null), resourceLocater);
+                var parserContext = new ParserContext
+                {
+                    BaseUri = uri
+                };
+                typeof(XamlReader).GetMethod("LoadBaml", BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, new object[] { stream, parserContext, userControl, true });
+            }
+            catch (Exception)
+            {
+                //log
+            }
         }
     }
 }

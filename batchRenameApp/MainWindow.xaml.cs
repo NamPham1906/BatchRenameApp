@@ -978,7 +978,18 @@ namespace batchRenameApp
                     if (rule!=null) userRules.Add(rule.Clone());
                 }
                 //RuleList.Items.Clear();
-                StoreToProject();
+                // StoreToProject();
+                currentProject.PresetName = presets[index].PresetName;
+                List<RuleContainer> ruleContainers = new List<RuleContainer>();
+                for (int i = 0; i < userRules.Count(); i++)
+                {
+                    ruleContainers.Add(new RuleContainer()
+                    {
+                        Name = userRules[i].GetName(),
+                        Data = userRules[i].ToJson()
+                    });
+                }
+                currentProject.Rules = ruleContainers;
                 RuleList.ItemsSource = userRules;
                 UpdatePreview();
             }
