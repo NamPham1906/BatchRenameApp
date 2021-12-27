@@ -28,9 +28,6 @@ namespace AddAlphabetCounter
         public AddAlphabetRuleWindow(AddAlphabetCounterRule rule)
         {
             this.rule = rule;
-            
-            //this.LoadViewFromUri("/AddAlphabetCounter;component/addalphabetrulewindow.xaml");
-            //System.Windows.Application.LoadComponent(this, resourceLocater);
 
             InitializeComponent();
         }
@@ -71,29 +68,6 @@ namespace AddAlphabetCounter
         {
             Regex regex = new Regex(@"[\/:*?""<>|\\]+");
             e.Handled = regex.IsMatch(e.Text);
-        }
-    }
-
-    public static class extension
-    {
-        public static void LoadViewFromUri(this UserControl userControl, string baseUri)
-        {
-            try
-            {
-                var resourceLocater = new Uri(baseUri, UriKind.Relative);
-                var exprCa = (PackagePart)typeof(Application).GetMethod("GetResourceOrContentPart", BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, new object[] { resourceLocater });
-                var stream = exprCa.GetStream();
-                var uri = new Uri((Uri)typeof(BaseUriHelper).GetProperty("PackAppBaseUri", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null, null), resourceLocater);
-                var parserContext = new ParserContext
-                {
-                    BaseUri = uri
-                };
-                typeof(XamlReader).GetMethod("LoadBaml", BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, new object[] { stream, parserContext, userControl, true });
-            }
-            catch (Exception)
-            {
-                //log
-            }
         }
     }
 }
