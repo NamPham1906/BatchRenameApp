@@ -961,7 +961,6 @@ namespace batchRenameApp
 
         private void Clear_All_Rule_Btn_Click(object sender, RoutedEventArgs e)
         {
-            PresetComboBox.SelectedIndex = -1;
             userRules.Clear();
             UpdatePreview();
         }
