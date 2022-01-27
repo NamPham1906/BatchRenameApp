@@ -11,7 +11,9 @@
 
 ## **Cách chạy chương trình**<a name="run"></a>
 1. **Chuẩn bị file DLL của các Luật**
+
     - Build toàn bộ solution để có được file dll của các luật
+
     - Copy các File DLL đặt vào folder DLL của folder chứa file exe hoặc chạy ứng dụng và sử dụng chức năng Browse để thêm các file dll muốn sử dụng.
     - Thầy có thể dùng các DLL nhóm em đã chuẩn bị sẵn trong folder Release
 2. **Chạy chương trình Batch Rename**
@@ -19,6 +21,7 @@
 3. **Release**:
     File exe của chương trình đi kèm với 4 folder:
     - DLL: Chức file dll của các luật và dll của Contract.
+
     - image: folder chứa các ảnh mà chương trình sử dụng.
     - LastProject: folder chứa thông tin về project cuối cùng mà người dùng mở trước khi đóng ứng dụng.
     - PRESET: folder chứa các preset
@@ -26,6 +29,7 @@
 * * *
 Nhóm gồm bốn thành viên
 - **Nguyễn Hồ Diệu Hương, MSSV: 19120524**
+
 - **Lê Trần Đăng Khoa, MSSV: 19120546**
 - **Lê Nguyễn Thảo Mi, MSSV: 19120576**
 - **Phạm Sơn Nam, MSSV: 19120596**
@@ -120,10 +124,12 @@ Khi có vấn đề về project, thầy có thể liên lạc với nhóm em th
 17. Có Context Menu cho mỗi file/folder trong danh sách trên giao diện với các chức năng:
     1. Đối với file:
         - Open this File: Mở file đó
+
         - Open in File explorer: Mở file đó trong file explorer
         - Delete Path: Xóa file khỏi danh sách file đang thao tác
     2. Đối với folder:
         - Open in File explorer: Mở folder đó trong file explorer
+
         - Delete Path: Xóa folder khỏi danh sách folder đang thao tác
 18. Phần giao diện danh sách file/folder có cột Status để hiển thị trạng thái của file/folder sau khi đổi tên(thành công, thất bại, trùng tên, không tồn tại,...)
 19. Hiển thị tổng sổ file/folder được rename thành công, rename thất bại, tổng số file và folder đang xử lí.
@@ -142,3 +148,5 @@ Khi có vấn đề về project, thầy có thể liên lạc với nhóm em th
 ## **Video demo** <a name="video"></a>
 * * *
 <https://youtube.com>
+
+**Ghi chú**: 
