@@ -734,13 +734,7 @@ namespace batchRenameApp
 
         private void ListBoxItem_PreviewMouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (sender is ListBoxItem)
-            {
-                ListBoxItem draggedItem = sender as ListBoxItem;
-                DataObject data = new DataObject("RULE", draggedItem.DataContext);
-                DragDrop.DoDragDrop(draggedItem, data, DragDropEffects.Move);
-                draggedItem.IsSelected = true;
-            }
+            
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -1797,5 +1791,50 @@ namespace batchRenameApp
             update_Filepage();
         }
 
+        private void OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+           e.Handled = true;
+        }
+
+        private bool isDrag = false;
+        int isDragCount = 0;
+
+        private void ListBoxItem_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                if (isDragCount==2)
+                {
+                    if (sender is ListBoxItem)
+                    {
+                        ListBoxItem draggedItem = sender as ListBoxItem;
+                        DataObject data = new DataObject("RULE", draggedItem.DataContext);
+                        DragDrop.DoDragDrop(draggedItem, data, DragDropEffects.Move);
+                        draggedItem.IsSelected = true;
+                    }
+                }
+                isDragCount++;
+
+
+            }
+        }
+
+        private void ListBoxItem_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            
+        }
+
+        private void ListBoxItem_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+           
+        }
+
+        private void ListBoxItem_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is ListBoxItem)
+            {
+                isDragCount = 0;
+            }
+        }
     }
 }

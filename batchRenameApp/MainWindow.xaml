@@ -121,6 +121,7 @@
                     <ListView.Resources>
                         <Style TargetType="GridViewColumnHeader">
                             <Setter Property="Visibility" Value="Collapsed" />
+                            
                         </Style>
                         <!--Layout for Default Item-->
                         <DataTemplate x:Key="DefaultItemTemplate">
@@ -213,10 +214,13 @@
                             <Setter Property="ContentTemplate" Value="{StaticResource DefaultItemTemplate}" />
                             <Setter Property="Background" Value="White"/>
                             <Setter Property="AllowDrop" Value="true"/>
-                            <EventSetter Event="PreviewMouseRightButtonDown" Handler="ListBoxItem_PreviewMouseRightButtonDown"/>
+                            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListBoxItem_MouseLeftButtonDown"/>
+                            <EventSetter Event="PreviewMouseLeftButtonUp" Handler="ListBoxItem_MouseLeftButtonUp"/>
+                            <EventSetter Event="PreviewMouseMove" Handler="ListBoxItem_MouseMove"/>
                             <EventSetter Event="Drop" Handler="ListBoxItem_Drop"/>
+                            <EventSetter Event="PreviewMouseRightButtonDown"  Handler="OnPreviewMouseDown"/>
                             <Style.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
+                                <Trigger Property="IsSelected"  Value="True">
                                     <Trigger.EnterActions>
                                         <BeginStoryboard>
                                             <Storyboard>
